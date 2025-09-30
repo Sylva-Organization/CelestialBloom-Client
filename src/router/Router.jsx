@@ -6,6 +6,8 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
+import ArticlesBlog from "../components/ArticlesBlog";
+import ArticleDetail from "../components/ArticleDetail";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -14,6 +16,14 @@ const routerBlog = createBrowserRouter([{
         {
             index: true,
             element: <Home/>
+        },
+        {
+            path: "/articulos",
+            element: <ArticlesBlog/>
+        },
+        {
+            path: "/articulo-detalle/:id",
+            element: <ArticleDetail/>
         },
         {
             path: "/astronomia",
