@@ -1,1 +1,46 @@
-/*navbar*/
+
+#top {
+    background: linear-gradient(to right, #014C5C, #016473, #1A642F);
+    display: flex;
+    padding: 20px 30px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+img {
+    height: 50px;
+}
+
+.menu {
+    display: flex;
+    gap: 30px;
+}
+
+.menu li {
+    list-style: none;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #fff;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.btn {
+    /* background-color: grey; */
+    padding: 7px 15px;
+    border-radius: 10px;
+}
+
+.btn-sign-in {
+    background-color: #fff;
+    color: black;
+}
+
+.btn-register {
+    background-color: #1E1E1E;
+
+}
