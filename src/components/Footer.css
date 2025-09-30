@@ -1,1 +1,16 @@
-/*navbar*/
+
+footer {
+    background: linear-gradient(to right, #014C5C, #016473, #1A642F);
+    display: flex;
+    justify-content: space-around; /*por ahora*/
+    gap: 70px;
+    padding: 40px 0;
+}
+
+.astronomy-box-footer > ul li, .botany-box-footer > ul li  {
+    list-style: none;
+}
+
+.title-footer {
+    margin-bottom: 20px;
+}
