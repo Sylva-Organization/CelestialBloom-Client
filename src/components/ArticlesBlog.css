@@ -1,0 +1,18 @@
+
+.articles-section {
+    width: 900px;
+    margin-bottom: 10%;
+}
+
+.articles-container {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.box-article h2{
+    margin: 15% 0; 
+    color: black;
+    font-weight: 500;
+    font-size: 25px;
+}

@@ -5,35 +5,35 @@ const Creators = () => {
     const creators = [
         {
             id: 1,
-            name: "María González",
-            description: "Especialista en astronomía observacional con más de 10 años de experiencia. Apasionada por compartir el conocimiento del cosmos.",
+            name: "Mariany Araujo",
+            description: ".",
             image: "/api/placeholder/300/200",
-            category: "Astronomía",
-            specialty: "Observación"
+            category: ".",
+            specialty: "."
         },
         {
             id: 2,
-            name: "Ana Martínez", 
-            description: "Botánica especializada en plantas medicinales y ecosistemas tropicales. Defensora de la conservación ambiental.",
+            name: "Gabriela Hernández", 
+            description: ".",
             image: "/api/placeholder/300/200",
-            category: "Botánica",
-            specialty: "Plantas Medicinales"
+            category: ".",
+            specialty: "."
         },
         {
             id: 3,
-            name: "Carmen López",
-            description: "Astrofísica teórica enfocada en el estudio de agujeros negros y relatividad general. Divulgadora científica activa.",
+            name: "Guissella Pérez",
+            description: ".",
             image: "/api/placeholder/300/200",
-            category: "Astrofísica",
-            specialty: "Teoría"
+            category: ".",
+            specialty: "."
         },
         {
             id: 4,
-            name: "Laura Rodríguez",
-            description: "Investigadora en ecología vegetal y cambio climático. Especialista en adaptación de plantas a condiciones extremas.",
+            name: "Priscelis Codrington",
+            description: ".",
             image: "/api/placeholder/300/200",
-            category: "Ecología",
-            specialty: "Cambio Climático"
+            category: ".",
+            specialty: "."
         }
     ];
 
