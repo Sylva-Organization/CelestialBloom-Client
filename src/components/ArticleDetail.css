@@ -1,1 +1,30 @@
-/*article detail*/
+
+
+.article-detail-container {
+    width: 950px;
+}
+
+.card-detail {
+    margin: 10% 2%;
+    color: black;
+}
+
+.title-detail {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.card-detail img {
+    width: 100%;
+    height: 400px;
+}
+
+.card-description-detail {
+    margin: 7% 0 2% 0;
+}
+
+.btn-back {
+    font-size: 20px;
+}
