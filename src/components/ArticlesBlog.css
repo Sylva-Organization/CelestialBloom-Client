@@ -1,1 +1,23 @@
-/*articles blog*/
+
+.articles-section {
+    width: 900px;
+    /* background-color: red; */
+
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    margin-bottom: 10%;
+}
+
+.articles-container {
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.box-article h2{
+    margin-bottom: 15%; 
+    color: black;
+    font-weight: 500;
+    font-size: 25px;
+}
