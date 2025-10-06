@@ -8,7 +8,7 @@
 .hero-section {
     text-align: center;
     padding: 4rem 2rem;
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+    background: #005262;
     color: white;
     margin-bottom: 3rem;
 }
@@ -122,30 +122,52 @@
     font-size: 0.95rem;
 }
 
+.creator-buttons {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
 .creator-btn {
-    background: #24292e;
-    color: white;
     border: none;
     padding: 0.75rem 1.5rem;
     border-radius: 8px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 100%;
+    flex: 1;
+    min-width: 120px;
     font-size: 0.95rem;
     text-decoration: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    color: white;
 }
 
 .creator-btn:hover {
-    background: #1a1e23;
     transform: translateY(-1px);
 }
 
-.github-btn svg {
+.github-btn {
+    background: #24292e;
+}
+
+.github-btn:hover {
+    background: #1a1e23;
+}
+
+.linkedin-btn {
+    background: #0077b5;
+}
+
+.linkedin-btn:hover {
+    background: #005885;
+}
+
+.github-btn svg,
+.linkedin-btn svg {
     flex-shrink: 0;
 }
 
