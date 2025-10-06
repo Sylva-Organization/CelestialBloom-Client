@@ -1,6 +1,50 @@
 import './Creators.css'
+import { useState, useEffect } from 'react'
 
 const Creators = () => {
+    const [selectedImage, setSelectedImage] = useState(null)
+    const [currentImageIndex, setCurrentImageIndex] = useState(0)
+    
+    const openImageModal = (imageData, index) => {
+        setSelectedImage(imageData)
+        setCurrentImageIndex(index)
+    }
+    
+    const navigateImage = (direction) => {
+        let newIndex = currentImageIndex + direction
+        if (newIndex < 0) newIndex = creators.length - 1
+        if (newIndex >= creators.length) newIndex = 0
+        
+        setCurrentImageIndex(newIndex)
+        setSelectedImage({
+            src: creators[newIndex].image,
+            name: creators[newIndex].name
+        })
+    }
+    
+    // Navegación con teclado
+    useEffect(() => {
+        const handleKeyPress = (e) => {
+            if (!selectedImage) return
+            
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault()
+                navigateImage(-1)
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault()
+                navigateImage(1)
+            } else if (e.key === 'Escape') {
+                e.preventDefault()
+                setSelectedImage(null)
+            }
+        }
+        
+        if (selectedImage) {
+            document.addEventListener('keydown', handleKeyPress)
+            return () => document.removeEventListener('keydown', handleKeyPress)
+        }
+    }, [selectedImage, currentImageIndex])
+    
     // Datos de ejemplo de creadoras
     const creators = [
         {
@@ -63,9 +107,9 @@ const Creators = () => {
             </div>
             
             <div className="creators-grid">
-                {creators.map((creator) => (
+                {creators.map((creator, index) => (
                     <div key={creator.id} className="creator-card">
-                        <div className="creator-image">
+                        <div className="creator-image" onClick={() => openImageModal({src: creator.image, name: creator.name}, index)}>
                             <img src={creator.image} alt={creator.name} />
                         </div>
                         <div className="creator-content">
@@ -102,6 +146,39 @@ const Creators = () => {
                     </div>
                 ))}
             </div>
+            
+            {/* Modal para ampliar imagen */}
+            {selectedImage && (
+                <div className="image-modal" onClick={() => setSelectedImage(null)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="modal-close" onClick={() => setSelectedImage(null)}>
+                            ×
+                        </button>
+                        
+                        {/* Flecha izquierda */}
+                        <button className="modal-nav modal-nav-left" onClick={() => navigateImage(-1)}>
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                            </svg>
+                        </button>
+                        
+                        {/* Flecha derecha */}
+                        <button className="modal-nav modal-nav-right" onClick={() => navigateImage(1)}>
+                            <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                            </svg>
+                        </button>
+                        
+                        <img src={selectedImage.src} alt={selectedImage.name} />
+                        <p className="modal-caption">{selectedImage.name}</p>
+                        
+                        {/* Indicador de posición */}
+                        <div className="modal-indicator">
+                            {currentImageIndex + 1} de {creators.length}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
