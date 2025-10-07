@@ -1,23 +1,47 @@
-import ArticleDetail from './ArticleDetail'
+import { useEffect, useState } from 'react';
 import './ArticlesFront.css'
 import { Link } from 'react-router-dom';
+import { getAllArticles } from '../services/ArticlesServices';
 
 const ArticlesFront = () => {
+
+    const [posts, setPosts] = useState([])
+    const [loading, setLoading] = useState(true)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await getAllArticles()
+                setPosts(data)
+            } catch (error) {
+                console.error('Error al cargar artículos: ', error);
+            } finally {
+                setLoading(false)
+            }
+        }
+        fetchData()
+    }, [])
+
+    const categoryStyles = {
+        "botánica": "category-botany",
+        "astronomía": "category-astronomy"
+    };
+
     return (
         <>
             <article className="articles">
-                <div className='card-container'>
-                    <img src="../src/assets/parallax-photo.jpg" alt="parallax-photo" />
-                    <div className="card-body">
-                        <h3 className='card-title'>Title</h3>
-                        <p className='card-paragraph'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.
-                        </p>
-                        {/* <Link to={`/articulo-detalle/${butterfly.id}`}></Link> */}
-                        <Link to="/articulo-detalle/:id" className='read-more'>Leer más</Link>
+                {posts.map((post) => (
+                    <div key={post.id} className='card-container'>
+                        <img src={post.image} alt="foto-post" />
+                        <div className="card-body">
+                            <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                            <h3 className='card-title'>{post.title}</h3>
+                            <p className='card-content'>{post.content}</p>
+                            <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                        </div>
                     </div>
-                </div>
+                ))}
             </article>
-
         </>
     )
 }
