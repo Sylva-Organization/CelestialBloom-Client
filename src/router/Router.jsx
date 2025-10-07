@@ -6,8 +6,8 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
-import ArticlesBlog from "../components/ArticlesBlog";
 import ArticleDetail from "../components/ArticleDetail";
+import ArticlesList from "../components/ArticlesList";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -19,7 +19,7 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/articulos",
-            element: <ArticlesBlog/>
+            element: <ArticlesList/>
         },
         {
             path: "/articulo-detalle/:id",
