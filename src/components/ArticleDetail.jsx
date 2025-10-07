@@ -15,7 +15,7 @@ const ArticleDetail = () => {
                 const data = await getOneArticle(id)
                 setPost(data)
             } catch (error) {
-                onsole.error('Error cargando el artículo: ', error)
+                console.error('Error cargando el artículo: ', error)
             } finally {
                 setLoading(false)
             }
@@ -39,6 +39,7 @@ const ArticleDetail = () => {
                     <img src={post.image} alt="image-article" />
                     <div className="card-body-detail">
                         <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                        <span className="post-subcategory">{post.categories.subcategories.name}</span>
                         <p className="card-description-detail">{post.content}</p>
                         <Link to="/" className='read-more btn-back'>Volver</Link>
                     </div>

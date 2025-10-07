@@ -27,6 +27,19 @@
     color: white;
 }
 
+.post-subcategory {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    background-color: #c5c5c5;
+    margin-left: 5px;
+}
+
 .category-botany {
     background: linear-gradient(to right, #2e7d32, #66bb6a);
 }
