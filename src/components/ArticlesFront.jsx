@@ -3,7 +3,7 @@ import './ArticlesFront.css'
 import { Link } from 'react-router-dom';
 import { getAllArticles } from '../services/ArticlesServices';
 
-const ArticlesFront = () => {
+const ArticlesFront = ({ categoryFilter }) => {
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -27,10 +27,15 @@ const ArticlesFront = () => {
         "astronomía": "category-astronomy"
     };
 
+    const filteredPosts = categoryFilter
+     ? posts.filter(
+        (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
+    ) : posts
+
     return (
         <>
             <article className="articles">
-                {posts.map((post) => (
+                {filteredPosts.map((post) => (
                     <div key={post.id} className='card-container'>
                         <img src={post.image} alt="foto-post" />
                         <div className="card-body">
