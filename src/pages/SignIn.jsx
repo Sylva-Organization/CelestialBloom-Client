@@ -1,5 +1,6 @@
 import './SignIn.css'
 import { useState } from 'react'
+import Swal from 'sweetalert2'
 
 const SignIn = () => {
     const [formData, setFormData] = useState({
@@ -7,6 +8,37 @@ const SignIn = () => {
         password: ''
     })
     const [rememberMe, setRememberMe] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+    const [errors, setErrors] = useState({})
+    const [showPassword, setShowPassword] = useState(false)
+
+    const validateField = (name, value) => {
+        let error = ''
+        
+        switch (name) {
+            case 'email':
+                if (!value) {
+                    error = 'El correo electrónico es requerido'
+                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    error = 'Ingresa un correo electrónico válido'
+                }
+                break
+            case 'password':
+                if (!value) {
+                    error = 'La contraseña es requerida'
+                } else if (value.length < 6) {
+                    error = 'La contraseña debe tener al menos 6 caracteres'
+                }
+                break
+        }
+        
+        setErrors(prev => ({
+            ...prev,
+            [name]: error
+        }))
+        
+        return !error
+    }
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -14,12 +46,76 @@ const SignIn = () => {
             ...prev,
             [name]: value
         }))
+        
+        // Validar en tiempo real solo si el campo ya tiene un error
+        if (errors[name]) {
+            validateField(name, value)
+        }
     }
 
-    const handleSubmit = (e) => {
+    const handleBlur = (e) => {
+        const { name, value } = e.target
+        validateField(name, value)
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log('Login data:', { ...formData, rememberMe })
-        // Aquí iría la lógica de autenticación
+        
+        // Validar todos los campos
+        const isEmailValid = validateField('email', formData.email)
+        const isPasswordValid = validateField('password', formData.password)
+        
+        if (!isEmailValid || !isPasswordValid) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos incorrectos',
+                text: 'Por favor, corrige los errores en el formulario',
+                confirmButtonColor: '#005262'
+            })
+            return
+        }
+
+        setIsLoading(true)
+
+        try {
+            // Simular llamada a API (reemplazar con tu lógica real)
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            
+            // Aquí iría tu lógica de autenticación real
+            console.log('Login data:', { ...formData, rememberMe })
+            
+            // Simular diferentes respuestas
+            const isValidUser = formData.email === 'admin@celestialbloom.com' && formData.password === '123456'
+            
+            if (isValidUser) {
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Bienvenido!',
+                    text: 'Has iniciado sesión correctamente',
+                    confirmButtonColor: '#005262',
+                    timer: 2000,
+                    showConfirmButton: false
+                })
+                // Redireccionar o actualizar estado de autenticación
+                console.log('Usuario autenticado exitosamente')
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Credenciales incorrectas',
+                    text: 'El correo electrónico o la contraseña son incorrectos',
+                    confirmButtonColor: '#005262'
+                })
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo conectar con el servidor. Inténtalo de nuevo.',
+                confirmButtonColor: '#005262'
+            })
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
@@ -30,7 +126,7 @@ const SignIn = () => {
                     <p>¿No tienes una cuenta? <a href="#" className="register-link">Crear una cuenta</a></p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="login-form">
+                <form onSubmit={handleSubmit} className="login-form" noValidate>
                     <div className="form-group">
                         <label htmlFor="email">Correo electrónico</label>
                         <input
@@ -39,22 +135,51 @@ const SignIn = () => {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            onBlur={handleBlur}
                             required
                             placeholder="Ingresa tu correo electrónico"
+                            aria-describedby={errors.email ? "email-error" : undefined}
+                            aria-invalid={!!errors.email}
+                            autoComplete="email"
                         />
+                        {errors.email && (
+                            <span id="email-error" className="field-error" role="alert">
+                                {errors.email}
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="password">Contraseña</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                            placeholder="Ingresa tu contraseña"
-                        />
+                        <div className="password-input-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleInputChange}
+                                onBlur={handleBlur}
+                                required
+                                placeholder="Ingresa tu contraseña"
+                                aria-describedby={errors.password ? "password-error" : undefined}
+                                aria-invalid={!!errors.password}
+                                autoComplete="current-password"
+                                minLength="6"
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                {showPassword ? "🙈" : "👁️"}
+                            </button>
+                        </div>
+                        {errors.password && (
+                            <span id="password-error" className="field-error" role="alert">
+                                {errors.password}
+                            </span>
+                        )}
                     </div>
 
                     <div className="form-options">
@@ -70,9 +195,17 @@ const SignIn = () => {
                         <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
                     </div>
 
-                    <button type="submit" className="login-button">
-                        Iniciar sesión
+                    <button 
+                        type="submit" 
+                        className={`login-button ${isLoading ? 'loading' : ''}`}
+                        disabled={isLoading}
+                        aria-describedby="login-button-help"
+                    >
+                        {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </button>
+                    <div id="login-button-help" className="sr-only">
+                        Presiona Enter o haz clic para iniciar sesión con tus credenciales
+                    </div>
                 </form>
             </div>
         </div>
