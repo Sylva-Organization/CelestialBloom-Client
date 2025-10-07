@@ -1,4 +1,4 @@
-import ArticlesBlog from '../components/ArticlesBlog'
+import ArticlesList from '../components/ArticlesList'
 import Parallax from '../components/Parallax'
 import './Home.css'
 
@@ -6,7 +6,7 @@ const Home = () => {
     return (
         <>
             <Parallax></Parallax>
-            <ArticlesBlog></ArticlesBlog>
+            <ArticlesList></ArticlesList>
         </>
     )
 }

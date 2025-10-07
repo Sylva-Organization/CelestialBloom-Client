@@ -1,1 +1,13 @@
-/*botánica*/
+
+.botany-section{
+    width: 900px;
+    margin: 2% 0 5% 0;
+}
+
+.title-botany {
+    text-align: center;
+    font-size: 40px;
+    font-weight: 500;
+    padding: 5% 0;
+    color: black;
+}
