@@ -1,0 +1,55 @@
+.articles-section {
+    width: 900px;
+    margin-bottom: 10%;
+}
+
+.articles-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.box-article {
+
+}
+
+.box-article h2 {
+    margin: 3% 0 5% 0;
+    color: black;
+    font-weight: 500;
+    font-size: 25px;
+    text-align: center;
+}
+
+/*Filter tabs*/
+.filter-tabs { 
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.tab-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.tab-btn {
+    padding: 1rem 2rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    /* position: relative; */
+    color: black;
+    text-decoration: none;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+    background: linear-gradient(45deg, #2d5a3d, #4a90e2);
+    color: white;
+    transform: translateY(-2px);
+}
