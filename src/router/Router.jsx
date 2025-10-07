@@ -42,7 +42,7 @@ const routerBlog = createBrowserRouter([{
             element: <SignIn/>
         },
         {
-            path: "/registrarse",
+            path: "/registro",
             element: <Register/>
         },
     ]

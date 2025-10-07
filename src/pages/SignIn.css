@@ -37,13 +37,24 @@
 
 .register-link {
     color: #2563eb;
-    text-decoration: none;
+    background: none;
+    border: none;
     font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
+    font-size: inherit;
 }
 
 .register-link:hover {
     color: #1d4ed8;
     text-decoration: underline;
+}
+
+.register-link:focus-visible {
+    outline: 2px solid #005262;
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 .login-form {
@@ -111,14 +122,24 @@
 
 .forgot-password {
     color: #2563eb;
-    text-decoration: none;
+    background: none;
+    border: none;
     font-size: 0.9rem;
     font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: none;
 }
 
 .forgot-password:hover {
     color: #1d4ed8;
     text-decoration: underline;
+}
+
+.forgot-password:focus-visible {
+    outline: 2px solid #005262;
+    outline-offset: 2px;
+    border-radius: 2px;
 }
 
 .login-button {

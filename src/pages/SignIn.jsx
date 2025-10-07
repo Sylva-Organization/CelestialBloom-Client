@@ -1,8 +1,10 @@
 import './SignIn.css'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const SignIn = () => {
+    const navigate = useNavigate()
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -118,12 +120,75 @@ const SignIn = () => {
         }
     }
 
+    const handleRegisterClick = (e) => {
+        e.preventDefault()
+        navigate('/registro')
+    }
+
+    const handleForgotPassword = (e) => {
+        e.preventDefault()
+        Swal.fire({
+            title: 'Recuperar Contraseña',
+            html: `
+                <p style="margin-bottom: 1rem; color: #374151;">Ingresa tu email para recuperar tu contraseña:</p>
+                <input 
+                    type="email" 
+                    id="recovery-email" 
+                    placeholder="tu-email@ejemplo.com"
+                    style="
+                        width: 100%; 
+                        padding: 0.75rem; 
+                        margin: 1rem 0; 
+                        border: 1px solid #d1d5db; 
+                        border-radius: 8px;
+                        font-size: 1rem;
+                        box-sizing: border-box;
+                        background: #f9fafb;
+                    "
+                />
+            `,
+            showCancelButton: true,
+            confirmButtonColor: '#005262',
+            cancelButtonColor: '#6b7280',
+            confirmButtonText: 'Enviar enlace',
+            cancelButtonText: 'Cancelar',
+            focusConfirm: false,
+            preConfirm: () => {
+                const email = document.getElementById('recovery-email').value
+                if (!email) {
+                    Swal.showValidationMessage('Por favor ingresa tu email')
+                    return false
+                }
+                if (!/\S+@\S+\.\S+/.test(email)) {
+                    Swal.showValidationMessage('Por favor ingresa un email válido')
+                    return false
+                }
+                return email
+            }
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                // TODO: Aquí irá la llamada al backend para enviar el email de recuperación
+                console.log('Enviar email de recuperación a:', result.value)
+                
+                // Simular envío exitoso
+                await Swal.fire({
+                    title: '¡Email Enviado!',
+                    text: `Se ha enviado un enlace de recuperación a ${result.value}`,
+                    icon: 'success',
+                    confirmButtonColor: '#005262',
+                    timer: 3000,
+                    showConfirmButton: false
+                })
+            }
+        })
+    }
+
     return (
         <div className="login-container">
             <div className="login-card">
                 <div className="login-header">
                     <h2>Acceder a tu cuenta</h2>
-                    <p>¿No tienes una cuenta? <a href="#" className="register-link">Crear una cuenta</a></p>
+                    <p>¿No tienes una cuenta? <button onClick={handleRegisterClick} className="register-link">Crear una cuenta</button></p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="login-form" noValidate>
@@ -192,7 +257,7 @@ const SignIn = () => {
                             />
                             <label htmlFor="remember">Recordar contraseña</label>
                         </div>
-                        <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+                        <button onClick={handleForgotPassword} className="forgot-password">¿Olvidaste tu contraseña?</button>
                     </div>
 
                     <button 
