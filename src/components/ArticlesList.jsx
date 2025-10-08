@@ -9,8 +9,8 @@ const ArticlesList = ({ users }) => {
                 <div className="container-tab">
                     <div className="tab-buttons">
                         <Link to="/" className='tab-btn active' data-filter="todos">Todos los Posts</Link>
-                        <Link to="/astronomia" className='tab-btn' data-filter="astronomia">⭐ Astronomía</Link>
-                        <Link to="/botanica" className='tab-btn' data-filter="botanica">🌿 Botánica</Link>
+                        <Link to="/astronomia" className='tab-btn' data-filter="astronomia">Astronomía</Link>
+                        <Link to="/botanica" className='tab-btn' data-filter="botanica">Botánica</Link>
                     </div>
                 </div>
             </section>
