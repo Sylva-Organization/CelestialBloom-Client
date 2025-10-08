@@ -122,7 +122,7 @@ const SignIn = () => {
 
     const handleRegisterClick = (e) => {
         e.preventDefault()
-        navigate('/registro')
+        navigate('/registro', { state: { fromSignIn: true } })
     }
 
     const handleForgotPassword = (e) => {
