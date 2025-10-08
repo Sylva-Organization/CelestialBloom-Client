@@ -1,14 +1,10 @@
 import './Register.css'
 import { useState } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 const Register = () => {
     const navigate = useNavigate()
-    const location = useLocation()
-    
-    // Verificar si viene desde Sign In (con state) o desde navbar (sin state)
-    const showForm = location.state?.fromSignIn === true
     
     const [formData, setFormData] = useState({
         firstName: '',
@@ -175,16 +171,6 @@ const Register = () => {
         navigate('/inicio-sesion')
     }
 
-    // Si no viene desde Sign In, mostrar página vacía
-    if (!showForm) {
-        return (
-            <div>
-                {/* Página vacía - acceso desde navbar */}
-            </div>
-        )
-    }
-
-    // Si viene desde Sign In, mostrar formulario completo
     return (
         <div className="register-container">
             <div className="register-card">
