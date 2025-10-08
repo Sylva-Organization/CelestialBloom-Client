@@ -6,6 +6,8 @@
     justify-content: center;
     background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7));
     padding: 2rem;
+    position: relative;
+    z-index: 1;
 }
 
 .register-card {
