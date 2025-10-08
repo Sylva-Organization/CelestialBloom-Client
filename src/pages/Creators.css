@@ -1,8 +1,21 @@
 /* Creators Page Styles */
+
+/* Asegurar que no hay espacios en blanco */
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .creators-container {
     min-height: 100vh;
+    width: 100vw;
     padding: 2rem 0;
     background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7));
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    box-sizing: border-box;
 }
 
 .hero-section {
