@@ -328,3 +328,50 @@ body, html {
         font-size: 1rem;
     }
 }
+
+/* Estilos personalizados para SweetAlert2 de bienvenida */
+.welcome-popup {
+    border-radius: 20px !important;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15) !important;
+}
+
+.welcome-button {
+    background: linear-gradient(135deg, #005262, #47b89d) !important;
+    border: none !important;
+    border-radius: 25px !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 15px rgba(0, 82, 98, 0.3) !important;
+}
+
+.welcome-button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 25px rgba(0, 82, 98, 0.4) !important;
+}
+
+/* Animaciones para la bienvenida */
+@keyframes welcomeFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.welcome-popup .swal2-icon.swal2-success {
+    animation: welcomeFloat 2s ease-in-out infinite !important;
+}
+
+/* Responsive para el modal de bienvenida */
+@media (max-width: 640px) {
+    .welcome-popup {
+        width: 95% !important;
+        margin: 0 !important;
+        padding: 1rem !important;
+    }
+    
+    .welcome-button {
+        padding: 0.625rem 1.5rem !important;
+        font-size: 0.9rem !important;
+    }
+}

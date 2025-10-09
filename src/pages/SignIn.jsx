@@ -87,11 +87,27 @@ const SignIn = () => {
             if (formData.email === 'admin@ejemplo.com' && formData.password === 'admin123') {
                 await Swal.fire({
                     icon: 'success',
-                    title: '¡Bienvenido!',
-                    text: 'Has iniciado sesión exitosamente',
+                    title: '¡Bienvenido de vuelta! 🌟',
+                    html: `
+                        <div style="text-align: center; padding: 0.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
+                            <p style="font-size: 1rem; color: #374151; margin-bottom: 0.5rem;">
+                                <strong>¡Has iniciado sesión exitosamente!</strong>
+                            </p>
+                            <p style="color: #6b7280; font-size: 0.9rem;">
+                                Explora el cosmos y la naturaleza con nosotros
+                            </p>
+                        </div>
+                    `,
+                    confirmButtonText: 'Comenzar',
                     confirmButtonColor: '#005262',
-                    timer: 2000,
-                    showConfirmButton: false
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    width: '400px',
+                    padding: '1.5rem'
                 })
                 // Redireccionar o actualizar estado de autenticación
                 console.log('Usuario autenticado exitosamente')

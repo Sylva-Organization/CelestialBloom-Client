@@ -144,11 +144,50 @@ const Register = () => {
             
             await Swal.fire({
                 icon: 'success',
-                title: '¡Cuenta creada exitosamente!',
-                text: 'Tu cuenta ha sido registrada. Ahora puedes iniciar sesión.',
+                title: `¡Bienvenid@ a CelestialBloom, ${formData.firstName}! 🌟`,
+                html: `
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀✨</div>
+                        <p style="font-size: 1.1rem; color: #374151; margin-bottom: 1rem; line-height: 1.6;">
+                            <strong>¡Tu cuenta ha sido creada exitosamente!</strong>
+                        </p>
+                        <p style="color: #6b7280; margin-bottom: 1.5rem; line-height: 1.5;">
+                            Ahora formas parte de nuestra comunidad de exploradores del cosmos y la naturaleza.
+                        </p>
+                        <div style="
+                            background: linear-gradient(135deg, #47b89d, #7ea83c);
+                            color: white;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 25px;
+                            display: inline-block;
+                            font-weight: 500;
+                            margin-bottom: 1rem;
+                            box-shadow: 0 4px 12px rgba(71, 184, 157, 0.3);
+                        ">
+                            Usuario: @${formData.username}
+                        </div>
+                        <p style="color: #374151; font-size: 0.9rem;">
+                            Serás redirigido al inicio de sesión en unos segundos...
+                        </p>
+                    </div>
+                `,
+                confirmButtonText: 'Ir al Login',
                 confirmButtonColor: '#005262',
-                timer: 3000,
-                showConfirmButton: false
+                timer: 8000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInUp animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutDown animate__faster'
+                },
+                customClass: {
+                    popup: 'welcome-popup',
+                    confirmButton: 'welcome-button'
+                },
+                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+                width: '500px',
+                padding: '2rem'
             })
             
             // Redireccionar a login después del registro exitoso
