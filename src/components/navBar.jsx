@@ -26,7 +26,7 @@ const Navbar = () => {
                     <Link to="/inicio-sesion" className="nav-link btn btn-sign-in">Sign in</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/registrarse" className="nav-link btn btn-register">Register</Link>
+                    <Link to="/register" className="nav-link btn btn-register">Register</Link>
                 </li>
             </ul>
         </nav>
