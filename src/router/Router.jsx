@@ -6,6 +6,7 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
+import ProtectedRoute from "../components/ProtectedRoute";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
 
@@ -27,15 +28,15 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/astronomia",
-            element: <Astronomy/>
+            element: <ProtectedRoute><Astronomy/></ProtectedRoute>
         },
         {
             path: "/botanica",
-            element: <Botany/>
+            element: <ProtectedRoute><Botany/></ProtectedRoute>
         },
         {
             path: "/creadoras",
-            element: <Creators/>
+            element: <ProtectedRoute><Creators/></ProtectedRoute>
         },
         {
             path: "/inicio-sesion",
