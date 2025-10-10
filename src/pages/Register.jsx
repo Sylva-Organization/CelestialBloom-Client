@@ -1,10 +1,12 @@
 import './Register.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import Swal from 'sweetalert2'
 
 const Register = () => {
     const navigate = useNavigate()
+    const { register } = useAuth()
     
     const [formData, setFormData] = useState({
         firstName: '',
@@ -134,13 +136,18 @@ const Register = () => {
             // Simular llamada a API
             await new Promise(resolve => setTimeout(resolve, 2000))
             
-            console.log('Register data:', {
+            // Datos del usuario registrado
+            const userData = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 email: formData.email,
-                username: formData.username,
-                password: formData.password
-            })
+                username: formData.username
+            }
+            
+            console.log('Register data:', userData)
+            
+            // Registrar y loguear automáticamente al usuario
+            register(userData)
             
             await Swal.fire({
                 icon: 'success',
@@ -167,13 +174,13 @@ const Register = () => {
                             Usuario: @${formData.username}
                         </div>
                         <p style="color: #374151; font-size: 0.9rem;">
-                            Serás redirigido al inicio de sesión en unos segundos...
+                            ¡Has iniciado sesión automáticamente! Serás redirigido al inicio...
                         </p>
                     </div>
                 `,
-                confirmButtonText: 'Ir al Login',
+                confirmButtonText: 'Explorar CelestialBloom',
                 confirmButtonColor: '#005262',
-                timer: 8000,
+                timer: 6000,
                 timerProgressBar: true,
                 showClass: {
                     popup: 'animate__animated animate__fadeInUp animate__faster'
@@ -190,8 +197,8 @@ const Register = () => {
                 padding: '2rem'
             })
             
-            // Redireccionar a login después del registro exitoso
-            navigate('/inicio-sesion')
+            // Redireccionar al inicio después del registro exitoso
+            navigate('/')
             
         } catch (error) {
             Swal.fire({

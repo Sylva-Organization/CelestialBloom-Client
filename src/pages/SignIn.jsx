@@ -1,10 +1,12 @@
 import './SignIn.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import Swal from 'sweetalert2'
 
 const SignIn = () => {
     const navigate = useNavigate()
+    const { login } = useAuth()
     
     const [formData, setFormData] = useState({
         email: '',
@@ -85,6 +87,17 @@ const SignIn = () => {
             
             // Simular validación básica (para demo)
             if (formData.email === 'admin@ejemplo.com' && formData.password === 'admin123') {
+                // Datos simulados del usuario
+                const userData = {
+                    email: formData.email,
+                    firstName: 'Administrador',
+                    lastName: 'Sistema',
+                    username: 'admin'
+                }
+
+                // Iniciar sesión usando el contexto
+                login(userData)
+
                 await Swal.fire({
                     icon: 'success',
                     title: '¡Bienvenido de vuelta! 🌟',
@@ -109,8 +122,9 @@ const SignIn = () => {
                     width: '400px',
                     padding: '1.5rem'
                 })
-                // Redireccionar o actualizar estado de autenticación
-                console.log('Usuario autenticado exitosamente')
+                
+                // Redireccionar a la página principal
+                navigate('/')
             } else {
                 Swal.fire({
                     icon: 'error',

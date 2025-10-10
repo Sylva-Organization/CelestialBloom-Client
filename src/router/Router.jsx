@@ -6,7 +6,7 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
-import RegisterTest from "../pages/RegisterTest";
+import AuthRedirect from "../components/AuthRedirect";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
 
@@ -40,15 +40,15 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/inicio-sesion",
-            element: <SignIn/>
+            element: <AuthRedirect><SignIn/></AuthRedirect>
         },
         {
             path: "/registro",
-            element: <RegisterTest/>
+            element: <AuthRedirect><Register/></AuthRedirect>
         },
         {
             path: "/register",
-            element: <Register/>
+            element: <AuthRedirect><Register/></AuthRedirect>
         },
     ]
 }])

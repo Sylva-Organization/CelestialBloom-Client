@@ -1,7 +1,10 @@
 import './Navbar.css'
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
+    const { user, isAuthenticated } = useAuth();
+
     return(
         <nav id='top'>
             <Link to="/" className="nav-title"><img src="/logo.PNG" className='logo-img' alt="logo" /></Link>
@@ -22,12 +25,27 @@ const Navbar = () => {
                 <li className="menu-item">
                     <Link to="/creadoras" className="nav-link">Creadoras</Link>
                 </li>
-                <li className="menu-item">
-                    <Link to="/inicio-sesion" className="nav-link btn btn-sign-in">Sign in</Link>
-                </li>
-                <li className="menu-item">
-                    <Link to="/register" className="nav-link btn btn-register">Register</Link>
-                </li>
+                
+                {/* Mostrar botones de autenticación solo si NO está autenticado */}
+                {!isAuthenticated && (
+                    <>
+                        <li className="menu-item">
+                            <Link to="/inicio-sesion" className="nav-link btn btn-sign-in">Sign in</Link>
+                        </li>
+                        <li className="menu-item">
+                            <Link to="/register" className="nav-link btn btn-register">Register</Link>
+                        </li>
+                    </>
+                )}
+                
+                {/* Mostrar saludo cuando está autenticado, pero sin botón de logout por ahora */}
+                {isAuthenticated && (
+                    <li className="menu-item user-info">
+                        <span className="nav-link user-welcome">
+                            ¡Hola, {user?.firstName || user?.username || 'Usuario'}! 👋
+                        </span>
+                    </li>
+                )}
             </ul>
         </nav>
     )
