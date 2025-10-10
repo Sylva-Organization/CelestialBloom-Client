@@ -138,7 +138,7 @@ const EditForm = () => {
                         {/* Form Actions - Buttons Delete/Create  */}
                         <div className="form-actions">
                             <button type='button' className="btn btn-secondary" onClick={() => window.history.back()}>Cancelar</button>
-                            <button type='submit' className="btn btn-primary">Publicar Artículo</button>
+                            <button type='submit' className="btn btn-primary">Editar Artículo</button>
                         </div>
                     </form>
                 </div>
