@@ -9,6 +9,7 @@
     width: 370px;
     height: 500px;
     margin-bottom: 10%;
+    /* background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7)); */
 }
 
 .card-container img {
