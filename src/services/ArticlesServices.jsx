@@ -1,5 +1,6 @@
 
 const URL_API = "http://localhost:3000/posts"
+// const URL_API = "http://localhost:3000/users"
 
 //GET METHOD
 export async function getAllArticles() {
