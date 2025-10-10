@@ -8,6 +8,7 @@ import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
+import Perfil from "../pages/Perfil";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -45,6 +46,10 @@ const routerBlog = createBrowserRouter([{
             path: "/registrarse",
             element: <Register/>
         },
+        {
+            path: "/perfil",
+            element: <Perfil></Perfil>
+        }
     ]
 }])
 
