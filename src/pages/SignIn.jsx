@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuthActions } from '../hooks/useAuthActions'
 import { formValidation, mockData, utils } from '../utils'
 import './SignIn.css'
 
@@ -10,9 +10,11 @@ const SignIn = () => {
         password: ''
     })
     const [errors, setErrors] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
+    const [showPassword, setShowPassword] = useState(false)
+    const [rememberMe, setRememberMe] = useState(false)
     
-    const { login } = useAuth()
+    // � Usar hook personalizado para autenticación
+    const { handleLogin, isLoading, setLoading } = useAuthActions()
     const navigate = useNavigate()
 
     // Log de inicialización del componente
@@ -53,44 +55,57 @@ const SignIn = () => {
             return
         }
 
-        setIsLoading(true)
+        setLoading(true)
         utils.devLog('Iniciando proceso de login...', 'info')
 
         try {
             // Simular delay de red
-            await new Promise(resolve => setTimeout(resolve, 1000))
+            await new Promise(resolve => setTimeout(resolve, 1500))
             
             // Usar mock data para simular login
             const mockResponse = mockData.mockLoginSuccess(formData.email)
             
             if (mockResponse.success) {
                 utils.devLog('Login exitoso con mock data', 'success')
-                login(mockResponse.user)
-                navigate('/')
+                
+                // 🔑 Simular token JWT
+                const mockToken = `jwt.token.${Date.now()}.${Math.random().toString(36).substr(2, 9)}`
+                
+                // 🎉 Usar hook mejorado para login
+                await handleLogin(mockResponse.user, mockToken, '/')
             }
         } catch (error) {
             utils.devLog('Error en login simulado', 'error')
             setErrors({ general: 'Error al iniciar sesión. Intenta nuevamente.' })
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Error de conexión',
+                text: 'No se pudo iniciar sesión. Intenta nuevamente.',
+                confirmButtonColor: '#005262'
+            })
         } finally {
-            setIsLoading(false)
+            setLoading(false)
         }
     }
 
     return (
-        <div className="signin-container">
-            <div className="signin-card">
-                <h2>Iniciar Sesión</h2>
-                <p className="signin-subtitle">Accede a tu cuenta de CelestialBloom</p>
-                
-                <form onSubmit={handleSubmit} className="signin-form">
+        <div className="login-container">
+            <div className="login-card">
+                <div className="login-header">
+                    <h2>Iniciar Sesión</h2>
+                    <p>¿No tienes una cuenta? <button onClick={() => navigate('/registro')} className="register-link">Crear cuenta</button></p>
+                </div>
+
+                <form onSubmit={handleSubmit} className="login-form" noValidate>
                     {errors.general && (
-                        <div className="error-message general-error">
+                        <div className="field-error" style={{ marginBottom: '1rem' }}>
                             {errors.general}
                         </div>
                     )}
                     
                     <div className="form-group">
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email">Correo electrónico</label>
                         <input
                             type="email"
                             id="email"
@@ -98,47 +113,63 @@ const SignIn = () => {
                             value={formData.email}
                             onChange={handleChange}
                             className={errors.email ? 'error' : ''}
-                            placeholder="tu@email.com"
+                            placeholder="tu-email@ejemplo.com"
                             required
                         />
                         {errors.email && (
-                            <span className="error-message">{errors.email}</span>
+                            <span className="field-error">{errors.email}</span>
                         )}
                     </div>
                     
                     <div className="form-group">
                         <label htmlFor="password">Contraseña</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            className={errors.password ? 'error' : ''}
-                            placeholder="Tu contraseña"
-                            required
-                        />
+                        <div className="password-input-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
+                                className={errors.password ? 'error' : ''}
+                                placeholder="Tu contraseña"
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
+                            >
+                                {showPassword ? "🙈" : "👁️"}
+                            </button>
+                        </div>
                         {errors.password && (
-                            <span className="error-message">{errors.password}</span>
+                            <span className="field-error">{errors.password}</span>
                         )}
+                    </div>
+
+                    <div className="form-options">
+                        <div className="remember-section">
+                            <input
+                                type="checkbox"
+                                id="remember"
+                                name="remember"
+                                checked={rememberMe}
+                                onChange={(e) => setRememberMe(e.target.checked)}
+                            />
+                            <label htmlFor="remember">Recordarme</label>
+                        </div>
+                        <button type="button" className="forgot-password">¿Olvidaste tu contraseña?</button>
                     </div>
                     
                     <button 
                         type="submit" 
-                        className="signin-button"
+                        className={`login-button ${isLoading ? 'loading' : ''}`}
                         disabled={isLoading}
                     >
-                        {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                        {isLoading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </button>
                 </form>
-                
-                <div className="signin-footer">
-                    <p>¿No tienes cuenta? <a href="/register">Regístrate aquí</a></p>
-                </div>
-                
-                <div className="mock-info">
-                    <p><strong>Demo:</strong> Usa cualquier email válido para probar</p>
-                </div>
             </div>
         </div>
     )

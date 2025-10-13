@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuthActions } from '../hooks/useAuthActions'
 import { formValidation, mockData, utils } from '../utils'
 import './Register.css'
 
@@ -12,9 +12,9 @@ const Register = () => {
         confirmPassword: ''
     })
     const [errors, setErrors] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
     
-    const { login } = useAuth()
+    // � Usar hook personalizado para autenticación
+    const { handleRegister, isLoading, setLoading } = useAuthActions()
     const navigate = useNavigate()
 
     // Log de inicialización del componente
@@ -76,18 +76,25 @@ const Register = () => {
             return
         }
 
-        setIsLoading(true)
+        setLoading(true)
         utils.devLog('Iniciando proceso de registro...', 'info')
 
         try {
             // Simular delay de red
-            await new Promise(resolve => setTimeout(resolve, 1200))
+            await new Promise(resolve => setTimeout(resolve, 1500))
             
             // Verificar si el usuario ya existe (simulado)
             const existingUser = mockData.getUserByEmail(formData.email)
             if (existingUser) {
                 utils.devLog('Usuario ya existe en mock data', 'warning')
                 setErrors({ email: 'Este email ya está registrado' })
+                
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Email ya registrado',
+                    text: 'Este correo electrónico ya está en uso. Intenta con otro.',
+                    confirmButtonColor: '#005262'
+                })
                 return
             }
             
@@ -99,14 +106,25 @@ const Register = () => {
             
             if (mockResponse.success) {
                 utils.devLog('Registro exitoso con mock data', 'success')
-                login(mockResponse.user)
-                navigate('/')
+                
+                // 🔑 Simular token JWT
+                const mockToken = `jwt.token.${Date.now()}.${Math.random().toString(36).substr(2, 9)}`
+                
+                // 🎉 Usar hook mejorado para registro
+                await handleRegister(mockResponse.user, mockToken, '/')
             }
         } catch (error) {
             utils.devLog('Error en registro simulado', 'error')
             setErrors({ general: 'Error al crear la cuenta. Intenta nuevamente.' })
+            
+            Swal.fire({
+                icon: 'error',
+                title: 'Error al crear cuenta',
+                text: 'No se pudo crear la cuenta. Inténtalo de nuevo.',
+                confirmButtonColor: '#005262'
+            })
         } finally {
-            setIsLoading(false)
+            setLoading(false)
         }
     }
 
@@ -201,7 +219,7 @@ const Register = () => {
                 </form>
                 
                 <div className="register-footer">
-                    <p>¿Ya tienes cuenta? <a href="/signin">Inicia sesión aquí</a></p>
+                    <p>¿Ya tienes cuenta? <button onClick={() => navigate('/inicio-sesion')} className="signin-link">Inicia sesión aquí</button></p>
                 </div>
                 
                 <div className="mock-info">

@@ -1,9 +1,10 @@
 import './Navbar.css'
 import { Link } from 'react-router-dom';
-import { useAuth } from '../hooks/useAuth';
+import { useAuthActions } from '../hooks/useAuthActions';
 
 const Navbar = () => {
-    const { isAuthenticated, getUser } = useAuth();
+    // � Usar el hook personalizado para acciones de autenticación
+    const { isAuthenticated, user, getUserName, handleLogout } = useAuthActions();
 
     return(
         <nav id='top'>
@@ -33,18 +34,29 @@ const Navbar = () => {
                             <Link to="/inicio-sesion" className="nav-link btn btn-sign-in">Sign in</Link>
                         </li>
                         <li className="menu-item">
-                            <Link to="/registrarse" className="nav-link btn btn-register">Register</Link>
+                            <Link to="/registro" className="nav-link btn btn-register">Register</Link>
                         </li>
                     </>
                 )}
                 
-                {/* Mostrar saludo si está autenticado */}
+                {/* Mostrar saludo y logout si está autenticado */}
                 {isAuthenticated && (
-                    <li className="menu-item">
-                        <span className="nav-link user-greeting">
-                            ¡Hola, {getUser()?.name}! 👋
-                        </span>
-                    </li>
+                    <>
+                        <li className="menu-item">
+                            <span className="nav-link user-greeting">
+                                ¡Hola, {getUserName()}! 👋
+                            </span>
+                        </li>
+                        <li className="menu-item">
+                            <button 
+                                onClick={handleLogout}
+                                className="nav-link btn btn-sign-in"
+                                style={{ cursor: 'pointer' }}
+                            >
+                                Cerrar Sesión
+                            </button>
+                        </li>
+                    </>
                 )}
             </ul>
         </nav>
