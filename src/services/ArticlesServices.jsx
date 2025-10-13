@@ -1,4 +1,3 @@
-
 const URL_API = "http://localhost:3000/posts"
 // const URL_API = "http://localhost:3000/users"
 
@@ -16,5 +15,20 @@ export async function getAllArticles() {
 export async function getOneArticle(id) {
     const response = await fetch (`${URL_API}/${id}`)
     if (!response.ok) throw new Error('Error al obtener el artículo')
+    return response.json()
+}
+
+// POST method
+// PUT method
+// DELETE method
+export async function deleteArticle(id) {
+    const response = await fetch(`${URL_API}/${id}`, {
+        method: 'DELETE'
+    })
+
+    if (!response.ok) {
+        throw new Error('Error al eliminar el artículo')
+    }
+
     return response.json()
 }

@@ -111,9 +111,35 @@ hr {
     border-radius: 5px 5px 0 0;
 }
 
+.posts-client span {
+    margin-left: 10px;
+}
+
 .title-client-article {
     font-weight: 600;
-    font-size: 17px;
+    font-size: 15px;
+
+}
+
+.posts-client.removed {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+hr {
+    margin: 3% 5%;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 10px 10px 0;
+    font-size: 0.85rem;
+    color: #999;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .date-post {
@@ -122,5 +148,50 @@ hr {
 }
 
 .title-client-article, .date-post {
-    padding-left: 10px;
+    padding: 5px 10px;
+}
+
+/*post buttons*/
+
+.post-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.action-btn.edit {
+    text-decoration: none;
+    background: rgba(74, 144, 226, 0.1);
+    color: #4a90e2;
+}
+
+.action-btn.edit:hover {
+    background: #4a90e2;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+
+.action-btn.delete {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+}
+
+.action-btn.delete:hover {
+    background: #ff6b6b;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
 }
