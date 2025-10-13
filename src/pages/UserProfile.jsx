@@ -10,6 +10,7 @@ const UserProfile = () => {
     const [user, setUser] = useState(null)
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
+    const [deletingPosts, setDeletingPosts] = useState([])
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -45,16 +46,17 @@ const UserProfile = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
+                    // Marca el post como en eliminación para animación
+                    setDeletingPosts(prev => [...prev, postId])
+
+                    // Llama a la API para eliminar
                     await deleteArticle(postId)
 
                     //Animación fade-out
-                    const postElement = document.getElementById(`post-${postId}`)
-                    if (postElement) {
-                        postElement.classList.add('removed')
-                        setTimeout(() => {
-                            setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
-                        }, 500)
-                    }
+                    setTimeout(() => {
+                        setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
+                        setDeletingPosts(prev => prev.filter(id => id !== postId))
+                    }, 500) 
 
                     Swal.fire({
                         title: '¡Eliminado!',
@@ -63,6 +65,7 @@ const UserProfile = () => {
                         timer: 1500,
                         showConfirmButton: false
                     })
+
                 } catch (error) {
                     Swal.fire({
                         title:'Error',
@@ -117,7 +120,7 @@ const UserProfile = () => {
                             <p>Este usuario no todavía no tiene posts.</p>
                         ) : (
                             posts.map((post) => (
-                                <div key={post.id} className="posts-client">
+                                <div key={post.id} className={`posts-client ${deletingPosts.includes(post.id) ? 'removed' : ''}`}>
                                     <img src={post.image} alt={post.title} />
                                     <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
                                     <h3 className='title-client-article'>{post.title}</h3>
