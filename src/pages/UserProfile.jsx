@@ -1,7 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getOneUser, getUserPosts } from '../services/UsersServices';
 import './UserProfile.css'
 import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { deleteArticle } from '../services/ArticlesServices';
 
 const UserProfile = () => {
     const { id } = useParams()
@@ -31,6 +33,47 @@ const UserProfile = () => {
         "botánica": "category-botany",
         "astronomía": "category-astronomy"
     };
+
+    const handleDelete = (postId) => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará el artículo permanentemente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    await deleteArticle(postId)
+
+                    //Animación fade-out
+                    const postElement = document.getElementById(`post-${postId}`)
+                    if (postElement) {
+                        postElement.classList.add('removed')
+                        setTimeout(() => {
+                            setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
+                        }, 500)
+                    }
+
+                    Swal.fire({
+                        title: '¡Eliminado!',
+                        text: 'El post se ha borrado correctamente.',
+                        icon: 'success',
+                        timer: 1500,
+                        showConfirmButton: false
+                    })
+                } catch (error) {
+                    Swal.fire({
+                        title:'Error',
+                        text: 'No se pudo eliminar el post.',
+                        icon: 'error'
+                    })
+                    console.error(error)
+                }
+            }
+        })
+    }
 
     if (loading) return <></>
     if (!user) return <p>No se encontró el usuario</p>
@@ -78,11 +121,19 @@ const UserProfile = () => {
                                     <img src={post.image} alt={post.title} />
                                     <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
                                     <h3 className='title-client-article'>{post.title}</h3>
-                                    <p className='date-post'>{new Date(post.createdAt).toLocaleDateString('es-ES', {
-                                        day: '2-digit',
-                                        month: 'short',
-                                        year: 'numeric'
-                                    })}</p>
+                                    <hr />
+                                    <div className="post-meta">
+                                        <p className='date-post'>{new Date(post.createdAt).toLocaleDateString('es-ES', {
+                                            day: '2-digit',
+                                            month: 'short',
+                                            year: 'numeric'
+                                        })}</p>
+                                        
+                                        <div className="post-actions">
+                                            <button className='action-btn delete' onClick={() => handleDelete(post.id)}>Eliminar</button>
+                                            <Link className='action-btn edit' to={`/edit-form/${post.id}`}>Editar</Link>
+                                        </div>
+                                    </div>
                                 </div>
                             ))
                         )}
