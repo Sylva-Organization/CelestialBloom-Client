@@ -122,25 +122,7 @@ const SignIn = () => {
 
     const handleRegisterClick = (e) => {
         e.preventDefault()
-        // Mostrar mensaje informativo ya que Register está en otra rama
-        Swal.fire({
-            title: 'Registro de Usuario',
-            html: `
-                <div style="text-align: left; color: #374151; line-height: 1.6;">
-                    <p style="margin-bottom: 1rem;"><strong>La funcionalidad de registro está disponible en la rama correspondiente.</strong></p>
-                    <p style="margin-bottom: 1rem;">Para acceder al formulario de registro:</p>
-                    <ol style="margin-left: 1.5rem; margin-bottom: 1rem;">
-                        <li>Cambia a la rama <code style="background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: monospace;">register</code></li>
-                        <li>O visita la URL de registro correspondiente</li>
-                    </ol>
-                    <p style="color: #6b7280; font-size: 0.9rem;">Si ya tienes una cuenta, puedes iniciar sesión aquí.</p>
-                </div>
-            `,
-            icon: 'info',
-            confirmButtonText: 'Entendido',
-            confirmButtonColor: '#005262',
-            width: '500px'
-        })
+        navigate('/registro')
     }
 
     const handleForgotPassword = (e) => {
