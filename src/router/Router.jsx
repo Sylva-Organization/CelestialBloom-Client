@@ -8,9 +8,9 @@ import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
-import Perfil from "../pages/Perfil";
 import CreateForm from "../components/CreateForm";
 import EditForm from "../components/EditForm";
+import UserProfile from "../pages/UserProfile";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -49,16 +49,16 @@ const routerBlog = createBrowserRouter([{
             element: <Register/>
         },
         {
-            path: "/perfil",
-            element: <Perfil></Perfil>
+            path: "/user-profile/:id",
+            element: <UserProfile/>
         },
         {
             path: "/create-form",
-            element: <CreateForm></CreateForm>
+            element: <CreateForm/>
         }, 
         {
-            path: "/edit-form",
-            element: <EditForm></EditForm>
+            path: "/edit-form/:id",
+            element: <EditForm/>
         }
     ]
 }])
