@@ -57,7 +57,7 @@ const routerBlog = createBrowserRouter([{
             element: <CreateForm/>
         }, 
         {
-            path: "/edit-form",
+            path: "/edit-form/:id",
             element: <EditForm/>
         }
     ]
