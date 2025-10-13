@@ -1,28 +1,70 @@
-
 .articles {
-    width: 370px;
-
-    margin-bottom: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-.card-container img{
+.card-container {
+    width: 370px;
+    height: 500px;
+    margin-bottom: 10%;
+    /* background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7)); */
+}
+
+.card-container img {
     width: 100%;
     height: 220px;
 }
 
-.card-title, .card-paragraph {
+.post-category {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+.post-subcategory {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    background-color: #c5c5c5;
+    margin-left: 5px;
+}
+
+.category-botany {
+    background: linear-gradient(to right, #2e7d32, #66bb6a);
+}
+
+.category-astronomy {
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
+}
+
+.card-title,
+.card-content {
     color: black;
 }
 
 .card-title {
     margin: 10px 0;
     font-weight: 500;
-    font-size: 22px;
+    font-size: 20px;
 }
 
-.card-paragraph {
-    padding-bottom: 10px;
+.card-content {
+    margin-bottom: 15px;
     font-size: 13px;
+    height: 100px;
+    overflow: hidden;
 }
 
 .read-more {
