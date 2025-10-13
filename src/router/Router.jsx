@@ -49,7 +49,7 @@ const routerBlog = createBrowserRouter([{
             element: <Register/>
         },
         {
-            path: "/user-profile",
+            path: "/user-profile/:id",
             element: <UserProfile/>
         },
         {
