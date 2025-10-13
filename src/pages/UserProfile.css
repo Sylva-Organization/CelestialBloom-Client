@@ -111,9 +111,14 @@ hr {
     border-radius: 5px 5px 0 0;
 }
 
+.posts-client span {
+    margin-left: 10px;
+}
+
 .title-client-article {
     font-weight: 600;
-    font-size: 17px;
+    font-size: 15px;
+
 }
 
 .date-post {
@@ -122,5 +127,5 @@ hr {
 }
 
 .title-client-article, .date-post {
-    padding-left: 10px;
+    padding: 5px 10px;
 }
