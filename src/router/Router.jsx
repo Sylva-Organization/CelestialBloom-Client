@@ -9,6 +9,9 @@ import Register from "../pages/Register";
 import AuthRedirect from "../components/AuthRedirect";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
+import Perfil from "../pages/Perfil";
+import CreateForm from "../components/CreateForm";
+import EditForm from "../components/EditForm";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -50,6 +53,18 @@ const routerBlog = createBrowserRouter([{
             path: "/register",
             element: <AuthRedirect><Register/></AuthRedirect>
         },
+        {
+            path: "/perfil",
+            element: <Perfil></Perfil>
+        },
+        {
+            path: "/create-form",
+            element: <CreateForm></CreateForm>
+        }, 
+        {
+            path: "/edit-form",
+            element: <EditForm></EditForm>
+        }
     ]
 }])
 
