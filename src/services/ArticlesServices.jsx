@@ -18,3 +18,7 @@ export async function getOneArticle(id) {
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
+
+// POST method
+// PUT method
+// DELETE method
