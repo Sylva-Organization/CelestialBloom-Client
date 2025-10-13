@@ -6,11 +6,12 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
+import AuthRedirect from "../components/AuthRedirect";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
-import Perfil from "../pages/Perfil";
 import CreateForm from "../components/CreateForm";
 import EditForm from "../components/EditForm";
+import UserProfile from "../pages/UserProfile";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -42,23 +43,27 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/inicio-sesion",
-            element: <SignIn/>
+            element: <AuthRedirect><SignIn/></AuthRedirect>
         },
         {
-            path: "/registrarse",
-            element: <Register/>
+            path: "/registro",
+            element: <AuthRedirect><Register/></AuthRedirect>
         },
         {
-            path: "/perfil",
-            element: <Perfil></Perfil>
+            path: "/register",
+            element: <AuthRedirect><Register/></AuthRedirect>
+        },
+        {
+            path: "/user-profile/:id",
+            element: <UserProfile/>
         },
         {
             path: "/create-form",
-            element: <CreateForm></CreateForm>
+            element: <CreateForm/>
         }, 
         {
-            path: "/edit-form",
-            element: <EditForm></EditForm>
+            path: "/edit-form/:id",
+            element: <EditForm/>
         }
     ]
 }])

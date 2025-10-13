@@ -1,96 +1,109 @@
 {
-    "posts": [
-        {
-            "id": 1,
-            "title": "Geranium: el geranio 2.0 para presumir de balcón",
-            "content": "¿Esta primavera te han entrado las ganas de arreglar tu balcón y darle mucha vida? ¡Te traemos las claves para convertir tu espacio al aire libre en un auténtico vergel! Cuando piensas en balcones con flores es muy probable que te vengan a la mente los típicos geranios de toda la vida: preciosos, coloridos y, además, muy agradecidos con los cuidados. Pero para estrenar esta primavera, nos gustaría proponerte algo diferente y salirnos un poco de lo clásico. Por eso, hoy venimos a hablarte de una versión mejorada de esta resistente flor.Te presentamos a los Geraniums. Los hemos bautizado como geranios 2.0 porque resisten temperaturas extremas, aguantan mejor la falta de riego y los puedes colocar en casi cualquier ubicación, tanto a pleno sol como en sombra. Vamos, que sea como sea tu balcón, con este geranio no puedes fallar. Son flores súper resistentes y que alegran cualquier espacio con sus diferentes colores. ¿Sabías que existen más de 400 variedades? Crecen prácticamente en cualquier condición, resisten muy bien a las plagas y no necesitan que les prestes mucha atención, por lo que son la mejor elección si quieres darle ese toque primaveral a tu casa sin tener que invertir demasiado esfuerzo en ello. Y es que encima son preciosos, ¡¡míralos!!. Pero... ¿y en qué se diferencian exactamente de los clásicos geranios? Si bien es cierto que pertenecen a la misma familia (la de las Geraniaceae) y que a los dos se los conoce comúnmente como geranios, técnicamente, los Geraniums y los Pelargoriums son dos géneros distintos. De hecho, aunque te cueste creerlo, cuando hablamos del típico geranio solemos referirnos a los segundos (los Pelargoniums). En un primer momento, cuando se registraron los Pelargoniums por primera vez hace alrededor de 400 años, sí que se incluyeron dentro de la especie de los Geraniums. Pero más adelante, a finales del siglo XVIII, Charles L’Héritier, un magistrado francés y apasionado botánico, los separó en dos géneros.",
-            "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/987966/original.jpg",
-            "author_id": 1,
-            "category_id": 1,
-            "createdAt": "2025-09-30T07:05:17.082Z",
-            "updatedAt": "2025-09-30T07:05:17.082Z",
-            "categories": {
-                "id": 1,
-                "name": "botánica",
-                "createdAt": "2025-09-30T07:05:16.998Z",
-                "updatedAt": "2025-09-30T07:05:16.998Z",
-                "subcategories": {
-                    "id": 1,
-                    "name": "flower",
-                    "category_id": 1,
-                    "createdAt": "2025-09-30T07:05:17.039Z",
-                    "updatedAt": "2025-09-30T07:05:17.039Z"
-                }
-            }
-        },
-        {
-            "id": 2,
-            "title": "Efemérides astronómicas de septiembre de 2025",
-            "content": "Hola de nuevo y bienvenidos a las efemérides astronómicas de septiembre de 2025. El verano ya va dando sus últimos coletazos y la mayoría hemos vuelto, en mayor o menor medida, a nuestras rutinas. Tan solo unos pocos siguen disfrutando ahora de su merecido, y nada sobrevalorado, descanso estival. Enhorabuena a ellos y ojalá le saquéis el provecho esperado. Queda un consuelo: hasta el 22 de septiembre seguimos en verano, con las constelaciones aún presentes en las noches que, ojalá, sean cálidas y despejadas. Disfrutarlo está ya en vuestras manos. Ha vuelto a crecer la familia en el Sistema Solar. Algo que me gusta de la astronomía es que la realidad constantemente nos recuerda que no podemos dar casi nada por sentado. Uno de los ejemplos más ilustrativos en nuestro propio Sistema Solar; en mi época escolar este estaba formado por 9 planetas, Plutón incluido. Algunos de estos planetas ya presentaban un importante número de lunas, pero la cosa parecía más o menos estable. A finales de los 90 y comienzos de los 2000 se produce un salto tecnológico en la captura de imágenes que nos permite encontrar centenares de objetos trasneptunianos (TNOs) con tamaño similar a Plutón. En 2005 se descubre Eris, con untamaño algo mayor a Plutón y una luna propia, lo que planteó la pregunta ¿entonces Eris también es un planeta?… que obtuvo la respuesta de que ninguno de los dos lo era, al igual que otro monton de objetos similares que se intuía que iban a ir apareciendo. Adiós Plutón En 2006 la UAI redefinió que un planeta orbita el Sol, mantiene una forma aproximadamente esférica y limpia su órbita de otros cuerpos Dado que Putón comparte orbita con muchos otros objetos automáticamente fue degradado a planeta enano, para consternación de los estadounidenses que vieron cómo el único planeta que habían descubierto dejaba de serlo. Un duro golpe para el ego de un país que se auto atribuye el nombre de un continente entero. Y la lista no para… Hemos encontrado miles de nuevos TNOs y decenas de candidatos a planeta enano se suman a los cinco oficiales. El último descubrimiento ha sido una nueva luna en Urano, lo que eleva el total de lunas del planeta a 29. La nueva luna, S/2025 U1, se detectó en febrero de 2025 con el James Webb en infrarrojo y mide apenas 10 km de diámetro. Tras este último descubrimiento sólo tengo un par de certezas, la primera es el increíble nivel tecnológico que estamos alcanzando y la segunda es que aún nos queda mucho por conocer de nuestro Sistema Solar. Este mes trae cosas especiales. El 22 de septiembre se producirá el equinoccio que marca la llegada del otoño en el hemisferio norte; un evento poco frecuente, aunque no excepcional. Aún más interesante este mes es el eclipse total de Luna del domingo 7 de septiembre, un fenómeno espectacular y mucho menos habitual. Nuestra compañera Eva ha preparado un excelente y super detallado artículo al respecto, por lo que lo más razonable es que lo consultéis todo allí, incluyendo als actividades especiales que hemos preparado para la ocasión.",
-            "image": "https://pictureinsect.com/wiki-image/1080/153936691697025028.jpeg",
-            "author_id": 1,
-            "category_id": 1,
-            "createdAt": "2025-09-30T07:05:17.082Z",
-            "updatedAt": "2025-09-30T07:05:17.082Z",
-            "categories": {
-                "id": 1,
-                "name": "astronomía",
-                "createdAt": "2025-09-30T07:05:16.998Z",
-                "updatedAt": "2025-09-30T07:05:16.998Z",
-                "subcategories": {
-                    "id": 1,
-                    "name": "planetas",
-                    "category_id": 1,
-                    "createdAt": "2025-09-30T07:05:17.039Z",
-                    "updatedAt": "2025-09-30T07:05:17.039Z"
-                }
-            }
-        },
-        {
-            "id": 3,
-            "title": "Prueba botánica",
-            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.",
-            "image": "https://jardin.inecol.mx/images/MARIPOSA_MES/alas_daga.jpg",
-            "author_id": 1,
-            "category_id": 1,
-            "createdAt": "2025-09-30T07:05:17.082Z",
-            "updatedAt": "2025-09-30T07:05:17.082Z",
-            "categories": {
-                "id": 1,
-                "name": "botánica",
-                "createdAt": "2025-09-30T07:05:16.998Z",
-                "updatedAt": "2025-09-30T07:05:16.998Z",
-                "subcategories": {
-                    "id": 1,
-                    "name": "flower",
-                    "category_id": 1,
-                    "createdAt": "2025-09-30T07:05:17.039Z",
-                    "updatedAt": "2025-09-30T07:05:17.039Z"
-                }
-            }
-        },
-        {
-            "id": 4,
-            "title": "Prueba astronomía",
-            "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.",
-            "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/1070139/original.jpg",
-            "author_id": 1,
-            "category_id": 1,
-            "createdAt": "2025-09-30T07:05:17.082Z",
-            "updatedAt": "2025-09-30T07:05:17.082Z",
-            "categories": {
-                "id": 1,
-                "name": "astronomía",
-                "createdAt": "2025-09-30T07:05:16.998Z",
-                "updatedAt": "2025-09-30T07:05:16.998Z",
-                "subcategories": {
-                    "id": 1,
-                    "name": "planetas",
-                    "category_id": 1,
-                    "createdAt": "2025-09-30T07:05:17.039Z",
-                    "updatedAt": "2025-09-30T07:05:17.039Z"
-                }
-            }
+  "users": [
+    {
+      "id": "1",
+      "role": "user",
+      "first_name": "Fulanito",
+      "last_name": "Pérez Pacheco",
+      "email": "fulanitopach@fulanito.com",
+      "password": "1234",
+      "nick_name": "@fulanitodetal",
+      "createdAt": "2025-09-30T07:05:16.929Z",
+      "updatedAt": "2025-09-30T07:05:16.929Z"
+    }
+  ],
+  "posts": [
+    {
+      "id": "1",
+      "title": "Geranium: el geranio 2.0 para presumir de balcón",
+      "content": "¿Esta primavera te han entrado las ganas de arreglar tu balcón y darle mucha vida? ¡Te traemos las claves para convertir tu espacio al aire libre en un auténtico vergel! Cuando piensas en balcones con flores es muy probable que te vengan a la mente los típicos geranios de toda la vida: preciosos, coloridos y, además, muy agradecidos con los cuidados. Pero para estrenar esta primavera, nos gustaría proponerte algo diferente y salirnos un poco de lo clásico. Por eso, hoy venimos a hablarte de una versión mejorada de esta resistente flor.Te presentamos a los Geraniums. Los hemos bautizado como geranios 2.0 porque resisten temperaturas extremas, aguantan mejor la falta de riego y los puedes colocar en casi cualquier ubicación, tanto a pleno sol como en sombra. Vamos, que sea como sea tu balcón, con este geranio no puedes fallar. Son flores súper resistentes y que alegran cualquier espacio con sus diferentes colores. ¿Sabías que existen más de 400 variedades? Crecen prácticamente en cualquier condición, resisten muy bien a las plagas y no necesitan que les prestes mucha atención, por lo que son la mejor elección si quieres darle ese toque primaveral a tu casa sin tener que invertir demasiado esfuerzo en ello. Y es que encima son preciosos, ¡¡míralos!!. Pero... ¿y en qué se diferencian exactamente de los clásicos geranios? Si bien es cierto que pertenecen a la misma familia (la de las Geraniaceae) y que a los dos se los conoce comúnmente como geranios, técnicamente, los Geraniums y los Pelargoriums son dos géneros distintos. De hecho, aunque te cueste creerlo, cuando hablamos del típico geranio solemos referirnos a los segundos (los Pelargoniums). En un primer momento, cuando se registraron los Pelargoniums por primera vez hace alrededor de 400 años, sí que se incluyeron dentro de la especie de los Geraniums. Pero más adelante, a finales del siglo XVIII, Charles L’Héritier, un magistrado francés y apasionado botánico, los separó en dos géneros.",
+      "image": "https://inaturalist-open-data.s3.amazonaws.com/photos/987966/original.jpg",
+      "author_id": 1,
+      "category_id": 1,
+      "createdAt": "2025-09-30T07:05:17.082Z",
+      "updatedAt": "2025-09-30T07:05:17.082Z",
+      "categories": {
+        "id": 1,
+        "name": "botánica",
+        "createdAt": "2025-09-30T07:05:16.998Z",
+        "updatedAt": "2025-09-30T07:05:16.998Z",
+        "subcategories": {
+          "id": 1,
+          "name": "flower",
+          "category_id": 1,
+          "createdAt": "2025-09-30T07:05:17.039Z",
+          "updatedAt": "2025-09-30T07:05:17.039Z"
         }
-    ]
+      }
+    },
+    {
+      "id": "2",
+      "title": "Efemérides astronómicas de septiembre de 2025",
+      "content": "Hola de nuevo y bienvenidos a las efemérides astronómicas de septiembre de 2025. El verano ya va dando sus últimos coletazos y la mayoría hemos vuelto, en mayor o menor medida, a nuestras rutinas. Tan solo unos pocos siguen disfrutando ahora de su merecido, y nada sobrevalorado, descanso estival. Enhorabuena a ellos y ojalá le saquéis el provecho esperado. Queda un consuelo: hasta el 22 de septiembre seguimos en verano, con las constelaciones aún presentes en las noches que, ojalá, sean cálidas y despejadas. Disfrutarlo está ya en vuestras manos. Ha vuelto a crecer la familia en el Sistema Solar. Algo que me gusta de la astronomía es que la realidad constantemente nos recuerda que no podemos dar casi nada por sentado. Uno de los ejemplos más ilustrativos en nuestro propio Sistema Solar; en mi época escolar este estaba formado por 9 planetas, Plutón incluido. Algunos de estos planetas ya presentaban un importante número de lunas, pero la cosa parecía más o menos estable. A finales de los 90 y comienzos de los 2000 se produce un salto tecnológico en la captura de imágenes que nos permite encontrar centenares de objetos trasneptunianos (TNOs) con tamaño similar a Plutón. En 2005 se descubre Eris, con untamaño algo mayor a Plutón y una luna propia, lo que planteó la pregunta ¿entonces Eris también es un planeta?… que obtuvo la respuesta de que ninguno de los dos lo era, al igual que otro monton de objetos similares que se intuía que iban a ir apareciendo. Adiós Plutón En 2006 la UAI redefinió que un planeta orbita el Sol, mantiene una forma aproximadamente esférica y limpia su órbita de otros cuerpos Dado que Putón comparte orbita con muchos otros objetos automáticamente fue degradado a planeta enano, para consternación de los estadounidenses que vieron cómo el único planeta que habían descubierto dejaba de serlo. Un duro golpe para el ego de un país que se auto atribuye el nombre de un continente entero. Y la lista no para… Hemos encontrado miles de nuevos TNOs y decenas de candidatos a planeta enano se suman a los cinco oficiales. El último descubrimiento ha sido una nueva luna en Urano, lo que eleva el total de lunas del planeta a 29. La nueva luna, S/2025 U1, se detectó en febrero de 2025 con el James Webb en infrarrojo y mide apenas 10 km de diámetro. Tras este último descubrimiento sólo tengo un par de certezas, la primera es el increíble nivel tecnológico que estamos alcanzando y la segunda es que aún nos queda mucho por conocer de nuestro Sistema Solar. Este mes trae cosas especiales. El 22 de septiembre se producirá el equinoccio que marca la llegada del otoño en el hemisferio norte; un evento poco frecuente, aunque no excepcional. Aún más interesante este mes es el eclipse total de Luna del domingo 7 de septiembre, un fenómeno espectacular y mucho menos habitual. Nuestra compañera Eva ha preparado un excelente y super detallado artículo al respecto, por lo que lo más razonable es que lo consultéis todo allí, incluyendo als actividades especiales que hemos preparado para la ocasión.",
+      "image": "https://pictureinsect.com/wiki-image/1080/153936691697025028.jpeg",
+      "author_id": 1,
+      "category_id": 1,
+      "createdAt": "2025-09-30T07:05:17.082Z",
+      "updatedAt": "2025-09-30T07:05:17.082Z",
+      "categories": {
+        "id": 1,
+        "name": "astronomía",
+        "createdAt": "2025-09-30T07:05:16.998Z",
+        "updatedAt": "2025-09-30T07:05:16.998Z",
+        "subcategories": {
+          "id": 1,
+          "name": "planetas",
+          "category_id": 1,
+          "createdAt": "2025-09-30T07:05:17.039Z",
+          "updatedAt": "2025-09-30T07:05:17.039Z"
+        }
+      }
+    },
+    {
+      "id": "3",
+      "title": "Prueba botánica",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.",
+      "image": "https://jardin.inecol.mx/images/MARIPOSA_MES/alas_daga.jpg",
+      "author_id": 1,
+      "category_id": 1,
+      "createdAt": "2025-09-30T07:05:17.082Z",
+      "updatedAt": "2025-09-30T07:05:17.082Z",
+      "categories": {
+        "id": 1,
+        "name": "botánica",
+        "createdAt": "2025-09-30T07:05:16.998Z",
+        "updatedAt": "2025-09-30T07:05:16.998Z",
+        "subcategories": {
+          "id": 1,
+          "name": "flower",
+          "category_id": 1,
+          "createdAt": "2025-09-30T07:05:17.039Z",
+          "updatedAt": "2025-09-30T07:05:17.039Z"
+        }
+      }
+    },
+    {
+      "id": "4",
+      "title": "Prueba astronomía",
+      "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.",
+      "image": "https://jardin.inecol.mx/images/MARIPOSA_MES/alas_daga.jpg",
+      "author_id": 1,
+      "category_id": 1,
+      "createdAt": "2025-09-30T07:05:17.082Z",
+      "updatedAt": "2025-09-30T07:05:17.082Z",
+      "categories": {
+        "id": 1,
+        "name": "astronomía",
+        "createdAt": "2025-09-30T07:05:16.998Z",
+        "updatedAt": "2025-09-30T07:05:16.998Z",
+        "subcategories": {
+          "id": 1,
+          "name": "flower",
+          "category_id": 1,
+          "createdAt": "2025-09-30T07:05:17.039Z",
+          "updatedAt": "2025-09-30T07:05:17.039Z"
+        }
+      }
+    }
+  ]
 }
