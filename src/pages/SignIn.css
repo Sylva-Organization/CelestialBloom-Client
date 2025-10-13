@@ -96,6 +96,7 @@ body, html {
     border: 1px solid #d1d5db;
     border-radius: 8px;
     font-size: 1rem;
+    color: #374151;
     transition: all 0.3s ease;
     background: #f9fafb;
     width: 100%;
@@ -107,6 +108,7 @@ body, html {
     border-color: #005262;
     box-shadow: 0 0 0 3px rgba(0, 82, 98, 0.1);
     background: white;
+    color: #1f2937;
 }
 
 .form-group input::placeholder {
@@ -117,6 +119,7 @@ body, html {
     border-color: #dc2626;
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
     background: #fef2f2;
+    color: #374151;
 }
 
 .form-group input[aria-invalid="true"]:focus {
