@@ -67,6 +67,18 @@
     overflow: hidden;
 }
 
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.post-user-author {
+    color: lightgray;
+}
+
 .read-more {
     text-decoration: none;
     color: var(--color-azul-oscuro);

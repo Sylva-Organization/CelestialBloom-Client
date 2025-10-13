@@ -28,9 +28,9 @@ const ArticlesFront = ({ categoryFilter }) => {
     };
 
     const filteredPosts = categoryFilter
-     ? posts.filter(
-        (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
-    ) : posts
+        ? posts.filter(
+            (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
+        ) : posts
 
     return (
         <>
@@ -43,7 +43,10 @@ const ArticlesFront = ({ categoryFilter }) => {
                             <span className="post-subcategory">{post.categories.subcategories.name}</span>
                             <h3 className='card-title'>{post.title}</h3>
                             <p className='card-content'>{post.content}</p>
-                            <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                            <div className="post-meta">
+                                <span className='post-user-author'>{post.author_id}</span>
+                                <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                            </div>
                         </div>
                     </div>
                 ))}
