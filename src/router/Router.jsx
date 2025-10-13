@@ -5,6 +5,7 @@ import Astronomy from "../pages/Astronomy";
 import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
+import Register from "../pages/Register";
 import RegisterRedirect from "../components/RegisterRedirect";
 import ArticlesBlog from "../components/ArticlesBlog";
 import ArticleDetail from "../components/ArticleDetail";
@@ -43,7 +44,7 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/registro",
-            element: <RegisterRedirect/>
+            element: <Register/>
         },
     ]
 }])

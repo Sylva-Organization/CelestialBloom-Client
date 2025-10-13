@@ -205,8 +205,8 @@ const SignIn = () => {
         <div className="login-container">
             <div className="login-card">
                 <div className="login-header">
-                    <h2>Acceder a tu cuenta</h2>
-                    <p>¿No tienes una cuenta? <button onClick={handleRegisterClick} className="register-link">Crear una cuenta</button></p>
+                    <h2>Iniciar Sesión</h2>
+                    <p>¿No tienes una cuenta? <button onClick={handleRegisterClick} className="register-link">Crear cuenta</button></p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="login-form" noValidate>
@@ -220,10 +220,11 @@ const SignIn = () => {
                             onChange={handleInputChange}
                             onBlur={handleBlur}
                             required
-                            placeholder="Ingresa tu correo electrónico"
+                            placeholder="tu-email@ejemplo.com"
                             aria-describedby={errors.email ? "email-error" : undefined}
                             aria-invalid={!!errors.email}
                             autoComplete="email"
+                            className={errors.email ? 'error' : ''}
                         />
                         {errors.email && (
                             <span id="email-error" className="field-error" role="alert">
@@ -243,11 +244,12 @@ const SignIn = () => {
                                 onChange={handleInputChange}
                                 onBlur={handleBlur}
                                 required
-                                placeholder="Ingresa tu contraseña"
+                                placeholder="Tu contraseña"
                                 aria-describedby={errors.password ? "password-error" : undefined}
                                 aria-invalid={!!errors.password}
                                 autoComplete="current-password"
                                 minLength="6"
+                                className={errors.password ? 'error' : ''}
                             />
                             <button
                                 type="button"
@@ -273,7 +275,7 @@ const SignIn = () => {
                                 checked={rememberMe}
                                 onChange={(e) => setRememberMe(e.target.checked)}
                             />
-                            <label htmlFor="remember">Recordar contraseña</label>
+                            <label htmlFor="remember">Recordarme</label>
                         </div>
                         <button onClick={handleForgotPassword} className="forgot-password">¿Olvidaste tu contraseña?</button>
                     </div>
