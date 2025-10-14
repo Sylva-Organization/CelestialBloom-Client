@@ -39,7 +39,7 @@ const ArticleDetail = () => {
             confirmButtonText: 'Sí, eliminar',
             cancelButtonText: 'Cancelar'
         }).then(async (result) => {
-            if (result.isConfirmed) { //CAMBIAR  A QUE APAREZCA 'NO SE ENCONTRÓ ARTÍCULO'
+            if (result.isConfirmed) {
                 try {
                     // Llama a la API para eliminar
                     await deleteArticle(postId)
@@ -86,7 +86,7 @@ const ArticleDetail = () => {
                     </div>
 
                     <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
-                    <span className="post-subcategory">{post.categories.subcategories}</span>
+                    {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                     <h2 className='title-detail'>{post.title}</h2>
 
                     <div className="article-meta">
