@@ -1,4 +1,5 @@
-const URL_API = "http://localhost:3000/posts"
+// const URL_API = "http://localhost:3000/posts"
+const URL_API = "/api/posts" //Usammos proxy de Vite
 const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
 
 //GET METHOD
@@ -20,11 +21,11 @@ export async function getOneArticle(id) {
 }
 
 // POST method
-export async function createArticle(newArticle) {
+export async function createArticle(articleData) {
     const response = await fetch(URL_API, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newArticle)
+        body: JSON.stringify(articleData)
     })
 
     if (!response.ok) {
