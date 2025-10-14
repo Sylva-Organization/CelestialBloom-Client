@@ -8,7 +8,10 @@
 .card-container {
     width: 370px;
     height: 500px;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
+    /* border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 10px; */
     /* background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7)); */
 }
 
@@ -65,6 +68,18 @@
     font-size: 13px;
     height: 100px;
     overflow: hidden;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.post-user-author {
+    color: lightgray;
 }
 
 .read-more {

@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "api-fake": "json-server --watch server/articles.json"
+    "api-fake": "json-server --watch server/db.json"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

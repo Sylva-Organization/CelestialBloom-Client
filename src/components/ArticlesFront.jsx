@@ -28,9 +28,13 @@ const ArticlesFront = ({ categoryFilter }) => {
     };
 
     const filteredPosts = categoryFilter
-     ? posts.filter(
-        (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
-    ) : posts
+        ? posts.filter(
+            (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
+        ) : posts
+
+    if (loading) {
+        return <div className='loading'>Cargando artículos...</div>
+    }
 
     return (
         <>
@@ -40,10 +44,13 @@ const ArticlesFront = ({ categoryFilter }) => {
                         <img src={post.image} alt="foto-post" />
                         <div className="card-body">
                             <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
-                            <span className="post-subcategory">{post.categories.subcategories.name}</span>
+                            <span className="post-subcategory">{post.categories.subcategories}</span>
                             <h3 className='card-title'>{post.title}</h3>
                             <p className='card-content'>{post.content}</p>
-                            <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                            <div className="post-meta">
+                                <span className='post-user-author'>{post.user?.first_name} {post.user?.last_name}</span>
+                                <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                            </div>
                         </div>
                     </div>
                 ))}
