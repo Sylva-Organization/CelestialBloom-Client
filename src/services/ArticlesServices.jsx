@@ -1,5 +1,5 @@
 const URL_API = "http://localhost:3000/posts"
-const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=category`
+const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
 
 //GET METHOD
 export async function getAllArticles() {
@@ -14,7 +14,7 @@ export async function getAllArticles() {
 //GET/:ID
 export async function getOneArticle(id) {
     // const response = await fetch (`${URL_API}/${id}`)
-    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=category`)
+    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=categories`)
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
