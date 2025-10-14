@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import './CreateForm.css'
+import { createArticle } from '../services/ArticlesServices'
 
 const CreateForm = () => {
     const [uploadedImages, setUploadedImages] = useState([])
@@ -15,7 +16,7 @@ const CreateForm = () => {
     // Manejo de imágenes
     const handleFiles = (files) => {
         const fileArray = Array.from(files)
-        const newImages = [...uploadedImages]
+        // const newImages = [...uploadedImages]
 
         /**Bucle con condicionales (?) para: ----> Mirar
          * si la cantidad de imágenes supera las permitidas 
@@ -28,7 +29,7 @@ const CreateForm = () => {
             reader.onload = (e) => {
                 setUploadedImages((prev) => [
                     ...prev,
-                    { name: fileArray.name, data: e.target.result },
+                    { name: file.name, data: e.target.result },
                 ])
             }
             reader.readAsDataURL(file)
@@ -51,29 +52,46 @@ const CreateForm = () => {
     }
 
     const removeImage = (index) => {
-        setUploadImages(uploadedImages.filter((_, i) => i !== index))
+        setUploadedImages(uploadedImages.filter((_, i) => i !== index))
     }
 
     // --- Envío del formulario
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
         if (!title || !category || !content) {
             alert('Por favor, completa todos los campos obligatorios')
-            return 
+            return
         }
 
         const articleData = {
-            title, 
+            title,
             category,
             subcategory: subcategory || null,
             content,
             images: uploadedImages,
-            publishedAt: new Date.toISOString(),
+            publishedAt: new Date().toISOString(),
+            author_id: 1, // Ajusta según el usuario logueado si tienes autenticación
+            category_id: category === 'astronomy' ? 2 : 1, // O ajusta según tu lógica
         }
 
-        console.log('Artículo publicado: ', articleData)
-        alert('¡Artículo publicado con éxito! 🎉') // hacerlo con un modal
+        try {
+            const created = await createArticle(articleData)
+            console.log('Artículo creado en DB', created)
+            alert('¡Artículo publicado con éxito! 🎉')   //VAS POR AQUÍ
+            // Reiniciar formulario
+            setTitle('')
+            setCategory('')
+            setSubcategory('')
+            setContent('')
+            setUploadedImages([])
+        } catch (error) {
+            console.error(error)
+            alert('Error al crear el artículo')
+        }
+
+        // console.log('Artículo publicado: ', articleData)
+        // alert('¡Artículo publicado con éxito! 🎉') // hacerlo con un modal
     }
     return (
         <>
@@ -104,26 +122,26 @@ const CreateForm = () => {
                         {/* Subcategory  */}
                         <div className="form-group">
                             <label className="form-label">Subcategoría <span className="optional">(opcional)</span></label>
-                            <input type="text" className="form-input" id='subcategory' placeholder='Ej: Plantas carnívoras, Exoplanetas, Fotosíntesis, etc.' value={subcategory} onChange={(e) => setSubcategory(e.target.value)}/>
+                            <input type="text" className="form-input" id='subcategory' placeholder='Ej: Plantas carnívoras, Exoplanetas, Fotosíntesis, etc.' value={subcategory} onChange={(e) => setSubcategory(e.target.value)} />
                         </div>
 
                         {/* Content  */}
                         <div className="form-group">
-                            <label htmlFor="" className="form-label">Contenido <span className="required">*</span></label>
-                            <textarea name="" id="content" className="form-textarea" placeholder='Escribe aquí el contenido de tu artículo...' required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                            <label className="form-label">Contenido <span className="required">*</span></label>
+                            <textarea id="content" className="form-textarea" placeholder='Escribe aquí el contenido de tu artículo...' required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
 
                         </div>
 
                         {/* Images  */}
                         <div className="form-group">
-                            <label htmlFor="" className="form-label">Imágenes <span className="required"></span></label>
+                            <label className="form-label">Imágenes <span className="required"></span></label>
                             <div className={`image-upload-area ${isDragging ? 'dragover' : ''}`} id='uploadArea' onClick={() => imageInputRef.current.click()} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
                                 <div className="upload-icon">📷</div>
                                 <div className="upload-text">Haz clic o arrastra imágenes aquí</div>
                                 <div className="upload-hint">PNG, JPG</div>
                             </div>
-                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)} style={{ display: 'none'}} />
-                            
+                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)} style={{ display: 'none' }} />
+
                             {/* Preview  */}
                             <div className="image-preview-container" id='imagePreview'>
                                 {uploadedImages.map((img, index) => (
