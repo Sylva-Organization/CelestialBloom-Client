@@ -1,10 +1,11 @@
 const URL_API = "http://localhost:3000/posts"
+const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
 
 //GET METHOD
 export async function getAllArticles() {
-    const response = await fetch(URL_API)
+    const response = await fetch(EXPANDED_URL)
     if (!response.ok) {
-        throw new Error('Error al obtener las mariposas')
+        throw new Error('Error al obtener los artículos')
     }
 
     return response.json() //convierte la respuesta del servidor a JSON y devuelve los datos para que se puede usar en la app
@@ -12,7 +13,8 @@ export async function getAllArticles() {
 
 //GET/:ID
 export async function getOneArticle(id) {
-    const response = await fetch (`${URL_API}/${id}`)
+    // const response = await fetch (`${URL_API}/${id}`)
+    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=categories`)
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
