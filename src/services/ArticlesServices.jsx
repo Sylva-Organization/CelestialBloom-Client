@@ -1,5 +1,4 @@
 const URL_API = "http://localhost:3000/posts"
-// const URL_API = "http://localhost:3000/users"
 
 //GET METHOD
 export async function getAllArticles() {
@@ -19,7 +18,22 @@ export async function getOneArticle(id) {
 }
 
 // POST method
+export async function createArticle(newArticle) {
+    const response = await fetch(URL_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newArticle)
+    })
+
+    if (!response.ok) {
+        throw new Error('Error al crear el artículo')
+    }
+    return response.json()
+}
+
 // PUT method
+
+
 // DELETE method
 export async function deleteArticle(id) {
     const response = await fetch(`${URL_API}/${id}`, {
