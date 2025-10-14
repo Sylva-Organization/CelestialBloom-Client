@@ -44,7 +44,7 @@ const ArticlesFront = ({ categoryFilter }) => {
                         <img src={post.image} alt="foto-post" />
                         <div className="card-body">
                             <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
-                            <span className="post-subcategory">{post.categories.subcategories}</span>
+                            {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                             <h3 className='card-title'>{post.title}</h3>
                             <p className='card-content'>{post.content}</p>
                             <div className="post-meta">
