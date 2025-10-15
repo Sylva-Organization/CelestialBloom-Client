@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/authStore'
 import Swal from 'sweetalert2'
+import { loginUser } from '../services/AuthServices'
 
 const SignIn = () => {
     const navigate = useNavigate()
@@ -80,33 +81,17 @@ const SignIn = () => {
         setIsLoading(true)
 
         try {
-            const res = await fetch('http://localhost:8000/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    identifier: formData.identifier,
-                    password: formData.password
-                })
+
+            const data = await loginUser({
+                identifier: formData.identifier,
+                password: formData.password
             })
-
-            const data = await res.json()
-
-            if (!res.ok) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Credenciales incorrectas',
-                    text: data.message || 'El correo electrónico o la contraseña son incorrectos',
-                    confirmButtonColor: '#005262'
-                })
-                return
-            }
 
             const user = {
                 id: data.data.id,
                 firstName: data.data.first_name,
                 lastName: data.data.last_name,
                 username: data.data.nick_name,
-                email: data.data.email,
                 role: data.data.role
             }
 
