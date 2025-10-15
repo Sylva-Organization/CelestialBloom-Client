@@ -34,7 +34,19 @@ export async function createArticle(articleData) {
 }
 
 // PUT method
+export async function updateArticle(id, articleData) {
+    const response = await fetch(`${URL_API}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(articleData)
+    })
 
+    if (!response.ok) {
+        throw new Error('Error al actualizar el artículo')
+    }
+
+    return response.json()
+}
 
 // DELETE method
 export async function deleteArticle(id) {
