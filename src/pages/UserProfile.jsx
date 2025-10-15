@@ -4,6 +4,7 @@ import './UserProfile.css'
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { deleteArticle } from '../services/ArticlesServices';
+import { useAuthStore } from '../store/authStore';
 
 const UserProfile = () => {
     const { id } = useParams()
@@ -31,6 +32,8 @@ const UserProfile = () => {
         }
         if (id) fetchUserData()
     }, [id])
+
+    const isAdmin = useAuthStore((s) => s.isAdmin?.() ?? s.roles?.includes('admin'));
 
     const categoryStyles = {
         "botánica": "category-botany",
@@ -114,6 +117,7 @@ const UserProfile = () => {
                 </div>
 
                 {/* User posts  */}
+                {isAdmin &&(
                 <div className='mis-posts-container'>
                     <h2 className="title-mis-post">Mis posts</h2>
                     <hr />
@@ -146,6 +150,7 @@ const UserProfile = () => {
                         )}
                     </div>
                 </div>
+                )}
             </section>
         </>
     )
