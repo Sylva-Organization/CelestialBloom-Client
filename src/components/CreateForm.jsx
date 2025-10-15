@@ -48,7 +48,6 @@ const CreateForm = () => {
     }
 
     const removeImage = (index) => {
-        // setUploadedImages(uploadedImages.filter((_, i) => i !== index))
         setUploadedImage(uploadedImage.filter((_, i) => i !== index))
     }
 
@@ -92,8 +91,6 @@ const CreateForm = () => {
             alert('Error al crear el artículo')
         }
 
-        // console.log('Artículo publicado: ', articleData)
-        // alert('¡Artículo publicado con éxito! 🎉') // hacerlo con un modal
     }
     return (
         <>
@@ -121,12 +118,6 @@ const CreateForm = () => {
                             </select>
                         </div>
 
-                        {/* Subcategory  */}
-                        {/* <div className="form-group">
-                            <label className="form-label">Subcategoría <span className="optional">(opcional)</span></label>
-                            <input type="text" className="form-input" id='subcategory' placeholder='Ej: Plantas carnívoras, Exoplanetas, Fotosíntesis, etc.' value={subcategory} onChange={(e) => setSubcategory(e.target.value)} />
-                        </div> */}
-
                         {/* Content  */}
                         <div className="form-group">
                             <label className="form-label">Contenido <span className="required">*</span></label>
@@ -143,7 +134,7 @@ const CreateForm = () => {
                                 <div className="upload-hint">PNG, JPG</div>
                             </div>
 
-                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)} style={{ display: 'none' }} />
+                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)}/>
 
                             {/* Preview  */}
                             <div className="image-preview-container" id='imagePreview'>
