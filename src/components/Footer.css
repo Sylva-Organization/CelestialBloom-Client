@@ -1,10 +1,10 @@
-
 footer {
     background: linear-gradient(to right, #014C5C, #016473, #1A642F);
     display: flex;
-    justify-content: space-around; /*por ahora*/
+    justify-content: space-around;
     gap: 70px;
-    padding: 40px 0;
+    padding: 40px 20px;
+    flex-wrap: wrap;
 }
 
 .astronomy-box-footer > ul li, .botany-box-footer > ul li  {
@@ -13,4 +13,54 @@ footer {
 
 .title-footer {
     margin-bottom: 20px;
+}
+
+.astronomy-box-footer, .botany-box-footer {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Responsive para tablets */
+@media (max-width: 768px) {
+    footer {
+        gap: 40px;
+        padding: 30px 20px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .astronomy-box-footer, .botany-box-footer {
+        min-width: 250px;
+    }
+
+    .title-footer {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 480px) {
+    footer {
+        flex-direction: column;
+        gap: 30px;
+        padding: 25px 15px;
+        align-items: center;
+    }
+
+    .astronomy-box-footer, .botany-box-footer {
+        width: 100%;
+        max-width: 300px;
+        min-width: auto;
+    }
+
+    .title-footer {
+        font-size: 1rem;
+        margin-bottom: 12px;
+    }
+
+    .astronomy-box-footer > ul li, .botany-box-footer > ul li {
+        padding: 8px 0;
+        font-size: 0.95rem;
+    }
 }
