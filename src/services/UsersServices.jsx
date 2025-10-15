@@ -1,27 +1,33 @@
 const URL_API_USERS = "http://localhost:8000/users"
 const URL_API_POSTS = "http://localhost:8000/posts"
+import { getAuthHeaders } from "./apiHelpers";
 
 //GET method
 export async function getAllUsers() {
-    const response = await fetch(URL_API_USERS)
+    const response = await fetch(URL_API_USERS, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) {
         throw new Error('Error al obtener los usuarios')
     }
-
     return response.json()
 }
 
 //GET/:id method
 export async function getOneUser(id) {
-    const response = await fetch(`${URL_API_USERS}/${id}`)
+    const response = await fetch(`${URL_API_USERS}/${id}`, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error('Error al obtener el usuario')
     return response.json()
 }
 
 export async function getUserPosts(authorId) {
-    const response = await fetch(`${URL_API_POSTS}?author_id=${authorId}`)
+    const response = await fetch(`${URL_API_POSTS}?author_id=${authorId}`, {
+        headers: getAuthHeaders()
+    });
     if (!response.ok) throw new Error("Error al obtener los posts del usuario");
-    return response.json()
+    return response.json();
 }
 // PUT o PATCH /users/:id → { data: User }
 export const updateUser = async (id, payload, { method = "put" } = {}) => {
@@ -32,6 +38,8 @@ export const updateUser = async (id, payload, { method = "put" } = {}) => {
 
 // DELETE /users/:id → { message }
 export const deleteUser = async (id) => {
-    const res = await api.delete(`/users/${id}`);
+    const res = await api.delete(`/users/${id}`, {
+        headers: getAuthHeaders()
+    });
     return res.data; // { message }
 };
