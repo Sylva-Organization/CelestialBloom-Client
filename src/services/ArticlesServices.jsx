@@ -1,9 +1,20 @@
+import { useAuthStore } from "../store/authStore"
+
 const URL_API = "http://localhost:8000/posts"
 const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
 
+// zustand
+function getAuthHeaders() {
+  const token = useAuthStore.getState().token;
+  return token
+    ? { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
+    : { "Content-Type": "application/json" };
+}
+
 //GET METHOD
 export async function getAllArticles() {
-    const response = await fetch(EXPANDED_URL)
+    const response = await fetch(EXPANDED_URL, {headers: getAuthHeaders(),        
+    })
     if (!response.ok) {
         throw new Error('Error al obtener los artículos')
     }
@@ -14,7 +25,9 @@ export async function getAllArticles() {
 //GET/:ID
 export async function getOneArticle(id) {
     // const response = await fetch (`${URL_API}/${id}`)
-    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=categories`)
+    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=categories`, {headers: getAuthHeaders(), 
+        
+});
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
@@ -23,7 +36,7 @@ export async function getOneArticle(id) {
 export async function createArticle(articleData) {
     const response = await fetch(URL_API, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify(articleData)
     })
 
@@ -39,7 +52,8 @@ export async function createArticle(articleData) {
 // DELETE method
 export async function deleteArticle(id) {
     const response = await fetch(`${URL_API}/${id}`, {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: getAuthHeaders(),
     })
 
     if (!response.ok) {
