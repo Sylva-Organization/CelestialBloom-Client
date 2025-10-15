@@ -66,35 +66,29 @@ const Register = () => {
         utils.devLog('Iniciando proceso de registro...', 'info')
 
         try {
-            // Simular llamada a API
-            await new Promise(resolve => setTimeout(resolve, 1000))
+            // Intentar registro con la API real
+            const { registerUser } = await import('../services/UsersServices')
+            const result = await registerUser(formData)
             
-            // Datos del usuario registrado
-            const userData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-                email: formData.email,
-                username: formData.username
-            }
+            if (result.success) {
+                console.log('Register data:', result.user)
+                
+                // Registrar y loguear automáticamente al usuario
+                register(result.user)
+                
+                // Enviar email de bienvenida
+                console.log('📧 Enviando email de bienvenida...')
+                const emailResult = await sendWelcomeEmailAuto(result.user)
+                
+                if (emailResult.success) {
+                    console.log('✅ Email de bienvenida enviado exitosamente')
+                } else {
+                    console.warn('⚠️ Error al enviar email de bienvenida:', emailResult.error)
+                }
             
-            console.log('Register data:', userData)
-            
-            // Registrar y loguear automáticamente al usuario
-            register(userData)
-            
-            // Enviar email de bienvenida
-            console.log('📧 Enviando email de bienvenida...')
-            const emailResult = await sendWelcomeEmailAuto(userData)
-            
-            if (emailResult.success) {
-                console.log('✅ Email de bienvenida enviado exitosamente')
-            } else {
-                console.warn('⚠️ Error al enviar email de bienvenida:', emailResult.error)
-            }
-            
-            await Swal.fire({
-                icon: 'success',
-                title: `¡Bienvenid@ a CelestialBloom, ${formData.firstName}! 🌟`,
+                await Swal.fire({
+                    icon: 'success',
+                    title: `¡Bienvenid@ a CelestialBloom, ${result.user.firstName}! 🌟`,
                 html: `
                     <div style="text-align: center; padding: 1rem;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">🚀✨</div>
@@ -155,9 +149,17 @@ const Register = () => {
                 width: '500px',
                 padding: '2rem'
             })
-            
-            // Redireccionar al inicio después del registro exitoso
-            navigate('/')
+                
+                // Redireccionar al inicio después del registro exitoso
+                navigate('/')
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error en el registro',
+                    text: result.error || 'No se pudo crear la cuenta',
+                    confirmButtonColor: '#005262'
+                })
+            }
             
         } catch (error) {
             utils.devLog('Error en registro simulado', 'error')

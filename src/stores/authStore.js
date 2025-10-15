@@ -88,12 +88,26 @@ const useAuthStore = create(
         return user?.emailVerified || true // Por defecto true en mock
       },
       
-      // ⏰ Verificar si el token ha expirado (mock implementation)
+      // ⏰ Verificar si el token ha expirado
       isTokenValid: () => {
         const token = get().token
         if (!token) return false
-        // En una implementación real, verificarías la expiración del JWT
-        return true
+        
+        // Importar dinámicamente para evitar dependencias circulares
+        import('../services/UsersServices').then(({ isTokenValid }) => {
+          return isTokenValid(token)
+        }).catch(() => false)
+        
+        // Verificación básica mientras tanto
+        try {
+          const parts = token.split('.')
+          if (parts.length !== 3) return false
+          
+          const payload = JSON.parse(atob(parts[1]))
+          return payload.exp ? payload.exp > Math.floor(Date.now() / 1000) : true
+        } catch {
+          return false
+        }
       },
       
       // 🔄 Renovar sesión automáticamente

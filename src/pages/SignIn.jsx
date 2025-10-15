@@ -63,21 +63,13 @@ const SignIn = () => {
         utils.devLog('Iniciando proceso de login...', 'info')
 
         try {
-            // Simular delay de red
-            await new Promise(resolve => setTimeout(resolve, 1500))
+            // Intentar login con la API real
+            const { loginUser } = await import('../services/UsersServices')
+            const result = await loginUser(formData.email, formData.password)
             
-            // Simular validación básica (para demo)
-            if (formData.email === 'admin@ejemplo.com' && formData.password === 'admin123') {
-                // Datos simulados del usuario
-                const userData = {
-                    email: formData.email,
-                    firstName: 'Administrador',
-                    lastName: 'Sistema',
-                    username: 'admin'
-                }
-
+            if (result.success) {
                 // Iniciar sesión usando el contexto
-                login(userData)
+                login(result.user)
 
                 await Swal.fire({
                     icon: 'success',
@@ -109,8 +101,8 @@ const SignIn = () => {
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: 'Credenciales incorrectas',
-                    text: 'El correo electrónico o la contraseña son incorrectos',
+                    title: 'Error de autenticación',
+                    text: result.error || 'Credenciales incorrectas',
                     confirmButtonColor: '#005262'
                 })
             }

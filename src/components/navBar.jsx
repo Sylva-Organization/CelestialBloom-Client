@@ -1,9 +1,44 @@
 import './Navbar.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import useAuthStore from '../stores/authStore';
+import Swal from 'sweetalert2';
 
 const Navbar = () => {
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, logout: contextLogout } = useAuth();
+    const { logout: storeLogout } = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        Swal.fire({
+            title: '¿Cerrar sesión?',
+            text: '¿Estás seguro de que quieres cerrar tu sesión?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, cerrar sesión',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Cerrar sesión en ambos sistemas
+                contextLogout();
+                storeLogout();
+                
+                // Mostrar mensaje de confirmación
+                Swal.fire({
+                    title: '¡Sesión cerrada!',
+                    text: 'Has cerrado sesión exitosamente.',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+                
+                // Redirigir al inicio
+                navigate('/');
+            }
+        });
+    };
 
     return(
         <nav id='top'>
@@ -38,13 +73,20 @@ const Navbar = () => {
                     </>
                 )}
                 
-                {/* Mostrar saludo cuando está autenticado, pero sin botón de logout por ahora */}
+                {/* Mostrar opciones cuando está autenticado */}
                 {isAuthenticated && (
-                    <li className="menu-item user-info">
-                        <span className="nav-link user-welcome">
-                            ¡Hola, {user?.firstName || user?.username || 'Usuario'}! 👋
-                        </span>
-                    </li>
+                    <>
+                        <li className="menu-item user-info">
+                            <span className="nav-link user-welcome">
+                                ¡Hola, {user?.firstName || user?.username || 'Usuario'}! 👋
+                            </span>
+                        </li>
+                        <li className="menu-item">
+                            <button className="nav-link btn btn-logout" onClick={handleLogout}>
+                                Cerrar Sesión
+                            </button>
+                        </li>
+                    </>
                 )}
             </ul>
         </nav>
