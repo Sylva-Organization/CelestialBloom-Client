@@ -15,7 +15,7 @@ const ArticleDetail = () => {
         const fetchPost = async () => {
             try {
                 const data = await getOneArticle(id)
-                setPost(data)
+                setPost(data.data)
             } catch (error) {
                 console.error('Error cargando el artículo: ', error)
             } finally {
@@ -85,7 +85,7 @@ const ArticleDetail = () => {
                         <span>Artículo</span>
                     </div>
 
-                    <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                    <span className={`post-category ${categoryStyles[post.category.name.toLowerCase()] || ''}`}>{post.category.name}</span>
                     {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                     <h2 className='title-detail'>{post.title}</h2>
 
