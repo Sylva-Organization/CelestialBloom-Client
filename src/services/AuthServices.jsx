@@ -1,4 +1,4 @@
-import { useAuthStore } from "../store/AuthStore";
+import { useAuthStore } from "../store/authStore";
 
 const URL_API_AUTH = "http://localhost:8000/auth";
 
