@@ -1,16 +1,65 @@
-
-
 .article-detail-container {
     width: 950px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    margin: 5% 0;
+    color: black;
+
+    opacity: 1;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.card-detail {
-    margin: 10% 2%;
-    color: black;
+.article-detail-container.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+.article-header {
+    margin: 3% 5%;
+}
+
+.breadcrumb {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.home-btn {
+    text-decoration: none;
+    color: #4a90e2;
+    transition: color 0.3s ease;
+}
+
+.home-btn:hover {
+    color: #2d5a3d;
+}
+
+.article-meta {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.author-name {
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .title-detail {
-    text-align: center;
     font-size: 40px;
     font-weight: 600;
     margin-bottom: 30px;
@@ -21,10 +70,46 @@
     height: 400px;
 }
 
+/*Card body detail*/
+.card-body-detail {
+    margin: 0 5%;
+}
+
 .card-description-detail {
     margin: 7% 0 2% 0;
 }
 
 .btn-back {
     font-size: 20px;
+    padding: 5px 20px;
+    background: transparent;
+    border-radius: 20px;
+    border: 2px solid #999;
+    color: #666;
+}
+
+.btn-back:hover {
+    background: #f8f9fa;
+    border-color: #666;
+    transform: translateX(-5px);
+}
+
+/*Action Buttons*/
+.article-actions {
+    padding: 2rem 3rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.action-group {
+    display: flex;
+    gap: 1rem;
+}
+
+/*Error message*/
+.error-msg {
+    color: black;
 }

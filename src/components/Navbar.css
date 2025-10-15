@@ -17,6 +17,7 @@ img {
 .menu {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
 
 .menu li {
@@ -35,6 +36,10 @@ img {
 .btn {
     padding: 7px 15px;
     border-radius: 10px;
+    border: none;
+    font-size: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btn-sign-in {
@@ -46,12 +51,34 @@ img {
     background-color: #1E1E1E;
 }
 
-.user-greeting {
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-welcome {
     color: #fff;
     font-weight: 500;
+    font-size: 0.95rem;
     white-space: nowrap;
 }
 
-.user-greeting:hover {
+.user-welcome:hover {
     text-decoration: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .user-welcome {
+        font-size: 0.85rem;
+    }
+    
+    .menu {
+        gap: 15px;
+    }
+    
+    .btn {
+        padding: 5px 10px;
+        font-size: 0.9rem;
+    }
 }

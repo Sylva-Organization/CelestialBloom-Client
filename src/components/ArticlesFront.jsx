@@ -52,6 +52,7 @@ const ArticlesFront = ({ categoryFilter }) => {
 
     // Filtrar posts por categoría si se especifica
     const filteredPosts = categoryFilter
+<<<<<<< HEAD
         ? posts.filter((post) => {
             // Compatibilidad con diferentes estructuras de datos
             const category = post.categories?.name || post.category || ''
@@ -60,13 +61,38 @@ const ArticlesFront = ({ categoryFilter }) => {
         : posts
 
     utils.devLog(`Posts filtrados: ${filteredPosts.length} de ${posts.length}`, 'debug')
+=======
+        ? posts.filter(
+            (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
+        ) : posts
+
+    if (loading) {
+        return <div className='loading'>Cargando artículos...</div>
+    }
+>>>>>>> 4181761b3f9065c4d502364a481e1f988dce6a2a
 
     return (
         <>
             <article className="articles">
+<<<<<<< HEAD
                 {loading ? (
                     <div className="loading-message">
                         <p>Cargando artículos...</p>
+=======
+                {filteredPosts.map((post) => (
+                    <div key={post.id} className='card-container'>
+                        <img src={post.image} alt="foto-post" />
+                        <div className="card-body">
+                            <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                            {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
+                            <h3 className='card-title'>{post.title}</h3>
+                            <p className='card-content'>{post.content}</p>
+                            <div className="post-meta">
+                                <span className='post-user-author'>{post.user?.first_name} {post.user?.last_name}</span>
+                                <Link to={`/articulo-detalle/${post.id}`} className='read-more'>Leer más</Link>
+                            </div>
+                        </div>
+>>>>>>> 4181761b3f9065c4d502364a481e1f988dce6a2a
                     </div>
                 ) : filteredPosts.length === 0 ? (
                     <div className="no-articles-message">

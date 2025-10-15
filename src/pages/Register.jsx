@@ -5,9 +5,14 @@ import { formValidation, mockData, utils } from '../utils'
 import './Register.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { sendWelcomeEmailAuto } from '../services/EmailService'
 import Swal from 'sweetalert2'
 
 const Register = () => {
+    const navigate = useNavigate()
+    const { register } = useAuth()
+    
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -64,34 +69,99 @@ const Register = () => {
         utils.devLog('Iniciando proceso de registro...', 'info')
 
         try {
-            // Simular delay de red
-            await new Promise(resolve => setTimeout(resolve, 1500))
+            // Simular llamada a API
+            await new Promise(resolve => setTimeout(resolve, 1000))
             
-            // Verificar si el usuario ya existe (simulado)
-            const existingUser = mockData.getUserByEmail(formData.email)
-            if (existingUser) {
-                utils.devLog('Usuario ya existe en mock data', 'warning')
-                setErrors({ email: 'Este email ya está registrado' })
-                return
-            }
-            
-            // Usar mock data para simular registro
-            const mockResponse = mockData.mockRegisterSuccess({
+            // Datos del usuario registrado
+            const userData = {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 email: formData.email,
                 username: formData.username
+            }
+            
+            console.log('Register data:', userData)
+            
+            // Registrar y loguear automáticamente al usuario
+            register(userData)
+            
+            // Enviar email de bienvenida
+            console.log('📧 Enviando email de bienvenida...')
+            const emailResult = await sendWelcomeEmailAuto(userData)
+            
+            if (emailResult.success) {
+                console.log('✅ Email de bienvenida enviado exitosamente')
+            } else {
+                console.warn('⚠️ Error al enviar email de bienvenida:', emailResult.error)
+            }
+            
+            await Swal.fire({
+                icon: 'success',
+                title: `¡Bienvenid@ a CelestialBloom, ${formData.firstName}! 🌟`,
+                html: `
+                    <div style="text-align: center; padding: 1rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀✨</div>
+                        <p style="font-size: 1.1rem; color: #374151; margin-bottom: 1rem; line-height: 1.6;">
+                            <strong>¡Tu cuenta ha sido creada exitosamente!</strong>
+                        </p>
+                        <p style="color: #6b7280; margin-bottom: 1rem; line-height: 1.5;">
+                            Ahora formas parte de nuestra comunidad de exploradores del cosmos y la naturaleza.
+                        </p>
+                        <div style="
+                            background: linear-gradient(135deg, #47b89d, #7ea83c);
+                            color: white;
+                            padding: 0.75rem 1.5rem;
+                            border-radius: 25px;
+                            display: inline-block;
+                            font-weight: 500;
+                            margin-bottom: 1rem;
+                            box-shadow: 0 4px 12px rgba(71, 184, 157, 0.3);
+                        ">
+                            Usuario: @${formData.username}
+                        </div>
+                        <div style="
+                            background: #f0f9ff;
+                            border: 2px solid #0ea5e9;
+                            border-radius: 12px;
+                            padding: 0.75rem;
+                            margin: 1rem 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            gap: 0.5rem;
+                        ">
+                            <span style="font-size: 1.2rem;">📧</span>
+                            <span style="color: #0f172a; font-size: 0.9rem; font-weight: 500;">
+                                ${emailResult.real ? 'Email de bienvenida enviado' : 'Email de bienvenida simulado'} a ${formData.email}
+                            </span>
+                        </div>
+                        <p style="color: #374151; font-size: 0.9rem;">
+                            ¡Has iniciado sesión automáticamente! Serás redirigido al inicio...
+                        </p>
+                    </div>
+                `,
+                confirmButtonText: 'Explorar CelestialBloom',
+                confirmButtonColor: '#005262',
+                timer: 6000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeInUp animate__faster'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutDown animate__faster'
+                },
+                customClass: {
+                    popup: 'welcome-popup',
+                    confirmButton: 'welcome-button'
+                },
+                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+                width: '500px',
+                padding: '2rem'
             })
             
-            if (mockResponse.success) {
-                utils.devLog('Registro exitoso con mock data', 'success')
-                
-                // 🔑 Simular token JWT
-                const mockToken = `jwt.token.${Date.now()}.${Math.random().toString(36).substr(2, 9)}`
-                
-                // 🎉 Usar hook mejorado para registro
-                await handleRegister(mockResponse.user, mockToken, '/')
-            }
+            // Redireccionar al inicio después del registro exitoso
+            navigate('/')
+            
         } catch (error) {
             utils.devLog('Error en registro simulado', 'error')
             setErrors({ general: 'Error al crear la cuenta. Intenta nuevamente.' })

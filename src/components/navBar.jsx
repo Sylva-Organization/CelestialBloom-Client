@@ -1,10 +1,9 @@
 import './Navbar.css'
 import { Link } from 'react-router-dom';
-import { useAuthActions } from '../hooks/useAuthActions';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-    // � Usar el hook personalizado para acciones de autenticación
-    const { isAuthenticated, user, getUserName, handleLogout } = useAuthActions();
+    const { user, isAuthenticated } = useAuth();
 
     return(
         <nav id='top'>
@@ -27,36 +26,25 @@ const Navbar = () => {
                     <Link to="/creadoras" className="nav-link">Creadoras</Link>
                 </li>
                 
-                {/* Solo mostrar Sign In y Register si NO está autenticado */}
+                {/* Mostrar botones de autenticación solo si NO está autenticado */}
                 {!isAuthenticated && (
                     <>
                         <li className="menu-item">
                             <Link to="/inicio-sesion" className="nav-link btn btn-sign-in">Sign in</Link>
                         </li>
                         <li className="menu-item">
-                            <Link to="/registro" className="nav-link btn btn-register">Register</Link>
+                            <Link to="/register" className="nav-link btn btn-register">Register</Link>
                         </li>
                     </>
                 )}
                 
-                {/* Mostrar saludo y logout si está autenticado */}
+                {/* Mostrar saludo cuando está autenticado, pero sin botón de logout por ahora */}
                 {isAuthenticated && (
-                    <>
-                        <li className="menu-item">
-                            <span className="nav-link user-greeting">
-                                ¡Hola, {getUserName()}! 👋
-                            </span>
-                        </li>
-                        <li className="menu-item">
-                            <button 
-                                onClick={handleLogout}
-                                className="nav-link btn btn-sign-in"
-                                style={{ cursor: 'pointer' }}
-                            >
-                                Cerrar Sesión
-                            </button>
-                        </li>
-                    </>
+                    <li className="menu-item user-info">
+                        <span className="nav-link user-welcome">
+                            ¡Hola, {user?.firstName || user?.username || 'Usuario'}! 👋
+                        </span>
+                    </li>
                 )}
             </ul>
         </nav>

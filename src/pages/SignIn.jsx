@@ -6,9 +6,13 @@ import Swal from 'sweetalert2'
 import './SignIn.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 import Swal from 'sweetalert2'
 
 const SignIn = () => {
+    const navigate = useNavigate()
+    const { login } = useAuth()
+    
     const [formData, setFormData] = useState({
         email: '',
         password: ''
@@ -66,17 +70,53 @@ const SignIn = () => {
             // Simular delay de red
             await new Promise(resolve => setTimeout(resolve, 1500))
             
-            // Usar mock data para simular login
-            const mockResponse = mockData.mockLoginSuccess(formData.email)
-            
-            if (mockResponse.success) {
-                utils.devLog('Login exitoso con mock data', 'success')
+            // Simular validación básica (para demo)
+            if (formData.email === 'admin@ejemplo.com' && formData.password === 'admin123') {
+                // Datos simulados del usuario
+                const userData = {
+                    email: formData.email,
+                    firstName: 'Administrador',
+                    lastName: 'Sistema',
+                    username: 'admin'
+                }
+
+                // Iniciar sesión usando el contexto
+                login(userData)
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: '¡Bienvenido de vuelta! 🌟',
+                    html: `
+                        <div style="text-align: center; padding: 0.5rem;">
+                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
+                            <p style="font-size: 1rem; color: #374151; margin-bottom: 0.5rem;">
+                                <strong>¡Has iniciado sesión exitosamente!</strong>
+                            </p>
+                            <p style="color: #6b7280; font-size: 0.9rem;">
+                                Explora el cosmos y la naturaleza con nosotros
+                            </p>
+                        </div>
+                    `,
+                    confirmButtonText: 'Comenzar',
+                    confirmButtonColor: '#005262',
+                    timer: 4000,
+                    timerProgressBar: true,
+                    showClass: {
+                        popup: 'animate__animated animate__fadeIn animate__faster'
+                    },
+                    width: '400px',
+                    padding: '1.5rem'
+                })
                 
-                // 🔑 Simular token JWT
-                const mockToken = `jwt.token.${Date.now()}.${Math.random().toString(36).substr(2, 9)}`
-                
-                // 🎉 Usar hook mejorado para login
-                await handleLogin(mockResponse.user, mockToken, '/')
+                // Redireccionar a la página principal
+                navigate('/')
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Credenciales incorrectas',
+                    text: 'El correo electrónico o la contraseña son incorrectos',
+                    confirmButtonColor: '#005262'
+                })
             }
         } catch (error) {
             utils.devLog('Error en login simulado', 'error')
