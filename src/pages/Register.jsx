@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext'
 import { sendWelcomeEmailAuto } from '../services/EmailService'
 import Swal from 'sweetalert2'
 import { useAuthStore } from '../store/authStore'
+import { registerUser } from '../services/AuthServices'
 
 const Register = () => {
     const navigate = useNavigate()
@@ -117,23 +118,20 @@ const Register = () => {
         setIsLoading(true)
 
         try {
-            const res = await fetch('http://localhost:8000/auth/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    first_name: formData.firstName,
-                    last_name: formData.lastName,
-                    email: formData.email,
-                    password: formData.password,
-                    nick_name: formData.username
-                })
-            })
-
-            const data = await res.json()
-
-            if (!res.ok) {
-                throw new Error(data.message || 'Error al registrar usuario')
-            }
+            const data = await registerUser({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                email: formData.email,
+                password: formData.password,
+                nick_name: formData.username
+            });
+            // console.log("Backend:", {
+            //     first_name: formData.firstName,
+            //     last_name: formData.lastName,
+            //     email: formData.email,
+            //     password: formData.password,
+            //     nick_name: formData.username
+            // });
 
             const user = {
                 id: data.data.id,

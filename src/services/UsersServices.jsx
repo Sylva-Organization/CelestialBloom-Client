@@ -13,7 +13,7 @@ export async function getAllUsers() {
 
 //GET/:id method
 export async function getOneUser(id) {
-    const response = await fetch (`${URL_API_USERS}/${id}`)
+    const response = await fetch(`${URL_API_USERS}/${id}`)
     if (!response.ok) throw new Error('Error al obtener el usuario')
     return response.json()
 }
@@ -23,3 +23,15 @@ export async function getUserPosts(authorId) {
     if (!response.ok) throw new Error("Error al obtener los posts del usuario");
     return response.json()
 }
+// PUT o PATCH /users/:id → { data: User }
+export const updateUser = async (id, payload, { method = "put" } = {}) => {
+    const fn = method === "patch" ? api.patch : api.put;
+    const res = await fn(`/users/${id}`, payload);
+    return res.data?.data;
+};
+
+// DELETE /users/:id → { message }
+export const deleteUser = async (id) => {
+    const res = await api.delete(`/users/${id}`);
+    return res.data; // { message }
+}; 
