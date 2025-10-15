@@ -1,19 +1,12 @@
-import { useAuthStore } from "../store/authStore"
+import { getAuthHeaders } from "./apiHelpers";
 
 const URL_API = "http://localhost:8000/posts"
-const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
-
-// zustand
-function getAuthHeaders() {
-  const token = useAuthStore.getState().token;
-  return token
-    ? { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
-    : { "Content-Type": "application/json" };
-}
+const EXPANDED_URL = `${URL_API}?_expand=user&_expand=categories`
 
 //GET METHOD
 export async function getAllArticles() {
-    const response = await fetch(EXPANDED_URL, {headers: getAuthHeaders(),        
+    const response = await fetch(EXPANDED_URL, {
+        headers: getAuthHeaders(),
     })
     if (!response.ok) {
         throw new Error('Error al obtener los artículos')
@@ -25,9 +18,10 @@ export async function getAllArticles() {
 //GET/:ID
 export async function getOneArticle(id) {
     // const response = await fetch (`${URL_API}/${id}`)
-    const response = await fetch (`${URL_API}/${id}?_expand=user&_expand=categories`, {headers: getAuthHeaders(), 
-        
-});
+    const response = await fetch(`${URL_API}/${id}?_expand=user&_expand=categories`, {
+        headers: getAuthHeaders(),
+
+    });
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
