@@ -1,44 +1,47 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './EditForm.css'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getOneArticle, updateArticle } from '../services/ArticlesServices'
+
+const CLOUD_NAME = "dmidet1rt"
+const UPLOAD_PRESET = "celestialbloom_react_upload"
 
 const EditForm = () => {
-    const [uploadedImages, setUploadedImages] = useState([])
+    const { id } = useParams() // obtenemos el id desde la URL
+    const [imageFile, setImageFile] = useState(null)
+    const [existingImage, setExistingImage] = useState(null)
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
-    const [subcategory, setSubcategory] = useState('')
     const [content, setContent] = useState('')
+    const [uploading, setUploading] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
+    const navigate = useNavigate()
 
-    // const uploadAreaRef = useRef(null);
     const imageInputRef = useRef(null)
 
-    // Manejo de imágenes
-    const handleFiles = (files) => {
-        const fileArray = Array.from(files)
-        const newImages = [...uploadedImages]
-
-        /**Bucle con condicionales (?) para: ----> Mirar
-         * si la cantidad de imágenes supera las permitidas 
-         * si las imágenes son de tamaño mayor al solicitado
-         * si la imagen es una no válida
-         */
-
-        fileArray.forEach((file) => {
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                setUploadedImages((prev) => [
-                    ...prev,
-                    { name: fileArray.name, data: e.target.result },
-                ])
+    // --- Cargar datos ya existentes ---
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                const article = await getOneArticle(id)
+                setTitle(article.title)
+                setContent(article.content)
+                setExistingImage(article.image || null)
+                setCategory(article.categories?.name || '') //Mirar si está bien
+            } catch (error) {
+                console.error('Error al cargar artículo:', error)
             }
-            reader.readAsDataURL(file)
-        })
-    }
+        }
+        fetchArticle()
+    }, [id])
 
-    const handleDrop = (e) => {
-        e.preventDefault()
-        setIsDragging(false)
-        handleFiles(e.dataTranfer.files)
+    // --- Manejo del archivo ---
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) {
+            setImageFile(file)
+            setExistingImage(null)
+        }
     }
 
     const handleDragOver = (e) => {
@@ -46,42 +49,99 @@ const EditForm = () => {
         setIsDragging(true)
     }
 
-    const handleDragLeave = () => {
+    const handleDragLeave = () => setIsDragging(false)
+
+    const handleDrop = (e) => {
+        e.preventDefault()
         setIsDragging(false)
+        const file = e.dataTransfer.files[0]
+        if (file) {
+            setImageFile(file)
+            setExistingImage(null)
+        }
     }
 
-    const removeImage = (index) => {
-        setUploadImages(uploadedImages.filter((_, i) => i !== index))
+    const removeImage = () => {
+        setImageFile(null)
+        setExistingImage(null)
     }
+
+    // --- Subida a Cloudinary ---
+    const uploadImageToCloudinary = async (file) => {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("upload_preset", UPLOAD_PRESET)
+        formData.append("folder", "celestialbloom")
+
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+            {
+                method: "POST",
+                body: formData,
+            }
+        )
+
+        if (!response.ok) throw new Error("Error al subir la imagen")
+        const data = await response.json()
+        return data.secure_url
+    }
+
+    // --- Validación del formulario
+    const isFormValid = title.trim() && category && category !== "#" && content.trim()
 
     // --- Envío del formulario
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
 
-        if (!title || !category || !content) {
-            alert('Por favor, completa todos los campos obligatorios')
-            return
+        if (!isFormValid) {
+            alert("⚠️ Completa todos los campos.")
+            return // Salimos si falta algo
         }
 
-        const articleData = {
-            title,
-            category,
-            subcategory: subcategory || null,
-            content,
-            images: uploadedImages,
-            publishedAt: new Date.toISOString(),
-        }
+        setUploading(true)
 
-        console.log('Artículo publicado: ', articleData)
-        alert('¡Artículo publicado con éxito! 🎉') // hacerlo con un modal
+        try {
+            let imageUrl = existingImage
+            if (imageFile) {
+                imageUrl = await uploadImageToCloudinary(imageFile)
+                console.log("✅ Imagen subida a Cloudinary:", imageUrl)
+            }
+
+            const updatedArticle = {
+                title,
+                content,
+                image: imageUrl,
+                category_id: category === 'astronomia' ? 2 : 1,
+                updatedAt: new Date().toISOString(),
+                categories: {
+                    id: category === 'astronomia' ? 2 : 1,
+                    name: category === 'astronomy' ? 'astronomia' : 'botanica'
+                }
+            }
+
+            await updateArticle(id, updatedArticle) //?
+            alert("✅ Artículo actualizado con éxito")
+
+            // Esperar 1.5 segundos antes de redirigir
+            setTimeout(() => {
+                navigate('/') // Redirige a la página principal
+            }, 1500)
+
+        } catch (error) {
+            console.error(error)
+            alert("❌ Error al actualizar el artículo")
+        } finally {
+            setUploading(false)
+        }
     }
+
     return (
         <>
             <section className="form-section">
                 <div className="form-container">
                     <div className="form-header">
-                        <h1>Crear Nuevo Artículo</h1>
-                        <p>Comparte tu conocimiento sobre botánica o astronomía</p>
+                        <h1>Editar Artículo</h1>
+                        <p>Modifica los datos de tu artículo</p>
                     </div>
 
                     <form action="article-form" id='articleForm' onSubmit={handleSubmit}>
@@ -96,49 +156,44 @@ const EditForm = () => {
                             <label className="form-label">Categoría <span className="required">*</span></label>
                             <select name="category" id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                                 <option value="#">Selecciona una opción</option>
-                                <option value="astronomy">Astronomía</option>
-                                <option value="botany">Botánica</option>
+                                <option value="astronomia">Astronomía</option>
+                                <option value="botanica">Botánica</option>
                             </select>
-                        </div>
-
-                        {/* Subcategory  */}
-                        <div className="form-group">
-                            <label className="form-label">Subcategoría <span className="optional">(opcional)</span></label>
-                            <input type="text" className="form-input" id='subcategory' placeholder='Ej: Plantas carnívoras, Exoplanetas, Fotosíntesis, etc.' value={subcategory} onChange={(e) => setSubcategory(e.target.value)} />
                         </div>
 
                         {/* Content  */}
                         <div className="form-group">
-                            <label htmlFor="" className="form-label">Contenido <span className="required">*</span></label>
-                            <textarea name="" id="content" className="form-textarea" placeholder='Escribe aquí el contenido de tu artículo...' required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
+                            <label className="form-label">Contenido <span className="required">*</span></label>
+                            <textarea id="content" className="form-textarea" placeholder='Escribe aquí el contenido de tu artículo...' required value={content} onChange={(e) => setContent(e.target.value)}></textarea>
 
                         </div>
 
                         {/* Images  */}
                         <div className="form-group">
-                            <label htmlFor="" className="form-label">Imágenes <span className="required"></span></label>
+                            <label className="form-label">Imágenes <span className="required">*</span></label>
                             <div className={`image-upload-area ${isDragging ? 'dragover' : ''}`} id='uploadArea' onClick={() => imageInputRef.current.click()} onDragOver={handleDragOver} onDragLeave={handleDragLeave} onDrop={handleDrop}>
                                 <div className="upload-icon">📷</div>
                                 <div className="upload-text">Haz clic o arrastra imágenes aquí</div>
                                 <div className="upload-hint">PNG, JPG</div>
                             </div>
-                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)} style={{ display: 'none' }} />
+                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/*' onChange={handleFileChange} />
 
                             {/* Preview  */}
-                            <div className="image-preview-container" id='imagePreview'>
-                                {uploadedImages.map((img, index) => (
-                                    <div key={index} className="image-preview">
-                                        <img src={img.data} alt={img.name} />
-                                        <button type='button' className="remove-image" onClick={() => removeImage(index)}>x</button>
+                            {(existingImage || imageFile) && (
+                                <div className="image-preview-container" id='imagePreview'>
+                                    <div className="image-preview">
+                                        <img src={imageFile ? URL.createObjectURL(imageFile) : existingImage} alt="Vista previa" />
+
+                                        <button type='button' className="remove-image" onClick={removeImage}>x</button>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            )}
                         </div>
 
                         {/* Form Actions - Buttons Delete/Create  */}
                         <div className="form-actions">
-                            <button type='button' className="btn btn-secondary" onClick={() => window.history.back()}>Cancelar</button>
-                            <button type='submit' className="btn btn-primary">Editar Artículo</button>
+                            <button type='button' className="btn btn-secondary" onClick={() => window.history.back()} disabled={uploading}>Cancelar</button>
+                            <button type='submit' className="btn btn-primary" disabled={!isFormValid || uploading}>{uploading ? "Guardando..." : "Editar Artículo"}</button>
                         </div>
                     </form>
                 </div>
