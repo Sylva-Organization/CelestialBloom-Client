@@ -255,7 +255,7 @@ const SignIn = () => {
                         )}
                     </div>
 
-                    <div className="form-actions">
+                    {/* <div className="form-actions">
                         <button
                             type="button"
                             className="forgot-password-link"
@@ -263,7 +263,7 @@ const SignIn = () => {
                         >
                             ¿Olvidaste tu contraseña?
                         </button>
-                    </div>
+                    </div> */}
 
                     <button
                         type="submit"
