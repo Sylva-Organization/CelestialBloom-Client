@@ -9,6 +9,7 @@
     width: 370px;
     height: 500px;
     margin-bottom: 10%;
+    /* background: linear-gradient(to right, rgba(126, 168, 60, 0.7), rgba(71, 184, 157, 0.7)); */
 }
 
 .card-container img {
@@ -74,4 +75,51 @@
 
 .read-more:hover {
     text-decoration: underline;
+}
+
+/* Estilos adicionales para fechas y meta información */
+.card-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.post-date {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.card-author {
+    font-size: 0.85rem;
+    color: #3498db;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ecf0f1;
+}
+
+.formatted-date {
+    font-size: 0.8rem;
+    color: #95a5a6;
+}
+
+.loading-message, .no-articles-message {
+    text-align: center;
+    width: 100%;
+    padding: 2rem;
+    color: #7f8c8d;
+}
+
+.loading-message p, .no-articles-message p {
+    font-size: 1.1rem;
+    margin: 0;
 }

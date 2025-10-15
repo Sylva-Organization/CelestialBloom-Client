@@ -6,9 +6,12 @@ import Botany from "../pages/Botany";
 import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
-import RegisterTest from "../pages/RegisterTest";
+import ProtectedRoute from "../components/ProtectedRoute";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
+import Perfil from "../pages/Perfil";
+import CreateForm from "../components/CreateForm";
+import EditForm from "../components/EditForm";
 
 const routerBlog = createBrowserRouter([{
     path: "/",
@@ -28,15 +31,15 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/astronomia",
-            element: <Astronomy/>
+            element: <ProtectedRoute><Astronomy/></ProtectedRoute>
         },
         {
             path: "/botanica",
-            element: <Botany/>
+            element: <ProtectedRoute><Botany/></ProtectedRoute>
         },
         {
             path: "/creadoras",
-            element: <Creators/>
+            element: <ProtectedRoute><Creators/></ProtectedRoute>
         },
         {
             path: "/inicio-sesion",
@@ -44,12 +47,20 @@ const routerBlog = createBrowserRouter([{
         },
         {
             path: "/registro",
-            element: <RegisterTest/>
-        },
-        {
-            path: "/register",
             element: <Register/>
         },
+        {
+            path: "/perfil",
+            element: <Perfil></Perfil>
+        },
+        {
+            path: "/create-form",
+            element: <CreateForm></CreateForm>
+        }, 
+        {
+            path: "/edit-form",
+            element: <EditForm></EditForm>
+        }
     ]
 }])
 

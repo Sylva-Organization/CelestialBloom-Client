@@ -1,4 +1,3 @@
-
 #top {
     background: linear-gradient(to right, #014C5C, #016473, #1A642F);
     display: flex;
@@ -45,4 +44,14 @@ img {
 
 .btn-register {
     background-color: #1E1E1E;
+}
+
+.user-greeting {
+    color: #fff;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.user-greeting:hover {
+    text-decoration: none;
 }
