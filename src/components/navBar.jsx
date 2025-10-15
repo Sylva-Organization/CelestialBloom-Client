@@ -70,7 +70,7 @@ const Navbar = () => {
                     <>
                         <li className='menu-item user-info'>
                             <span className='nav-link user-welcome'>
-                                ¡Hola, {user?.firstName || user?.username || 'Usuario'}! 👋
+                                ¡Hola, {user?.firstName || user?.username || 'Usuario'}!
                             </span>
                         </li>
                         <li className='menu-item'>
