@@ -3,6 +3,8 @@ import './ArticleDetail.css'
 import { Link, useParams } from 'react-router-dom';
 import { getOneArticle, deleteArticle } from '../services/ArticlesServices';
 import Swal from 'sweetalert2';
+import { useAuthStore } from '../store/authStore';
+
 
 const ArticleDetail = () => {
 
@@ -24,6 +26,9 @@ const ArticleDetail = () => {
         }
         fetchPost()
     }, [id])
+
+    const isAdmin = useAuthStore((s) => s.isAdmin?.() ?? s.roles?.includes('admin')); //
+
 
     const categoryStyles = {
         "botánica": "category-botany",
@@ -105,11 +110,21 @@ const ArticleDetail = () => {
                         <p className="card-description-detail">{post.content}</p>
                         <div className="article-actions">
                             <Link to="/" className='read-more btn-back'>← Volver</Link>
-                            <div className="action-group">
-                                <button className='action-btn delete' onClick={() => handleDelete(post.id)}>Eliminar</button>
-                                <Link className='action-btn edit' to={`/edit-form/${post.id}`}>Editar</Link>
-                            </div>
+
+                            {isAdmin && (   // 👈 aquí empieza la condición
+                                <div className="action-group">
+                                    <button
+                                        className='action-btn delete'
+                                        onClick={() => handleDelete(post.id)}
+                                        disabled={isDeleting}
+                                    >
+                                        Eliminar
+                                    </button>
+                                    <Link className='action-btn edit' to={`/edit-form/${post.id}`}>Editar</Link>
+                                </div>
+                            )}  {/* 👈 aquí cierra la condición */}
                         </div>
+
                     </div>
                 </div>
             </article>
