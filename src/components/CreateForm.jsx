@@ -63,13 +63,25 @@ const CreateForm = () => {
         return data.secure_url //la URL pública de Cloudinary
     }
 
+    // --- Validación del formulario
+    const isFormValid = title.trim() && category && category !== "#" && content.trim() && imageFile
+
     // --- Envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault()
+
+        // Validaciones 
+        if (!isFormValid) {
+            alert("⚠️ Por favor, completa todos los campos y sube una imagen antes de publicar.")
+            return // Salimos si falta algo
+        }
+        
         setUploading(true)
 
         try {
             let imageUrl = ""
+
+            if (imageFile) imageUrl = await uploadImageToCloudinary(imageFile)
 
             if (imageFile) {
                 imageUrl = await uploadImageToCloudinary(imageFile)
@@ -167,7 +179,8 @@ const CreateForm = () => {
                         {/* Form Actions - Buttons Delete/Create  */}
                         <div className="form-actions">
                             <button type='button' className="btn btn-secondary" onClick={() => window.history.back()} disabled={uploading}>Cancelar</button>
-                            <button type='submit' className="btn btn-primary" disabled={uploading}>{uploading ? "Publicando" : "Publicar Artículo"}</button>
+                
+                            <button type='submit' className={`btn btn-primary ${(!isFormValid || uploading) ? 'btn-disabled' : ''}`} disabled={uploading || !isFormValid}>{uploading ? "Publicando" : "Publicar Artículo"}</button>
                         </div>
                     </form>
                 </div>
