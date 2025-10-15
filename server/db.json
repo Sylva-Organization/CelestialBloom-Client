@@ -202,6 +202,20 @@
         "name": "botanica"
       },
       "id": "0637"
+    },
+    {
+      "id": "4016",
+      "title": "Prueba con .env",
+      "content": "Tan importante como esto es ofrecerle a nuestra tortuga de agua un punto cálido en la zona seca, el área terrestre de su tortuguera. Para ello, tendremos que utilizar una lámpara de calor que permita que en esa zona concreta nuestra tortuga cuente con temperaturas superiores a 30 grados.\n\n4. La luz, otro aspecto crucial en el cuidado de tortugas de agua en casa\nY en el que tampoco solemos reparar. Íntimamente ligado con o anterior, las tortugas de agua deben recibir una buena dosis de sol diariamente por una cuestión de salud. La luz es fundamental para que la tortuga sintetice vitamina D3 y fije el calcio, crucial tanto para sus huesos como para su caparazón.\n\nPor ello, es conveniente utilizar una luz UVB que utilizaremos para evitar que nuestro reptil acuático sufra dolencias como la enfermedad metabólica ósea.\n\n5. La alimentación, un punto vital en los cuidados de las tortugas de agua\nTan importante como desconocido. Solemos saber que las tortugas de agua son animales omnívoros pero desconocemos que su dieta debe estar adecuada a su edad. O, dicho de otro modo, que la proporción entre proteína y vegetales cambia en función del momento vital de la tortuga. Y no: por más que lo creamos, las tortugas de agua no se alimentan únicamente de camarones desecados. Es más: si la dieta de nuestra tortuga de agua está basada únicamente en ellas, le estaremos generando un serio problema de nutrición ya que tendrá una carencia de nutrientes tan importantes como el calcio, la fibra y otras vitaminas.",
+      "image": "https://res.cloudinary.com/dmidet1rt/image/upload/v1760513791/celestialbloom/d6gtosn3f0hg78hmieyr.png",
+      "user_id": 1,
+      "category_id": 1,
+      "createdAt": "2025-10-15T16:35:16.178Z",
+      "updatedAt": "2025-10-15T16:35:16.178Z",
+      "categories": {
+        "id": 1,
+        "name": "botanica"
+      }
     }
   ]
 }
