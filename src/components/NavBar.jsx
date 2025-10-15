@@ -15,7 +15,6 @@ const Navbar = () => {
   const toggleMenu = () => setIsMenuOpen((p) => !p)
   const closeMenu = () => setIsMenuOpen(false)
 
-  // Prevenir scroll cuando el menú está abierto
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = 'hidden'
@@ -56,37 +55,12 @@ const Navbar = () => {
   return (
     <>
       <nav id='top'>
+        {/* Logo a la izquierda */}
         <Link to='/' className='nav-title' onClick={closeMenu}>
           <img src='/logo.PNG' className='logo-img' alt='logo' />
         </Link>
 
-        <div className='nav-right'>
-          {!token && (
-            <div className='auth-buttons'>
-              <Link to='/inicio-sesion' className='nav-link btn btn-sign-in' onClick={closeMenu}>
-                Sign in
-              </Link>
-              <Link to='/register' className='nav-link btn btn-register' onClick={closeMenu}>
-                Register
-              </Link>
-            </div>
-          )}
-
-          <button
-            type='button'
-            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
-            onClick={toggleMenu}
-            aria-label='Abrir menú'
-            aria-expanded={isMenuOpen}
-            aria-controls='mobile-menu'
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-
-        {/* Menú de escritorio */}
+        {/* Menú de escritorio al centro/izq */}
         <ul className='menu desktop-menu'>
           <li className='menu-item'>
             <Link to='/' className='nav-link'>Inicio</Link>
@@ -119,6 +93,33 @@ const Navbar = () => {
             </>
           )}
         </ul>
+
+        {/* A la derecha: botones de auth (cuando NO hay token) + hamburguesa */}
+        <div className='nav-right'>
+          {!token && (
+            <div className='auth-buttons'>
+              <Link to='/inicio-sesion' className='nav-link btn btn-sign-in' onClick={closeMenu}>
+                Sign in
+              </Link>
+              <Link to='/register' className='nav-link btn btn-register' onClick={closeMenu}>
+                Register
+              </Link>
+            </div>
+          )}
+
+          <button
+            type='button'
+            className={`hamburger ${isMenuOpen ? 'active' : ''}`}
+            onClick={toggleMenu}
+            aria-label='Abrir menú'
+            aria-expanded={isMenuOpen}
+            aria-controls='mobile-menu'
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
 
         {/* Menú móvil colgando del NavBar */}
         {isMenuOpen && (
