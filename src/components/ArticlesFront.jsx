@@ -12,7 +12,7 @@ const ArticlesFront = ({ categoryFilter }) => {
         const fetchData = async () => {
             try {
                 const data = await getAllArticles()
-                setPosts(data)
+                setPosts(data.data)
             } catch (error) {
                 console.error('Error al cargar artículos: ', error);
             } finally {
@@ -29,8 +29,9 @@ const ArticlesFront = ({ categoryFilter }) => {
 
     const filteredPosts = categoryFilter
         ? posts.filter(
-            (post) => post.categories.name.toLowerCase() === categoryFilter.toLowerCase()
-        ) : posts
+            (post) => post.category?.name.toLowerCase() === categoryFilter.toLowerCase()
+        )
+        : posts
 
     if (loading) {
         return <div className='loading'>Cargando artículos...</div>
@@ -43,7 +44,7 @@ const ArticlesFront = ({ categoryFilter }) => {
                     <div key={post.id} className='card-container'>
                         <img src={post.image} alt="foto-post" />
                         <div className="card-body">
-                            <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                            <span className={`post-category ${categoryStyles[post.category.name.toLowerCase()] || ''}`}>{post.category.name}</span>
                             {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                             <h3 className='card-title'>{post.title}</h3>
                             <p className='card-content'>{post.content}</p>

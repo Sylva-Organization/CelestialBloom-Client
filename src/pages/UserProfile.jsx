@@ -16,11 +16,13 @@ const UserProfile = () => {
         const fetchUserData = async () => {
             try {
                 const userData = await getOneUser(id)
-                // const userPosts = await getUserPosts(id)
-
+                const userPosts = await getUserPosts(id)
+                // console.log(userData);
+                // console.log(userPosts);
                 setUser(userData.data)
-                console.log("ID desde useParams", id)
-                // setPosts(userPosts)
+                //console.log("ID desde useParams", id)
+                setPosts(userPosts.data)
+                //console.log(userData.data.posts)
             } catch (error) {
                 console.error('Error cargando datos del usuario: ', error)
             } finally {
@@ -56,7 +58,7 @@ const UserProfile = () => {
                     setTimeout(() => {
                         setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
                         setDeletingPosts(prev => prev.filter(id => id !== postId))
-                    }, 500) 
+                    }, 500)
 
                     Swal.fire({
                         title: '¡Eliminado!',
@@ -68,7 +70,7 @@ const UserProfile = () => {
 
                 } catch (error) {
                     Swal.fire({
-                        title:'Error',
+                        title: 'Error',
                         text: 'No se pudo eliminar el post.',
                         icon: 'error'
                     })
@@ -122,7 +124,9 @@ const UserProfile = () => {
                             posts.map((post) => (
                                 <div key={post.id} className={`posts-client ${deletingPosts.includes(post.id) ? 'removed' : ''}`}>
                                     <img src={post.image} alt={post.title} />
-                                    <span className={`post-category ${categoryStyles[post.categories.name.toLowerCase()] || ''}`}>{post.categories.name}</span>
+                                    <span className={`post-category ${categoryStyles[post.category?.name.toLowerCase()] || ''}`}>
+                                        {post.category?.name || 'Sin categoría'}
+                                    </span>
                                     <h3 className='title-client-article'>{post.title}</h3>
                                     <hr />
                                     <div className="post-meta">
@@ -131,7 +135,7 @@ const UserProfile = () => {
                                             month: 'short',
                                             year: 'numeric'
                                         })}</p>
-                                        
+
                                         <div className="post-actions">
                                             <button className='action-btn delete' onClick={() => handleDelete(post.id)}>Eliminar</button>
                                             <Link className='action-btn edit' to={`/edit-form/${post.id}`}>Editar</Link>
