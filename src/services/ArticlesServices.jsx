@@ -1,5 +1,4 @@
-// const URL_API = "http://localhost:3000/posts"
-const URL_API = "/api/posts" //Usammos proxy de Vite
+const URL_API = "http://localhost:8000/posts"
 const EXPANDED_URL =  `${URL_API}?_expand=user&_expand=categories`
 
 //GET METHOD
