@@ -2,8 +2,10 @@ import { useRef, useState } from 'react'
 import './CreateForm.css'
 import { createArticle } from '../services/ArticlesServices'
 
-const CLOUD_NAME = "dmidet1rt"
-const UPLOAD_PRESET = "celestialbloom_react_upload"
+const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME
+const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET
+const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER
+const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL
 
 const CreateForm = () => {
     const [imageFile, setImageFile] = useState(null)
@@ -47,10 +49,10 @@ const CreateForm = () => {
         const formData = new FormData()
         formData.append("file", file)
         formData.append("upload_preset", UPLOAD_PRESET)
-        formData.append("folder", "celestialbloom") // carpeta donde se guardarán las imágenes
+        formData.append("folder", CLOUDINARY_FOLDER) // carpeta donde se guardarán las imágenes
 
         const response = await fetch(
-            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+            CLOUDINARY_URL,
             {
                 method: "POST",
                 body: formData,
