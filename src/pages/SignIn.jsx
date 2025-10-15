@@ -1,15 +1,16 @@
 import './SignIn.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuthStore } from '../store/authStore'
 import Swal from 'sweetalert2'
+import { loginUser } from '../services/AuthServices'
 
 const SignIn = () => {
     const navigate = useNavigate()
-    const { login } = useAuth()
-    
+    const setAuth = useAuthStore((state) => state.setAuth)
+
     const [formData, setFormData] = useState({
-        email: '',
+        identifier: '',
         password: ''
     })
     const [isLoading, setIsLoading] = useState(false)
@@ -18,12 +19,12 @@ const SignIn = () => {
 
     const validateField = (name, value) => {
         let error = ''
-        
+
         switch (name) {
-            case 'email':
+            case 'identifier':
                 if (!value) {
-                    error = 'El correo electrónico es requerido'
-                } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                    error = 'El correo electrónico o nombre de usuario es requerido'
+                } else if (value.includes('@') && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
                     error = 'Ingresa un correo electrónico válido'
                 }
                 break
@@ -35,12 +36,12 @@ const SignIn = () => {
                 }
                 break
         }
-        
+
         setErrors(prev => ({
             ...prev,
             [name]: error
         }))
-        
+
         return !error
     }
 
@@ -50,8 +51,7 @@ const SignIn = () => {
             ...prev,
             [name]: value
         }))
-        
-        // Validar en tiempo real solo si el campo ya tiene un error
+
         if (errors[name]) {
             validateField(name, value)
         }
@@ -64,12 +64,11 @@ const SignIn = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-        // Validar todos los campos
-        const isEmailValid = validateField('email', formData.email)
+
+        const isIdentifierValid = validateField('identifier', formData.identifier)
         const isPasswordValid = validateField('password', formData.password)
-        
-        if (!isEmailValid || !isPasswordValid) {
+
+        if (!isIdentifierValid || !isPasswordValid) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Datos incorrectos',
@@ -82,57 +81,49 @@ const SignIn = () => {
         setIsLoading(true)
 
         try {
-            // Simular llamada a API
-            await new Promise(resolve => setTimeout(resolve, 2000))
-            
-            // Simular validación básica (para demo)
-            if (formData.email === 'admin@ejemplo.com' && formData.password === 'admin123') {
-                // Datos simulados del usuario
-                const userData = {
-                    email: formData.email,
-                    firstName: 'Administrador',
-                    lastName: 'Sistema',
-                    username: 'admin'
-                }
 
-                // Iniciar sesión usando el contexto
-                login(userData)
+            const data = await loginUser({
+                identifier: formData.identifier,
+                password: formData.password
+            })
 
-                await Swal.fire({
-                    icon: 'success',
-                    title: '¡Bienvenido de vuelta! 🌟',
-                    html: `
-                        <div style="text-align: center; padding: 0.5rem;">
-                            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
-                            <p style="font-size: 1rem; color: #374151; margin-bottom: 0.5rem;">
-                                <strong>¡Has iniciado sesión exitosamente!</strong>
-                            </p>
-                            <p style="color: #6b7280; font-size: 0.9rem;">
-                                Explora el cosmos y la naturaleza con nosotros
-                            </p>
-                        </div>
-                    `,
-                    confirmButtonText: 'Comenzar',
-                    confirmButtonColor: '#005262',
-                    timer: 4000,
-                    timerProgressBar: true,
-                    showClass: {
-                        popup: 'animate__animated animate__fadeIn animate__faster'
-                    },
-                    width: '400px',
-                    padding: '1.5rem'
-                })
-                
-                // Redireccionar a la página principal
-                navigate('/')
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Credenciales incorrectas',
-                    text: 'El correo electrónico o la contraseña son incorrectos',
-                    confirmButtonColor: '#005262'
-                })
+            const user = {
+                id: data.data.id,
+                firstName: data.data.first_name,
+                lastName: data.data.last_name,
+                username: data.data.nick_name,
+                role: data.data.role
             }
+
+            const token = data.token
+            setAuth(user, token)
+
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Bienvenido de vuelta! 🌟',
+                html: `
+          <div style="text-align: center; padding: 0.5rem;">
+            <div style="font-size: 2.5rem; margin-bottom: 1rem;">🚀</div>
+            <p style="font-size: 1rem; color: #374151; margin-bottom: 0.5rem;">
+              <strong>¡Has iniciado sesión exitosamente!</strong>
+            </p>
+            <p style="color: #6b7280; font-size: 0.9rem;">
+              Explora el cosmos y la naturaleza con nosotros
+            </p>
+          </div>
+        `,
+                confirmButtonText: 'Comenzar',
+                confirmButtonColor: '#005262',
+                timer: 4000,
+                timerProgressBar: true,
+                showClass: {
+                    popup: 'animate__animated animate__fadeIn animate__faster'
+                },
+                width: '400px',
+                padding: '1.5rem'
+            })
+
+            navigate('/')
         } catch (error) {
             Swal.fire({
                 icon: 'error',
@@ -155,23 +146,23 @@ const SignIn = () => {
         Swal.fire({
             title: 'Recuperar Contraseña',
             html: `
-                <p style="margin-bottom: 1rem; color: #374151;">Ingresa tu email para recuperar tu contraseña:</p>
-                <input 
-                    type="email" 
-                    id="recovery-email" 
-                    placeholder="tu-email@ejemplo.com"
-                    style="
-                        width: 100%; 
-                        padding: 0.75rem; 
-                        margin: 1rem 0; 
-                        border: 1px solid #d1d5db; 
-                        border-radius: 8px;
-                        font-size: 1rem;
-                        box-sizing: border-box;
-                        background: #f9fafb;
-                    "
-                />
-            `,
+        <p style="margin-bottom: 1rem; color: #374151;">Ingresa tu email para recuperar tu contraseña:</p>
+        <input 
+          type="email" 
+          id="recovery-email" 
+          placeholder="tu-email@ejemplo.com"
+          style="
+            width: 100%; 
+            padding: 0.75rem; 
+            margin: 1rem 0; 
+            border: 1px solid #d1d5db; 
+            border-radius: 8px;
+            font-size: 1rem;
+            box-sizing: border-box;
+            background: #f9fafb;
+          "
+        />
+      `,
             showCancelButton: true,
             confirmButtonText: 'Enviar',
             cancelButtonText: 'Cancelar',
@@ -211,23 +202,23 @@ const SignIn = () => {
 
                 <form onSubmit={handleSubmit} className="signin-form" noValidate>
                     <div className="form-group">
-                        <label htmlFor="email">Correo electrónico</label>
+                        <label htmlFor="identifier">Correo o nombre de usuario</label>
                         <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={formData.email}
+                            type="text"
+                            id="identifier"
+                            name="identifier"
+                            value={formData.identifier}
                             onChange={handleInputChange}
                             onBlur={handleBlur}
                             required
-                            placeholder="tu-email@ejemplo.com"
-                            aria-describedby={errors.email ? "email-error" : undefined}
-                            aria-invalid={!!errors.email}
-                            autoComplete="email"
+                            placeholder="tu-email@ejemplo.com o tu_nickname"
+                            aria-describedby={errors.identifier ? "identifier-error" : undefined}
+                            aria-invalid={!!errors.identifier}
+                            autoComplete="username"
                         />
-                        {errors.email && (
-                            <span id="email-error" className="field-error" role="alert">
-                                {errors.email}
+                        {errors.identifier && (
+                            <span id="identifier-error" className="field-error" role="alert">
+                                {errors.identifier}
                             </span>
                         )}
                     </div>
@@ -264,7 +255,7 @@ const SignIn = () => {
                         )}
                     </div>
 
-                    <div className="form-actions">
+                    {/* <div className="form-actions">
                         <button
                             type="button"
                             className="forgot-password-link"
@@ -272,10 +263,10 @@ const SignIn = () => {
                         >
                             ¿Olvidaste tu contraseña?
                         </button>
-                    </div>
+                    </div> */}
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={`signin-button ${isLoading ? 'loading' : ''}`}
                         disabled={isLoading}
                         aria-describedby="signin-button-help"

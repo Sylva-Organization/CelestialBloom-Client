@@ -4,27 +4,28 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { sendWelcomeEmailAuto } from '../services/EmailService'
 import Swal from 'sweetalert2'
+import { useAuthStore } from '../store/authStore'
+import { registerUser } from '../services/AuthServices'
 
 const Register = () => {
     const navigate = useNavigate()
     const { register } = useAuth()
-    
+    const setAuth = useAuthStore((state) => state.setAuth)
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
         email: '',
         username: '',
-        password: '',
-        confirmPassword: ''
+        password: ''
     })
     const [isLoading, setIsLoading] = useState(false)
     const [errors, setErrors] = useState({})
     const [showPassword, setShowPassword] = useState(false)
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 
     const validateField = (name, value) => {
         let error = ''
-        
+
         switch (name) {
             case 'firstName':
                 if (!value) {
@@ -67,20 +68,13 @@ const Register = () => {
                     error = 'Debe contener al menos una mayúscula, una minúscula y un número'
                 }
                 break
-            case 'confirmPassword':
-                if (!value) {
-                    error = 'Confirma tu contraseña'
-                } else if (value !== formData.password) {
-                    error = 'Las contraseñas no coinciden'
-                }
-                break
         }
-        
+
         setErrors(prev => ({
             ...prev,
             [name]: error
         }))
-        
+
         return !error
     }
 
@@ -90,18 +84,10 @@ const Register = () => {
             ...prev,
             [name]: value
         }))
-        
+
         // Validar en tiempo real solo si el campo ya tiene un error
         if (errors[name]) {
             validateField(name, value)
-        }
-        
-        // Si se está editando la contraseña, revalidar confirmPassword si ya tiene valor
-        if (name === 'password' && formData.confirmPassword && errors.confirmPassword) {
-            setErrors(prev => ({
-                ...prev,
-                confirmPassword: value !== formData.confirmPassword ? 'Las contraseñas no coinciden' : ''
-            }))
         }
     }
 
@@ -112,16 +98,14 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
-        // Validar todos los campos
+
         const isFirstNameValid = validateField('firstName', formData.firstName)
         const isLastNameValid = validateField('lastName', formData.lastName)
         const isEmailValid = validateField('email', formData.email)
         const isUsernameValid = validateField('username', formData.username)
         const isPasswordValid = validateField('password', formData.password)
-        const isConfirmPasswordValid = validateField('confirmPassword', formData.confirmPassword)
-        
-        if (!isFirstNameValid || !isLastNameValid || !isEmailValid || !isUsernameValid || !isPasswordValid || !isConfirmPasswordValid) {
+
+        if (!isFirstNameValid || !isLastNameValid || !isEmailValid || !isUsernameValid || !isPasswordValid) {
             Swal.fire({
                 icon: 'warning',
                 title: 'Datos incorrectos',
@@ -134,109 +118,141 @@ const Register = () => {
         setIsLoading(true)
 
         try {
-            // Simular llamada a API
-            await new Promise(resolve => setTimeout(resolve, 1000))
-            
-            // Datos del usuario registrado
-            const userData = {
-                firstName: formData.firstName,
-                lastName: formData.lastName,
+            const data = await registerUser({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
                 email: formData.email,
-                username: formData.username
+                password: formData.password,
+                nick_name: formData.username
+            });
+            // console.log("Backend:", {
+            //     first_name: formData.firstName,
+            //     last_name: formData.lastName,
+            //     email: formData.email,
+            //     password: formData.password,
+            //     nick_name: formData.username
+            // });
+
+            const user = {
+                id: data.data.id,
+                firstName: data.data.first_name,
+                lastName: data.data.last_name,
+                username: data.data.nick_name,
+                role: data.data.role
             }
-            
-            console.log('Register data:', userData)
-            
-            // Registrar y loguear automáticamente al usuario
-            register(userData)
-            
-            // Enviar email de bienvenida
-            console.log('📧 Enviando email de bienvenida...')
-            const emailResult = await sendWelcomeEmailAuto(userData)
-            
-            if (emailResult.success) {
-                console.log('✅ Email de bienvenida enviado exitosamente')
-            } else {
-                console.warn('⚠️ Error al enviar email de bienvenida:', emailResult.error)
-            }
-            
+            const token = data.token
+
+            setAuth(user, token)
+
             await Swal.fire({
                 icon: 'success',
-                title: `¡Bienvenid@ a CelestialBloom, ${formData.firstName}! 🌟`,
-                html: `
-                    <div style="text-align: center; padding: 1rem;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem;">🚀✨</div>
-                        <p style="font-size: 1.1rem; color: #374151; margin-bottom: 1rem; line-height: 1.6;">
-                            <strong>¡Tu cuenta ha sido creada exitosamente!</strong>
-                        </p>
-                        <p style="color: #6b7280; margin-bottom: 1rem; line-height: 1.5;">
-                            Ahora formas parte de nuestra comunidad de exploradores del cosmos y la naturaleza.
-                        </p>
-                        <div style="
-                            background: linear-gradient(135deg, #47b89d, #7ea83c);
-                            color: white;
-                            padding: 0.75rem 1.5rem;
-                            border-radius: 25px;
-                            display: inline-block;
-                            font-weight: 500;
-                            margin-bottom: 1rem;
-                            box-shadow: 0 4px 12px rgba(71, 184, 157, 0.3);
-                        ">
-                            Usuario: @${formData.username}
-                        </div>
-                        <div style="
-                            background: #f0f9ff;
-                            border: 2px solid #0ea5e9;
-                            border-radius: 12px;
-                            padding: 0.75rem;
-                            margin: 1rem 0;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 0.5rem;
-                        ">
-                            <span style="font-size: 1.2rem;">📧</span>
-                            <span style="color: #0f172a; font-size: 0.9rem; font-weight: 500;">
-                                ${emailResult.real ? 'Email de bienvenida enviado' : 'Email de bienvenida simulado'} a ${formData.email}
-                            </span>
-                        </div>
-                        <p style="color: #374151; font-size: 0.9rem;">
-                            ¡Has iniciado sesión automáticamente! Serás redirigido al inicio...
-                        </p>
-                    </div>
-                `,
-                confirmButtonText: 'Explorar CelestialBloom',
-                confirmButtonColor: '#005262',
-                timer: 6000,
-                timerProgressBar: true,
-                showClass: {
-                    popup: 'animate__animated animate__fadeInUp animate__faster'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutDown animate__faster'
-                },
-                customClass: {
-                    popup: 'welcome-popup',
-                    confirmButton: 'welcome-button'
-                },
-                background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
-                width: '500px',
-                padding: '2rem'
+                title: `¡Bienvenid@ a CelestialBloom, ${user.firstName}!`,
+                text: 'Tu cuenta ha sido creada y has iniciado sesión automáticamente.',
+                confirmButtonColor: '#005262'
             })
-            
-            // Redireccionar al inicio después del registro exitoso
+
             navigate('/')
-            
         } catch (error) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error al crear cuenta',
-                text: 'No se pudo crear la cuenta. Inténtalo de nuevo.',
+                text: error.message,
                 confirmButtonColor: '#005262'
             })
         } finally {
             setIsLoading(false)
         }
+
+        // Registrar y loguear automáticamente al usuario
+        //register(userData)
+
+        // Enviar email de bienvenida
+        //console.log('📧 Enviando email de bienvenida...')
+        //const emailResult = await sendWelcomeEmailAuto(userData)
+
+        // if (emailResult.success) {
+        //     console.log('✅ Email de bienvenida enviado exitosamente')
+        // } else {
+        //     console.warn('⚠️ Error al enviar email de bienvenida:', emailResult.error)
+        // }
+
+        // await Swal.fire({
+        //     icon: 'success',
+        //     title: `¡Bienvenid@ a CelestialBloom, ${formData.firstName}! 🌟`,
+        //     html: `
+        //         <div style="text-align: center; padding: 1rem;">
+        //             <div style="font-size: 3rem; margin-bottom: 1rem;">🚀✨</div>
+        //             <p style="font-size: 1.1rem; color: #374151; margin-bottom: 1rem; line-height: 1.6;">
+        //                 <strong>¡Tu cuenta ha sido creada exitosamente!</strong>
+        //             </p>
+        //             <p style="color: #6b7280; margin-bottom: 1rem; line-height: 1.5;">
+        //                 Ahora formas parte de nuestra comunidad de exploradores del cosmos y la naturaleza.
+        //             </p>
+        //             <div style="
+        //                 background: linear-gradient(135deg, #47b89d, #7ea83c);
+        //                 color: white;
+        //                 padding: 0.75rem 1.5rem;
+        //                 border-radius: 25px;
+        //                 display: inline-block;
+        //                 font-weight: 500;
+        //                 margin-bottom: 1rem;
+        //                 box-shadow: 0 4px 12px rgba(71, 184, 157, 0.3);
+        //             ">
+        //                 Usuario: @${formData.username}
+        //             </div>
+        //             <div style="
+        //                 background: #f0f9ff;
+        //                 border: 2px solid #0ea5e9;
+        //                 border-radius: 12px;
+        //                 padding: 0.75rem;
+        //                 margin: 1rem 0;
+        //                 display: flex;
+        //                 align-items: center;
+        //                 justify-content: center;
+        //                 gap: 0.5rem;
+        //             ">
+        //                 <span style="font-size: 1.2rem;">📧</span>
+        //                 <span style="color: #0f172a; font-size: 0.9rem; font-weight: 500;">
+        //                     ${emailResult.real ? 'Email de bienvenida enviado' : 'Email de bienvenida simulado'} a ${formData.email}
+        //                 </span>
+        //             </div>
+        //             <p style="color: #374151; font-size: 0.9rem;">
+        //                 ¡Has iniciado sesión automáticamente! Serás redirigido al inicio...
+        //             </p>
+        //         </div>
+        //     `,
+        //     confirmButtonText: 'Explorar CelestialBloom',
+        //     confirmButtonColor: '#005262',
+        //     timer: 6000,
+        //     timerProgressBar: true,
+        //     showClass: {
+        //         popup: 'animate__animated animate__fadeInUp animate__faster'
+        //     },
+        //     hideClass: {
+        //         popup: 'animate__animated animate__fadeOutDown animate__faster'
+        //     },
+        //     customClass: {
+        //         popup: 'welcome-popup',
+        //         confirmButton: 'welcome-button'
+        //     },
+        //     background: 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)',
+        //     width: '500px',
+        //     padding: '2rem'
+        // })
+
+        // // Redireccionar al inicio después del registro exitoso
+        // navigate('/')
+
+        // } catch (error) {
+        //     Swal.fire({
+        //         icon: 'error',
+        //         title: 'Error al crear cuenta',
+        //         text: 'No se pudo crear la cuenta. Inténtalo de nuevo.',
+        //         confirmButtonColor: '#005262'
+        //     })
+        // } finally {
+        //     setIsLoading(false)
+        // }
     }
 
     const handleSignInClick = (e) => {
@@ -388,40 +404,9 @@ const Register = () => {
                         )}
                     </div>
 
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword">Confirmar contraseña</label>
-                        <div className="password-input-wrapper">
-                            <input
-                                type={showConfirmPassword ? "text" : "password"}
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                value={formData.confirmPassword}
-                                onChange={handleInputChange}
-                                onBlur={handleBlur}
-                                required
-                                placeholder="Repite tu contraseña"
-                                aria-describedby={errors.confirmPassword ? "confirmPassword-error" : undefined}
-                                aria-invalid={!!errors.confirmPassword}
-                                autoComplete="new-password"
-                            />
-                            <button
-                                type="button"
-                                className="password-toggle"
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                aria-label={showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                            >
-                                {showConfirmPassword ? "🙈" : "👁️"}
-                            </button>
-                        </div>
-                        {errors.confirmPassword && (
-                            <span id="confirmPassword-error" className="field-error" role="alert">
-                                {errors.confirmPassword}
-                            </span>
-                        )}
-                    </div>
 
-                    <button 
-                        type="submit" 
+                    <button
+                        type="submit"
                         className={`register-button ${isLoading ? 'loading' : ''}`}
                         disabled={isLoading}
                         aria-describedby="register-button-help"
