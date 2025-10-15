@@ -1,16 +1,19 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './CreateForm.css'
 import { createArticle } from '../services/ArticlesServices'
+import { useAuthStore } from '../store/authStore'
 
-const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME
 const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET
 const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER
 const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL
 
 const CreateForm = () => {
+    const { user } = useAuthStore() // Accedemos al usuario logueado
+    // console.log("Usuario desde Zustand:", user)
+
     const [imageFile, setImageFile] = useState(null)
     const [title, setTitle] = useState('')
-    const [category, setCategory] = useState('')
+    const [category_id, setCategoryId] = useState()
     const [content, setContent] = useState('')
     const [uploading, setUploading] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
@@ -36,7 +39,7 @@ const CreateForm = () => {
     const handleDrop = (e) => {
         e.preventDefault()
         setIsDragging(false)
-        
+
         // Creamos un "evento simulado" con la misma estructura
         const fakeEvent = { target: { files: e.dataTransfer.files } };
         handleFileChange(fakeEvent);
@@ -66,7 +69,7 @@ const CreateForm = () => {
     }
 
     // --- Validación del formulario
-    const isFormValid = title.trim() && category && category !== "#" && content.trim() && imageFile
+    const isFormValid = title.trim() && category_id && category_id !== "#" && content.trim() && imageFile
 
     // --- Envío del formulario
     const handleSubmit = async (e) => {
@@ -77,7 +80,7 @@ const CreateForm = () => {
             alert("⚠️ Por favor, completa todos los campos y sube una imagen antes de publicar.")
             return // Salimos si falta algo
         }
-        
+
         setUploading(true)
 
         try {
@@ -94,23 +97,18 @@ const CreateForm = () => {
                 title,
                 content,
                 image: imageUrl,
-                user_id: 1, //cambiar próximamente dependiendo del usuario que se inicie sesión
-                category_id: category === 'astronomia' ? 2 : 1,
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                categories: {
-                    id: category === 'astronomia' ? 2 : 1,
-                    name: category === 'astronomy' ? 'astronomia' : 'botanica'
-                }
-            }
+                author_id: user?.id, 
+                category_id
 
+            }
+            console.log("ARTICLE DATA TO SEND:" ,articleData)
             const created = await createArticle(articleData)
             console.log('Artículo creado en DB', created)
             alert('¡Artículo publicado con éxito! 🎉')
 
             // Reiniciar formulario
             setTitle('')
-            setCategory('')
+            setCategoryId('')
             setContent('')
             setImageFile(null)
 
@@ -141,10 +139,10 @@ const CreateForm = () => {
                         {/* Category */}
                         <div className="form-group">
                             <label className="form-label">Categoría <span className="required">*</span></label>
-                            <select name="category" id="category" value={category} required onChange={(e) => setCategory(e.target.value)}>
+                            <select name="category" id="category" value={category_id} required onChange={(e) => setCategoryId(e.target.value)}>
                                 <option value="#">Selecciona una opción</option>
-                                <option value="astronomia">Astronomía</option>
-                                <option value="botanica">Botánica</option>
+                                <option value={2}>Astronomía</option>
+                                <option value={1}>Botánica</option>
                             </select>
                         </div>
 
@@ -174,14 +172,14 @@ const CreateForm = () => {
                                         <img src={URL.createObjectURL(imageFile)} alt="Previsualización" />
                                         <button type='button' className="remove-image" onClick={removeImage}>x</button>
                                     </div>
-                            </div>
+                                </div>
                             )}
                         </div>
 
                         {/* Form Actions - Buttons Delete/Create  */}
                         <div className="form-actions">
                             <button type='button' className="btn btn-secondary" onClick={() => window.history.back()} disabled={uploading}>Cancelar</button>
-                
+
                             <button type='submit' className={`btn btn-primary ${(!isFormValid || uploading) ? 'btn-disabled' : ''}`} disabled={uploading || !isFormValid}>{uploading ? "Publicando" : "Publicar Artículo"}</button>
                         </div>
                     </form>
