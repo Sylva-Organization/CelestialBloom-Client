@@ -6,7 +6,7 @@ const Botany = () => {
         <>
             <section className="botany-section">
                 <h2 className="title-botany">Artículos de botánica</h2>
-                <ArticlesFront categoryFilter="botánica"></ArticlesFront>
+                <ArticlesFront categoryFilter="botanica"></ArticlesFront>
             </section>
         </>
     )

@@ -6,7 +6,7 @@ const Astronomy = () => {
         <>
             <section className="astronomy-section">
                 <h2 className="title-astronomy">Artículos de astronomía</h2>
-                <ArticlesFront categoryFilter="astronomía"></ArticlesFront>
+                <ArticlesFront categoryFilter="astronomia"></ArticlesFront>
             </section>
         </>
     )
