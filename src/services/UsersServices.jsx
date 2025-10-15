@@ -1,5 +1,5 @@
-const URL_API_USERS = "http://localhost:3000/users"
-const URL_API_POSTS = "http://localhost:3000/posts"
+const URL_API_USERS = "http://localhost:8000/users"
+const URL_API_POSTS = "http://localhost:8000/posts"
 
 //GET method
 export async function getAllUsers() {
