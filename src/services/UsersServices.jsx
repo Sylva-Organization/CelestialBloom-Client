@@ -34,4 +34,4 @@ export const updateUser = async (id, payload, { method = "put" } = {}) => {
 export const deleteUser = async (id) => {
     const res = await api.delete(`/users/${id}`);
     return res.data; // { message }
-}; 
+};
