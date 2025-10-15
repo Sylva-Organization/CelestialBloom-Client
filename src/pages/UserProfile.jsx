@@ -16,11 +16,11 @@ const UserProfile = () => {
         const fetchUserData = async () => {
             try {
                 const userData = await getOneUser(id)
-                const userPosts = await getUserPosts(id)
+                // const userPosts = await getUserPosts(id)
 
-                setUser(userData)
+                setUser(userData.data)
                 console.log("ID desde useParams", id)
-                setPosts(userPosts)
+                // setPosts(userPosts)
             } catch (error) {
                 console.error('Error cargando datos del usuario: ', error)
             } finally {
