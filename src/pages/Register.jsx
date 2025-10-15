@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthActions } from '../hooks/useAuthActions'
 import { formValidation, mockData, utils } from '../utils'
 import './Register.css'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { sendWelcomeEmailAuto } from '../services/EmailService'
 import Swal from 'sweetalert2'
@@ -25,7 +23,6 @@ const Register = () => {
     
     // 🎣 Usar hook personalizado para autenticación
     const { handleRegister, isLoading, setLoading } = useAuthActions()
-    const navigate = useNavigate()
 
     // Log de inicialización del componente
     utils.devLog('Componente Register montado', 'info')

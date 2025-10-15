@@ -7,6 +7,7 @@ import Creators from "../pages/Creators";
 import SignIn from "../pages/SignIn";
 import Register from "../pages/Register";
 import AuthRedirect from "../components/AuthRedirect";
+import ProtectedRoute from "../components/ProtectedRoute";
 import ArticleDetail from "../components/ArticleDetail";
 import ArticlesList from "../components/ArticlesList";
 import CreateForm from "../components/CreateForm";
