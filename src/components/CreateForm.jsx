@@ -2,42 +2,26 @@ import { useRef, useState } from 'react'
 import './CreateForm.css'
 import { createArticle } from '../services/ArticlesServices'
 
+const CLOUD_NAME = "dmidet1rt"
+const UPLOAD_PRESET = "celestialbloom_react_upload"
+
 const CreateForm = () => {
-    // const [formData, setFormData] = useState({
-    //     title: '',
-    //     categories: [
-    //         'botanica',
-    //         'astronomia'
-    //     ]
-    // })
-    const [uploadedImage, setUploadedImage] = useState([])
+    const [imageFile, setImageFile] = useState(null)
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
-    const [subcategory, setSubcategory] = useState('')
     const [content, setContent] = useState('')
+    const [uploading, setUploading] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
 
     const imageInputRef = useRef(null)
 
-    // Manejo de imágenes (solo una)
-    const handleFiles = (files) => {
-        const file = files[0]
-        
-        if (file) {
-            const reader = new FileReader()
-            reader.onload = (e) => {
-                setUploadedImage([{ name: file.name, data: e.target.result }])
-            }
-            reader.readAsDataURL(file)
-        }
+    // Manejo del archivo
+    const handleFileChange = (e) => {
+        const file = e.target.files[0]
+        if (file) setImageFile(file)
     }
 
-    const handleDrop = (e) => {
-        e.preventDefault()
-        setIsDragging(false)
-        handleFiles(e.dataTransfer.files)
-    }
-
+    // Drag & Drop
     const handleDragOver = (e) => {
         e.preventDefault()
         setIsDragging(true)
@@ -47,48 +31,80 @@ const CreateForm = () => {
         setIsDragging(false)
     }
 
-    const removeImage = (index) => {
-        setUploadedImage(uploadedImage.filter((_, i) => i !== index))
+    const handleDrop = (e) => {
+        e.preventDefault()
+        setIsDragging(false)
+        
+        // Creamos un "evento simulado" con la misma estructura
+        const fakeEvent = { target: { files: e.dataTransfer.files } };
+        handleFileChange(fakeEvent);
+    }
+
+    const removeImage = (index) => setImageFile(null) //quitar?
+
+    // Subida a Cloudinary
+    const uploadImageToCloudinary = async (file) => {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("upload_preset", UPLOAD_PRESET)
+        formData.append("folder", "celestialbloom") // carpeta donde se guardarán las imágenes
+
+        const response = await fetch(
+            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+            {
+                method: "POST",
+                body: formData,
+            }
+        )
+
+        if (!response.ok) throw new Error("Error al subir la imagen")
+
+        const data = await response.json()
+        return data.secure_url //la URL pública de Cloudinary
     }
 
     // --- Envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        if (!title || !category || !content) {
-            alert('Por favor, completa todos los campos obligatorios')
-            return
-        }
-
-        //Estructura que coincide con db.json
-        const articleData = {
-            title: title,
-            content: content,
-            image: uploadedImage.length > 0 ? uploadedImage[0].data : "",
-            user_id: 1, // Ajusta según el usuario logueado si tienes autenticación
-            category_id: category === 'astronomia' ? 2 : 1,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            categories: {
-                id: category === 'astronomia' ? 2 : 1,
-                name: category === 'astronomy' ? 'astronomia' : 'botanica'
-            } 
-        }
+        setUploading(true)
 
         try {
+            let imageUrl = ""
+
+            if (imageFile) {
+                imageUrl = await uploadImageToCloudinary(imageFile)
+                console.log("✅ Imagen subida a Cloudinary:", imageUrl)
+            }
+
+            const articleData = {
+                title,
+                content,
+                image: imageUrl,
+                user_id: 1, //cambiar próximamente dependiendo del usuario que se inicie sesión
+                category_id: category === 'astronomia' ? 2 : 1,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString(),
+                categories: {
+                    id: category === 'astronomia' ? 2 : 1,
+                    name: category === 'astronomy' ? 'astronomia' : 'botanica'
+                }
+            }
+
             const created = await createArticle(articleData)
             console.log('Artículo creado en DB', created)
-            alert('¡Artículo publicado con éxito! 🎉')   
+            alert('¡Artículo publicado con éxito! 🎉')
 
             // Reiniciar formulario
             setTitle('')
             setCategory('')
             setContent('')
-            setUploadedImage([])
+            setImageFile(null)
 
         } catch (error) {
             console.error(error)
-            alert('Error al crear el artículo')
+            alert("Error al crear el artículo")
+        } finally {
+            setUploading(false)
         }
 
     }
@@ -134,27 +150,27 @@ const CreateForm = () => {
                                 <div className="upload-hint">PNG, JPG</div>
                             </div>
 
-                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/png, image/jpeg, image/jpg' multiple onChange={(e) => handleFiles(e.target.files)}/>
+                            <input type="file" className="file-input" id='imageInput' ref={imageInputRef} accept='image/*' onChange={handleFileChange} />
+
 
                             {/* Preview  */}
-                            <div className="image-preview-container" id='imagePreview'>
-                                {uploadedImage.map((img, index) => (
-                                    <div key={index} className="image-preview">
-                                        <img src={img.data} alt={img.name} />
-                                        <button type='button' className="remove-image" onClick={() => removeImage(index)}>x</button>
+                            {imageFile && (
+                                <div className="image-preview-container" id='imagePreview'>
+                                    <div className="image-preview">
+                                        <img src={URL.createObjectURL(imageFile)} alt="Previsualización" />
+                                        <button type='button' className="remove-image" onClick={removeImage}>x</button>
                                     </div>
-                                ))}
                             </div>
+                            )}
                         </div>
 
                         {/* Form Actions - Buttons Delete/Create  */}
                         <div className="form-actions">
-                            <button type='button' className="btn btn-secondary" onClick={() => window.history.back()}>Cancelar</button>
-                            <button type='submit' className="btn btn-primary">Publicar Artículo</button>
+                            <button type='button' className="btn btn-secondary" onClick={() => window.history.back()} disabled={uploading}>Cancelar</button>
+                            <button type='submit' className="btn btn-primary" disabled={uploading}>{uploading ? "Publicando" : "Publicar Artículo"}</button>
                         </div>
                     </form>
                 </div>
-
             </section>
         </>
     )
