@@ -138,7 +138,6 @@ const Register = () => {
                 firstName: data.data.first_name,
                 lastName: data.data.last_name,
                 username: data.data.nick_name,
-                email: data.data.email,
                 role: data.data.role
             }
             const token = data.token
