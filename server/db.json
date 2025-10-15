@@ -112,18 +112,16 @@
       }
     },
     {
-      "id": "8",
-      "title": "Prueba botánica, plantas aromáticas",
+      "title": "Prueba botánica, plantas aromáticas, pruebas formulario editar",
       "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit. Doloribus aliquid quaerat similique velit impedit est reprehenderit asperiores officia excepturi! Hic ab quas, distinctio sequi voluptas eius quis exercitationem aliquam velit.",
-      "image": "https://jardin.inecol.mx/images/MARIPOSA_MES/alas_daga.jpg",
-      "user_id": 1,
+      "image": "https://res.cloudinary.com/dmidet1rt/image/upload/v1760510297/celestialbloom/bypmqwf5gkdgjgltkrv8.png",
       "category_id": 1,
-      "createdAt": "2025-09-30T07:05:17.082Z",
-      "updatedAt": "2025-09-30T07:05:17.082Z",
+      "updatedAt": "2025-10-15T15:37:01.753Z",
       "categories": {
         "id": 1,
         "name": "botanica"
-      }
+      },
+      "id": "8"
     },
     {
       "id": "9e3a",
@@ -182,20 +180,6 @@
       }
     },
     {
-      "id": "2863",
-      "title": "Prueba 5 cloudinary y required",
-      "content": "El helecho fue una de las primeras plantas en conquistar la sombra y vivir sin necesidad de flor, y esto lo convierte en una especie revolucionaria dentro del mundo vegetal. Mientras la mayoría de las plantas requieren luz solar abundante para desarrollarse y dependen de flores para reproducirse, los helechos evolucionaron una estrategia diferente: crecen felices en ambientes de baja luz y se reproducen mediante esporas diminutas, no flores ni semillas. Esta capacidad de prosperar en rincones húmedos y sombríos les permitió expandirse a hábitats donde casi ninguna otra planta podía competir.\n\nEsta “rebeldía botánica” es la razón por la que los helechos son tan fáciles de mantener en interiores, baños o despachos con poca luz natural. No compiten por el protagonismo del sol, ni exigen grandes atenciones, y su ciclo de vida es perfecto para quienes buscan plantas resistentes que decoran y sobreviven sin hacer drama cuando cae la sombra. Es justamente este rasgo pionero el que los hace tan efectivos hoy en día como plantas de oficina: siguen adaptándose allá donde apenas llega la luz y el ambiente sería demasiado duro para especies más exigentes.",
-      "image": "",
-      "user_id": 1,
-      "category_id": 1,
-      "createdAt": "2025-10-15T06:25:57.881Z",
-      "updatedAt": "2025-10-15T06:25:57.881Z",
-      "categories": {
-        "id": 1,
-        "name": "botanica"
-      }
-    },
-    {
       "id": "e2d3",
       "title": "Prueba con validaciones",
       "content": "Zarcillos\nLos zarcillos son órganos que emiten algunas plantas y que les sirven para agarrarse a superficies y trepar. No son exclusivos de las Passifloras pero, hasta donde yo sé, todas las especies de Passiflora los tienen.\n\nY me alucinan porque se amarran como si no hubiese mañana… y lo hacen a una velocidad pasmosa, os lo aseguro (aquí podéis ver un en acción en un time lapse que grabé a principios de verano).\n\nPero, no contenta con esto, la Passiflora produce otro tipo de órgano “extra” que también me vuelve loca y que la convierten en una planta irresistible para muchos insectos.",
@@ -210,18 +194,16 @@
       }
     },
     {
-      "id": "0637",
-      "title": "Prueba con validaciones",
+      "title": "Prueba formulario editar",
       "content": "Encuentra esta y otras luces en nuestra sección de accesorios de reptiles.\nTan importante como esto es ofrecerle a nuestra tortuga de agua un punto cálido en la zona seca, el área terrestre de su tortuguera. Para ello, tendremos que utilizar una lámpara de calor que permita que en esa zona concreta nuestra tortuga cuente con temperaturas superiores a 30 grados.\n\n4. La luz, otro aspecto crucial en el cuidado de tortugas de agua en casa\nY en el que tampoco solemos reparar. Íntimamente ligado con o anterior, las tortugas de agua deben recibir una buena dosis de sol diariamente por una cuestión de salud. La luz es fundamental para que la tortuga sintetice vitamina D3 y fije el calcio, crucial tanto para sus huesos como para su caparazón.\n\nPor ello, es conveniente utilizar una luz UVB que utilizaremos para evitar que nuestro reptil acuático sufra dolencias como la enfermedad metabólica ósea.\n\n5. La alimentación, un punto vital en los cuidados de las tortugas de agua\nTan importante como desconocido. Solemos saber que las tortugas de agua son animales omnívoros pero desconocemos que su dieta debe estar adecuada a su edad. O, dicho de otro modo, que la proporción entre proteína y vegetales cambia en función del momento vital de la tortuga. Y no: por más que lo creamos, las tortugas de agua no se alimentan únicamente de camarones desecados. Es más: si la dieta de nuestra tortuga de agua está basada únicamente en ellas, le estaremos generando un serio problema de nutrición ya que tendrá una carencia de nutrientes tan importantes como el calcio, la fibra y otras vitaminas.",
-      "image": "https://res.cloudinary.com/dmidet1rt/image/upload/v1760479167/celestialbloom/ajftkt9kod6wmhc1e8qv.jpg",
-      "user_id": 1,
-      "category_id": 1,
-      "createdAt": "2025-10-15T06:58:12.629Z",
-      "updatedAt": "2025-10-15T06:58:12.629Z",
+      "image": "https://res.cloudinary.com/dmidet1rt/image/upload/v1760509672/celestialbloom/ks1vicq0afjogpdtzwgd.png",
+      "category_id": 2,
+      "updatedAt": "2025-10-15T15:26:36.353Z",
       "categories": {
-        "id": 1,
+        "id": 2,
         "name": "botanica"
-      }
+      },
+      "id": "0637"
     }
   ]
 }
