@@ -3,8 +3,9 @@ import './EditForm.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getOneArticle, updateArticle } from '../services/ArticlesServices'
 
-const CLOUD_NAME = "dmidet1rt"
-const UPLOAD_PRESET = "celestialbloom_react_upload"
+const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME
+const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET
+const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER
 
 const EditForm = () => {
     const { id } = useParams() // obtenemos el id desde la URL
@@ -71,7 +72,7 @@ const EditForm = () => {
         const formData = new FormData()
         formData.append("file", file)
         formData.append("upload_preset", UPLOAD_PRESET)
-        formData.append("folder", "celestialbloom")
+        formData.append("folder", CLOUDINARY_FOLDER)
 
         const response = await fetch(
             `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
