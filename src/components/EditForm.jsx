@@ -157,7 +157,7 @@ const EditForm = () => {
             setUploading(false)
         }
     }
-  };
+  
 
   return (
     <>
