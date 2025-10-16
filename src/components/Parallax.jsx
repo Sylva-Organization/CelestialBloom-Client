@@ -14,9 +14,10 @@ const Parallax = () => {
     return (
         <>
             <section className="parallax-section">
-                <figure className='parallax-container' style={{ backgroundPositionY: `${offsetY * 0.5}px`}}>
+                <div className="parallax-container">
+                    <video src="src/assets/parallax-video.mp4" className="parallax-video" autoPlay loop muted playsInline style={{ transform: `translateY(${offsetY * 0.5}px)`}}></video>
                     <h1 className='parallax-title'>CelestialBloom: Blog de astronomía y botánica</h1>
-                </figure>
+                </div>
             </section>
 
         </>
