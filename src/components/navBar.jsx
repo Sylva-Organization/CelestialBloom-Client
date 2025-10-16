@@ -10,6 +10,9 @@ const Navbar = () => {
     const token = useAuthStore((state) => state.token)
     const logout = useAuthStore((state) => state.logout)
 
+    const isAdmin = useAuthStore((s) => s.isAdmin?.() ?? s.roles?.includes('admin'));
+
+
     const handleLogout = () => {
         Swal.fire({
             title: '¿Cerrar sesión?',
@@ -64,6 +67,14 @@ const Navbar = () => {
                             <Link to='/register' className='nav-link btn btn-register'>Register</Link>
                         </li>
                     </>
+                )}
+
+                   {isAdmin && (
+                    <li className='menu-item'>
+                        <Link to='/create-form' className='nav-link btn btn-create'>
+                            Crear post
+                        </Link>
+                    </li>
                 )}
 
                 {token && (
