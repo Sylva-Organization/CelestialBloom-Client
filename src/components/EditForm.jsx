@@ -1,55 +1,46 @@
-import { useEffect, useRef, useState } from "react";
-import "./EditForm.css";
-import { useNavigate, useParams } from "react-router-dom";
-import { getOneArticle, updateArticle } from "../services/ArticlesServices";
-import { useAuthStore } from "../store/authStore";
-import {
-  confirmAction,
-  showSuccess,
-  showError,
-  showWarning,
-} from "./SweetAlerts";
+import { useEffect, useRef, useState } from 'react'
+import './EditForm.css'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getOneArticle, updateArticle } from '../services/ArticlesServices'
+import { useAuthStore } from '../store/authStore'
 
-const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
-const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER;
-const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL;
+const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET
+const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER
+const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL
 
 const EditForm = () => {
-  const { user } = useAuthStore();
-  const { id } = useParams(); // obtenemos el id desde la URL
-  const [imageFile, setImageFile] = useState(null);
-  const [existingImage, setExistingImage] = useState(null);
-  const [title, setTitle] = useState("");
-  const [category_id, setCategoryId] = useState("");
-  const [content, setContent] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const navigate = useNavigate();
+    const { user } = useAuthStore()
+    const { id } = useParams() // obtenemos el id desde la URL
+    const [imageFile, setImageFile] = useState(null)
+    const [existingImage, setExistingImage] = useState(null)
+    const [title, setTitle] = useState('')
+    const [category_id, setCategoryId] = useState('')
+    const [content, setContent] = useState('')
+    const [uploading, setUploading] = useState(false)
+    const [isDragging, setIsDragging] = useState(false)
+    const navigate = useNavigate()
 
-  const imageInputRef = useRef(null);
+    const imageInputRef = useRef(null)
 
-  // --- Cargar datos ya existentes ---
-  useEffect(() => {
-    const fetchArticle = async () => {
-      console.log("Fetch article ID", id);
-      if (!id) return;
-      try {
-        const article = await getOneArticle(id);
-        console.log("Artículo recibido:", article);
-        setTitle(article.data.title ?? "");
-        setContent(article.data.content ?? "");
-        setExistingImage(article.data.image || null);
-        setCategoryId(article.data.category_id || "");
-      } catch (error) {
-        console.error("Error al cargar artículo:", error);
-        showError({
-          title: "No se pudo cargar",
-          text: "Intenta recargar la página.",
-        });
-      }
-    };
-    fetchArticle();
-  }, [id]);
+    // --- Cargar datos ya existentes ---
+    useEffect(() => {
+        const fetchArticle = async () => {
+            console.log("Fetch article ID", id)
+            if (!id) return
+            try {
+                const article = await getOneArticle(id)
+                console.log('Artículo recibido:', article)
+                setTitle(article.data.title ?? '')
+                setContent(article.data.content ?? '')
+                setExistingImage(article.data.image || null)
+                setCategoryId(article.data.category_id || '') // Usa el ID directamente
+                // setCategoryId(article.category_id ? Number(article.category_id) : '')
+            } catch (error) {
+                console.error('Error al cargar artículo:', error)
+            }
+        }
+        fetchArticle()
+    }, [id])
 
   // --- Manejo del archivo ---
   const handleFileChange = (e) => {
@@ -90,30 +81,29 @@ const EditForm = () => {
     setExistingImage(null);
   };
 
-  // --- Subida a Cloudinary ---
-  const uploadImageToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", UPLOAD_PRESET);
-    formData.append("folder", CLOUDINARY_FOLDER);
+    // --- Subida a Cloudinary ---
+    const uploadImageToCloudinary = async (file) => {
+        const formData = new FormData()
+        formData.append("file", file)
+        formData.append("upload_preset", UPLOAD_PRESET)
+        formData.append("folder", CLOUDINARY_FOLDER)
 
-    const response = await fetch(CLOUDINARY_URL, {
-      method: "POST",
-      body: formData,
-    });
+        const response = await fetch(
+            CLOUDINARY_URL,
+            {
+                method: "POST",
+                body: formData,
+            }
+        )
 
-    if (!response.ok) throw new Error("Error al subir la imagen");
-    const data = await response.json();
-    return data.secure_url;
-  };
+        if (!response.ok) throw new Error("Error al subir la imagen")
+        const data = await response.json()
+        return data.secure_url
+    }
 
-  // --- Validación del formulario
-  // const isFormValid = title.trim() && category_id && category_id !== "#" && content.trim()
-  const isFormValid =
-    (title ?? "").trim() &&
-    category_id &&
-    category_id !== "#" &&
-    (content ?? "").trim();
+    // --- Validación del formulario
+    // const isFormValid = title.trim() && category_id && category_id !== "#" && content.trim()
+    const isFormValid = (title ?? '').trim() && category_id && category_id !== '#' && (content ?? '').trim()
 
   // --- Envío del formulario
   const handleSubmit = async (e) => {
@@ -144,31 +134,28 @@ const EditForm = () => {
         console.log("✅ Imagen subida a Cloudinary:", imageUrl);
       }
 
-      const updatedArticle = {
-        title,
-        content,
-        image: imageUrl,
-        category_id,
-      };
+            const updatedArticle = {
+                title,
+                content,
+                image: imageUrl,
+                author_id: user?.id,
+                category_id,
+            }
 
-      await updateArticle(id, updatedArticle);
-      await showSuccess({
-        title: "Cambios guardados",
-        text: "El artículo se actualizó correctamente.",
-      });
+            await updateArticle(id, updatedArticle) //?
+            alert("✅ Artículo actualizado con éxito")
 
-      // Esperar 1.5 segundos antes de redirigir
-      setTimeout(() => {
-        navigate("/"); // Redirige a la página principal
-      }, 1200);
-    } catch (error) {
-      console.error(error);
-      showError({
-        title: "No se pudo actualizar",
-        text: error?.message || "Ocurrió un error al guardar los cambios.",
-      });
-    } finally {
-      setUploading(false);
+            // Esperar 1.5 segundos antes de redirigir
+            setTimeout(() => {
+                navigate('/') // Redirige a la página principal
+            }, 1200)
+
+        } catch (error) {
+            console.error(error)
+            alert("❌ Error al actualizar el artículo")
+        } finally {
+            setUploading(false)
+        }
     }
   };
 
@@ -197,22 +184,15 @@ const EditForm = () => {
               />
             </div>
 
-            {/* Category */}
-            <div className="form-group">
-              <label className="form-label">
-                Categoría <span className="required">*</span>
-              </label>
-              <select
-                name="category"
-                id="category"
-                value={category_id}
-                onChange={(e) => setCategoryId(e.target.value)}
-              >
-                <option value="#">Selecciona una opción</option>
-                <option value={2}>Astronomía</option>
-                <option value={1}>Botánica</option>
-              </select>
-            </div>
+                        {/* Category */}
+                        <div className="form-group">
+                            <label className="form-label">Categoría <span className="required">*</span></label>
+                            <select name="category" id="category" value={category_id} onChange={(e) => setCategoryId(e.target.value)}>
+                                <option value="#">Selecciona una opción</option>
+                                <option value={2}>Astronomía</option>
+                                <option value={1}>Botánica</option>
+                            </select>
+                        </div>
 
             {/* Content  */}
             <div className="form-group">

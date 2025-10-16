@@ -17,11 +17,12 @@ export async function getAllArticles() {
 
 //GET/:ID
 export async function getOneArticle(id) {
+    console.log("Get one - ArticlesServices" + id)
     // const response = await fetch (`${URL_API}/${id}`)
     const response = await fetch(`${URL_API}/${id}?_expand=user&_expand=categories`, {
         headers: getAuthHeaders(),
-
     });
+    console.log("Get Auth - ArticlesServices" + getAuthHeaders())
     if (!response.ok) throw new Error('Error al obtener el artículo')
     return response.json()
 }
@@ -44,7 +45,7 @@ export async function createArticle(articleData) {
 export async function updateArticle(id, articleData) {
     const response = await fetch(`${URL_API}/${id}`, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        headers: getAuthHeaders(),
         body: JSON.stringify(articleData)
     })
 

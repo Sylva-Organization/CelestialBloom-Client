@@ -36,8 +36,8 @@ const UserProfile = () => {
     const isAdmin = useAuthStore((s) => s.isAdmin?.() ?? s.roles?.includes('admin'));
 
     const categoryStyles = {
-        "botánica": "category-botany",
-        "astronomía": "category-astronomy"
+        "botanica": "category-botany",
+        "astronomia": "category-astronomy"
     };
 
     const handleDelete = (postId) => {
