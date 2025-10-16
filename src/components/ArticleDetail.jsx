@@ -31,8 +31,8 @@ const ArticleDetail = () => {
 
 
     const categoryStyles = {
-        "botánica": "category-botany",
-        "astronomía": "category-astronomy"
+        "botanica": "category-botany",
+        "astronomia": "category-astronomy"
     };
 
     const handleDelete = (postId) => {
@@ -91,7 +91,6 @@ const ArticleDetail = () => {
                     </div>
 
                     <span className={`post-category ${categoryStyles[post.category.name.toLowerCase()] || ''}`}>{post.category.name}</span>
-                    {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                     <h2 className='title-detail'>{post.title}</h2>
 
                     <div className="article-meta">

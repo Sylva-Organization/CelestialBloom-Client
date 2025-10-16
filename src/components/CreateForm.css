@@ -108,7 +108,7 @@
 .image-upload-area {
     border: 3px dashed #e0e0e0;
     border-radius: 15px;
-    padding: 3rem;
+    /* padding: 3rem; */
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
