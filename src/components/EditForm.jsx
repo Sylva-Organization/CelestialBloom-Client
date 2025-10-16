@@ -2,18 +2,19 @@ import { useEffect, useRef, useState } from 'react'
 import './EditForm.css'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getOneArticle, updateArticle } from '../services/ArticlesServices'
+import { useAuthStore } from '../store/authStore'
 
-// const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME
 const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET
 const CLOUDINARY_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER
 const CLOUDINARY_URL = import.meta.env.VITE_CLOUDINARY_URL
 
 const EditForm = () => {
+    const { user } = useAuthStore()
     const { id } = useParams() // obtenemos el id desde la URL
     const [imageFile, setImageFile] = useState(null)
     const [existingImage, setExistingImage] = useState(null)
     const [title, setTitle] = useState('')
-    const [category, setCategory] = useState('')
+    const [category_id, setCategoryId] = useState('')
     const [content, setContent] = useState('')
     const [uploading, setUploading] = useState(false)
     const [isDragging, setIsDragging] = useState(false)
@@ -24,12 +25,16 @@ const EditForm = () => {
     // --- Cargar datos ya existentes ---
     useEffect(() => {
         const fetchArticle = async () => {
+            console.log("Fetch article ID", id)
+            if (!id) return
             try {
                 const article = await getOneArticle(id)
-                setTitle(article.title)
-                setContent(article.content)
-                setExistingImage(article.image || null)
-                setCategory(article.categories?.name || '') //Mirar si está bien
+                console.log('Artículo recibido:', article)
+                setTitle(article.data.title ?? '')
+                setContent(article.data.content ?? '')
+                setExistingImage(article.data.image || null)
+                setCategoryId(article.data.category_id || '') // Usa el ID directamente
+                // setCategoryId(article.category_id ? Number(article.category_id) : '')
             } catch (error) {
                 console.error('Error al cargar artículo:', error)
             }
@@ -76,7 +81,7 @@ const EditForm = () => {
         formData.append("folder", CLOUDINARY_FOLDER)
 
         const response = await fetch(
-           CLOUDINARY_URL,
+            CLOUDINARY_URL,
             {
                 method: "POST",
                 body: formData,
@@ -89,7 +94,8 @@ const EditForm = () => {
     }
 
     // --- Validación del formulario
-    const isFormValid = title.trim() && category && category !== "#" && content.trim()
+    // const isFormValid = title.trim() && category_id && category_id !== "#" && content.trim()
+    const isFormValid = (title ?? '').trim() && category_id && category_id !== '#' && (content ?? '').trim()
 
     // --- Envío del formulario
     const handleSubmit = async (e) => {
@@ -113,12 +119,8 @@ const EditForm = () => {
                 title,
                 content,
                 image: imageUrl,
-                category_id: category === 'astronomia' ? 2 : 1,
-                updatedAt: new Date().toISOString(),
-                categories: {
-                    id: category === 'astronomia' ? 2 : 1,
-                    name: category === 'astronomy' ? 'astronomia' : 'botanica'
-                }
+                author_id: user?.id,
+                category_id,
             }
 
             await updateArticle(id, updatedArticle) //?
@@ -127,7 +129,7 @@ const EditForm = () => {
             // Esperar 1.5 segundos antes de redirigir
             setTimeout(() => {
                 navigate('/') // Redirige a la página principal
-            }, 1500)
+            }, 1200)
 
         } catch (error) {
             console.error(error)
@@ -156,10 +158,10 @@ const EditForm = () => {
                         {/* Category */}
                         <div className="form-group">
                             <label className="form-label">Categoría <span className="required">*</span></label>
-                            <select name="category" id="category" value={category} onChange={(e) => setCategory(e.target.value)}>
+                            <select name="category" id="category" value={category_id} onChange={(e) => setCategoryId(e.target.value)}>
                                 <option value="#">Selecciona una opción</option>
-                                <option value="astronomia">Astronomía</option>
-                                <option value="botanica">Botánica</option>
+                                <option value={2}>Astronomía</option>
+                                <option value={1}>Botánica</option>
                             </select>
                         </div>
 
