@@ -23,8 +23,8 @@ const ArticlesFront = ({ categoryFilter }) => {
     }, [])
 
     const categoryStyles = {
-        "botánica": "category-botany",
-        "astronomía": "category-astronomy"
+        "botanica": "category-botany",
+        "astronomia": "category-astronomy"
     };
 
     const filteredPosts = categoryFilter
@@ -45,7 +45,6 @@ const ArticlesFront = ({ categoryFilter }) => {
                         <img src={post.image} alt="foto-post" />
                         <div className="card-body">
                             <span className={`post-category ${categoryStyles[post.category.name.toLowerCase()] || ''}`}>{post.category.name}</span>
-                            {/* <span className="post-subcategory">{post.categories.subcategories}</span> */}
                             <h3 className='card-title'>{post.title}</h3>
                             <p className='card-content'>{post.content}</p>
                             <div className="post-meta">
