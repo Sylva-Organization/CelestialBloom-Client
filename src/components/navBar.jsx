@@ -71,8 +71,8 @@ const Navbar = () => {
 
                    {isAdmin && (
                     <li className='menu-item'>
-                        <Link to='/create-form' className='nav-link btn btn-create'>
-                            Crear post
+                        <Link to='/create-form' className='nav-link '>
+                            Crear articulo
                         </Link>
                     </li>
                 )}
@@ -80,8 +80,8 @@ const Navbar = () => {
                 {token && (
                     <>
                         <li className='menu-item user-info'>
-                            <span className='nav-link user-welcome'>
-                                <Link to={`/user-profile/${user?.id}`} className='nav-link user-welcome'>
+                            <span className='nav-link'>
+                                <Link to={`/user-profile/${user?.id}`} className='nav-link'>
                                     ¡Hola, {user?.firstName || user?.username || 'Usuario'}!
                                 </Link>
                             </span>
