@@ -1,1 +1,18 @@
-/*navbar*/
+
+.welcome-section {
+    text-align: center;
+    padding: 80px 20px;
+    color: #333;
+}
+
+.welcome-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.welcome-text {
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
