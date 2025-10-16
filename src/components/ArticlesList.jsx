@@ -18,8 +18,9 @@ const ArticlesList = ({ users }) => {
             <section className="articles-section">
                 <article className="articles-container">
                     <div className='box-article'>
-                        <h2>Artículos</h2>
-                            <ArticlesFront></ArticlesFront>
+                        <h2>Aquí encontrarás los artículos de botánica y astronomía que dan vida a este universo de conocimiento</h2>
+
+                        <ArticlesFront></ArticlesFront>
                     </div>
                 </article>
             </section>
