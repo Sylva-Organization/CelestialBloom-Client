@@ -22,7 +22,7 @@ const Creators = () => {
         })
     }
     
-    // Navegación con teclado
+    
     useEffect(() => {
         const handleKeyPress = (e) => {
             if (!selectedImage) return

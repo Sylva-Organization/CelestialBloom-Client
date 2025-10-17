@@ -1,42 +1,43 @@
-/* ===== Desktop / base (>= 992px) ===== */
-.botany-section{
-  max-width: 900px;     
-  width: 100%;           /
-  margin: 2% auto 5%;    
-  padding: 0 16px;      
-  box-sizing: border-box;
+.botany-section {
+  
+  padding: 6rem 2rem 3rem;
+  color: #1b4332;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-.title-botany {
-  text-align: center;
-  font-size: 40px;       
-  font-weight: 500;
-  padding: 5% 0;        
-  color: black;
+
+.page-title-botany {
+    text-align: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1b4332;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  cursor: default;
 }
 
-/* ===== Tablet (<= 768px) ===== */
+
+.page-subtitle-botany {
+    text-align: center;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #3f6212; 
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+
 @media (max-width: 768px) {
-  .botany-section{
-    margin: 24px auto 48px;
-    padding: 0 16px;
+  .page-title-botany {
+    font-size: 2rem;
   }
 
-  .title-botany {
-    font-size: 32px;    
-    padding: 48px 0;     
-  }
-}
-
-/* ===== Móvil (<= 480px) ===== */
-@media (max-width: 480px) {
-  .botany-section{
-    margin: 20px auto 40px;
-    padding: 0 12px;
-  }
-
-  .title-botany {
-    font-size: 26px;    
-    padding: 32px 0;
+  .page-subtitle-botany {
+    font-size: 1rem;
+    padding: 0 1rem;
   }
 }

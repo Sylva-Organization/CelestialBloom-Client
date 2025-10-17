@@ -18,12 +18,11 @@ const UserProfile = () => {
             try {
                 const userData = await getOneUser(id)
                 const userPosts = await getUserPosts(id)
-                // console.log(userData);
-                // console.log(userPosts);
+               
                 setUser(userData.data)
-                //console.log("ID desde useParams", id)
+                
                 setPosts(userPosts.data)
-                //console.log(userData.data.posts)
+               
             } catch (error) {
                 console.error('Error cargando datos del usuario: ', error)
             } finally {
@@ -51,13 +50,13 @@ const UserProfile = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    // Marca el post como en eliminación para animación
+                    
                     setDeletingPosts(prev => [...prev, postId])
 
-                    // Llama a la API para eliminar
+                   
                     await deleteArticle(postId)
 
-                    //Animación fade-out
+                    
                     setTimeout(() => {
                         setPosts(prevPosts => prevPosts.filter(post => post.id !== postId))
                         setDeletingPosts(prev => prev.filter(id => id !== postId))
