@@ -1,0 +1,182 @@
+.articles {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ----- CARD ----- */
+.card-container {
+    width: 370px;
+    height: auto;
+    min-height: 480px;
+    margin-bottom: 5%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-container:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+/* Imagen */
+.card-container img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* Contenido */
+.card-body {
+    padding: 15px;
+}
+
+.post-category {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+.post-subcategory {
+    display: inline-block;
+    padding: 0.3rem 1rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: white;
+    background-color: #c5c5c5;
+    margin-left: 5px;
+}
+
+.category-botany {
+    background: linear-gradient(to right, #2e7d32, #66bb6a);
+}
+
+.category-astronomy {
+    background: linear-gradient(to right, #1e3a8a, #3b82f6);
+}
+
+.card-title,
+.card-content {
+    color: black;
+}
+
+.card-title {
+    margin: 10px 0;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.card-content {
+    margin-bottom: 15px;
+    font-size: 13px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.post-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.post-user-author {
+    color: lightgray;
+}
+
+.read-more {
+    text-decoration: none;
+    color: var(--color-azul-oscuro);
+    font-weight: 600;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+/* ----- RESPONSIVE ----- */
+
+/* Tablets medianas */
+@media (max-width: 1024px) {
+    .articles {
+        justify-content: center;
+        gap: 25px;
+    }
+
+    .card-container {
+        width: 45%;
+        height: auto;
+    }
+
+    .card-content {
+        height: auto;
+        font-size: 14px;
+    }
+}
+
+/* Tablets pequeñas o móviles grandes */
+@media (max-width: 768px) {
+    .articles {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card-container {
+        width: 90%;
+        max-width: 450px;
+    }
+
+    .card-container img {
+        height: 200px;
+    }
+
+    .card-content {
+        height: auto;
+        font-size: 14px;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .card-container {
+        width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .card-body {
+        padding: 12px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .card-content {
+        font-size: 13px;
+    }
+
+    .post-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}

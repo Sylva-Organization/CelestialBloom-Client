@@ -1,0 +1,43 @@
+.astronomy-section {
+  
+  padding: 6rem 2rem 3rem;
+  color: #1e3a8a; 
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+
+.page-title-astronomy {
+    text-align: center;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  letter-spacing: 0.5px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  cursor: default;
+}
+
+
+.page-subtitle-astronomy {
+    text-align: center;
+  font-size: 1.15rem;
+  font-weight: 400;
+  color: #334155;
+  line-height: 1.7;
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+
+
+@media (max-width: 768px) {
+  .page-title-astronomy {
+    font-size: 2rem;
+  }
+
+  .page-subtitle-astronomy {
+    font-size: 1rem;
+    padding: 0 1rem;
+  }
+}
