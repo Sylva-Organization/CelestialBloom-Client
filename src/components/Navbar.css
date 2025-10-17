@@ -1,96 +1,265 @@
+/* Header / NavBar */
 #top {
-    background: linear-gradient(to right, #014C5C, #016473, #1A642F);
-    display: flex;
-    padding: 20px 30px;
-    justify-content: space-between;
-    align-items: center;
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  background: linear-gradient(to right, #014C5C, #016473, #1A642F);
+  display: flex;
+  padding: 20px 30px;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;          /* El nav por encima del overlay */
+  /* isolation: isolate;  /* opcional si necesitas forzar stacking context */
 }
 
 img {
-    height: 50px;
+  height: 50px;
 }
 
 .menu {
-    display: flex;
-    gap: 30px;
-    align-items: center;
+  display: flex;
+  gap: 30px;
+  align-items: center;
 }
 
 .menu li {
-    list-style: none;
+  list-style: none;
 }
 
 .nav-link {
-    text-decoration: none;
-    color: #fff;
+  text-decoration: none;
+  color: #fff;
 }
 
 .nav-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .btn {
-    padding: 7px 15px;
-    border-radius: 10px;
-    border: none;
-    font-size: inherit;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  padding: 7px 15px;
+  border-radius: 10px;
+  border: none;
+  font-size: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .btn-sign-in {
-    background-color: #fff;
-    color: black;
+  background-color: #fff;
+  color: black;
 }
 
 .btn-register {
-    background-color: #1E1E1E;
+  background-color: #1E1E1E;
+  color: white;
 }
 
 .btn-logout {
-    background-color: #dc3545;
-    color: white;
-    border: 2px solid #dc3545;
+  background-color: #dc3545;
+  color: white;
+  border: 2px solid #dc3545;
 }
 
 .btn-logout:hover {
-    background-color: #c82333;
-    border-color: #c82333;
-    transform: translateY(-1px);
+  background-color: #c82333;
+  border-color: #c82333;
+  transform: translateY(-1px);
 }
 
 .user-info {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .user-welcome {
-    color: #fff;
-    font-weight: 500;
-    font-size: 0.95rem;
-    white-space: nowrap;
+  color: #fff;
+  font-weight: 500;
+  font-size: 0.95rem;
+  white-space: nowrap;
 }
 
 .user-welcome:hover {
-    text-decoration: none;
+  text-decoration: none;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  z-index: 1002; /* por encima del overlay (998) */
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Hamburger menu styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+  padding: 5px;
+  z-index: 1002;         /* por encima del overlay */
+  position: relative;
+  background: transparent;
+  border: 0;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  transition: all 0.3s ease;
+  border-radius: 3px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile menu overlay (debajo del nav) */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 998;           /* nav (1000) y su menú (999) quedan por encima */
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Mobile menu colgando del NavBar */
+.mobile-menu {
+  position: absolute;
+  top: 100%;              /* justo debajo del nav */
+  left: 0;
+  right: 0;
+  max-height: 70vh;
+  background: linear-gradient(to bottom, #014C5C, #016473);
+  z-index: 999;           /* debajo del nav (1000) pero encima del overlay (998) */
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+  overflow-y: auto;
+  animation: slideDown 0.25s ease-out;
+  will-change: transform, opacity;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-8px); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
+
+.mobile-menu-list {
+  list-style: none;
+  padding: 30px 25px 40px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mobile-menu-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-item:last-child {
+  border-bottom: none;
+}
+
+.mobile-menu-item .nav-link {
+  display: block;
+  padding: 15px 10px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+.mobile-menu-item .nav-link:hover {
+  padding-left: 20px;
+  text-decoration: none;
+}
+
+.user-info-mobile {
+  padding-top: 15px;
+  border-top: 2px solid rgba(255, 255, 255, 0.2);
+  margin-top: 10px;
+}
+
+.mobile-menu-item .btn-logout {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  font-size: 1rem;
 }
 
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    .user-welcome {
-        font-size: 0.85rem;
-    }
+  #top {
+    padding: 15px 20px;
+  }
 
-    .menu {
-        gap: 15px;
-    }
+  img {
+    height: 40px;
+  }
 
-    .btn {
-        padding: 5px 10px;
-        font-size: 0.9rem;
-    }
+  .hamburger {
+    display: flex;
+  }
+
+  .menu.desktop-menu {
+    display: none;
+  }
+
+  .auth-buttons {
+    gap: 8px;
+  }
+
+  .btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #top {
+    padding: 12px 15px;
+  }
+
+  img {
+    height: 35px;
+  }
+
+  .btn {
+    padding: 5px 10px;
+    font-size: 0.85rem;
+  }
+
+  .auth-buttons {
+    gap: 5px;
+  }
+
+  .mobile-menu {
+    max-height: 75vh;
+  }
+
+  .mobile-menu-item .nav-link {
+    font-size: 1rem;
+  }
 }

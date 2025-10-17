@@ -1,5 +1,5 @@
 .articles-section {
-    width: 900px;
+    width: auto;
     margin-bottom: 10%;
 }
 
@@ -9,9 +9,6 @@
     width: 100%;
 }
 
-.box-article {
-
-}
 
 .box-article h2 {
     margin: 3% 0 5% 0;
@@ -19,6 +16,9 @@
     font-weight: 500;
     font-size: 25px;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    /*flex-wrap: wrap;*/
 }
 
 /*Filter tabs*/

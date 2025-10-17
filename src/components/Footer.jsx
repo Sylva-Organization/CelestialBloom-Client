@@ -3,36 +3,25 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return(
-        <footer>
-            <div className="rrss"></div>
-            <div className='astronomy-box-footer'>
-                <ul>
-                    <h3 className='title-footer'>Astronomía</h3>
+        <footer className="footer-container">
+            <div className="footer-content">
+                <p className="footer-text">
+                    Este proyecto ha sido creado por las <strong>FemCoders Madrid</strong> del 
+                    <strong> Bootcamp de Desarrollo Web FullStack</strong> de 
+                    <Link 
+                        to="https://factoriaf5.org/" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="footer-link"
+                    > Factoría F5</Link>.
+                </p>
+                <p>© Copyright 2025</p>
+            </div>
 
-                    <li>UI design</li>
-                    <li>UX design</li>
-                    <li>Wireframing</li>
-                    <li>Diagramming</li>
-                    <li>Brainstorming</li>
-                    <li>Online whiteboard</li>
-                    <li>Team collaboration</li>
-                </ul>
-            </div>
-            <div className='botany-box-footer'>
-                <ul>
-                    <h3 className='title-footer'>Botánica</h3>
-                    
-                    <li>Design</li>
-                    <li>Prototyping</li>
-                    <li>Development features</li>
-                    <li>Desing systems</li>
-                    <li>Collaboration features</li>
-                    <li>Design process</li>
-                    <li>FigJam</li>
-                </ul>
-            </div>
-            <div className="logo-factoria">
-                <Link to="https://factoriaf5.org/"><img src="/logo-factoria.PNG" alt="logo-factoria-F5" /></Link>
+            <div className="footer-logo">
+                <Link to="https://factoriaf5.org/" target="_blank" rel="noopener noreferrer">
+                    <img src="/logo-factoria.PNG" alt="Logo Factoría F5" />
+                </Link>
             </div>
         </footer>
     )
