@@ -1,5 +1,5 @@
 .articles-section {
-    width: 900px;
+    width: auto;
     margin-bottom: 10%;
 }
 
@@ -8,10 +8,7 @@
     justify-content: space-between;
     width: 100%;
 }
-/*Recoje todos los posts*/
-.box-article {
 
-}
 
 .box-article h2 {
     margin: 3% 0 5% 0;
@@ -20,6 +17,7 @@
     font-size: 25px;
     text-align: center;
     display: flex;
+    justify-content: center;
     /*flex-wrap: wrap;*/
 }
 
