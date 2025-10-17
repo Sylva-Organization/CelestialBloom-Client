@@ -100,6 +100,12 @@ Ejecutar tests unitarios:
 npm run test
 ```
 
+## Capturas
+
+![Test 1](./public/testnavbar.JPG)
+![Test 2](./public/testhome.JPG)
+
+
 **Cobertura actual:**
 - ✅ Test TDD del Navbar
 - ✅ Configuración con Vitest + React Testing Library
@@ -111,10 +117,6 @@ npm run test
 3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
 4. Push a la rama (`git push origin feature/AmazingFeature`)
 5. Abre un Pull Request
-
-## Licencia
-
-Este proyecto está bajo la licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Contacto
 
