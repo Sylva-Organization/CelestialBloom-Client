@@ -1,13 +1,42 @@
-
+/* ===== Desktop / base (>= 992px) ===== */
 .botany-section{
-    width: 900px;
-    margin: 2% 0 5% 0;
+  max-width: 900px;     
+  width: 100%;           /
+  margin: 2% auto 5%;    
+  padding: 0 16px;      
+  box-sizing: border-box;
 }
 
 .title-botany {
-    text-align: center;
-    font-size: 40px;
-    font-weight: 500;
-    padding: 5% 0;
-    color: black;
+  text-align: center;
+  font-size: 40px;       
+  font-weight: 500;
+  padding: 5% 0;        
+  color: black;
+}
+
+/* ===== Tablet (<= 768px) ===== */
+@media (max-width: 768px) {
+  .botany-section{
+    margin: 24px auto 48px;
+    padding: 0 16px;
+  }
+
+  .title-botany {
+    font-size: 32px;    
+    padding: 48px 0;     
+  }
+}
+
+/* ===== Móvil (<= 480px) ===== */
+@media (max-width: 480px) {
+  .botany-section{
+    margin: 20px auto 40px;
+    padding: 0 12px;
+  }
+
+  .title-botany {
+    font-size: 26px;    
+    padding: 32px 0;
+  }
 }
